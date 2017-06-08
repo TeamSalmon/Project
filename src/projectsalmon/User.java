@@ -14,6 +14,15 @@ public abstract class User {
 	private boolean blockedFlag;
 	private byte loginBlockCounter;
 	
+	public User(String id,String first, String last, String password)
+	{
+		this.id = id;
+		this.first_name = first;
+		this.last_name = last;
+		this.password = password;
+		blockedFlag = false;
+		loginBlockCounter = 0;
+	};
 	public User(String id, byte privilige, String first, String last, String password, String email)
 	{
 		this.id = id;
