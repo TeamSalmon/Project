@@ -2,13 +2,13 @@ package projectsalmon;
 
 public class Teacher {
 
-	private String degree; 
-	private float weekly_hours; 
-	private float max_hours_per_week;
+	private String degree;
+	private float weekly_hours;
+	private float maximal_weekly_hours;
 	
 	public Teacher(int max_hours)
 	{
-		max_hours_per_week = max_hours;
+		maximal_weekly_hours = max_hours;
 		weekly_hours = 0;
 	}
 	
@@ -25,11 +25,11 @@ public class Teacher {
 	public void setWeekly_hours(float weekly_hours) {
 		this.weekly_hours = weekly_hours;
 	}
-	public float getMax_hours_per_week() {
-		return max_hours_per_week;
+	public float getMax_maximal_weekly_hours() {
+		return maximal_weekly_hours;
 	}
-	public void setMax_hours_per_week(float max_hours_per_week) {
-		this.max_hours_per_week = max_hours_per_week;
+	public void setMax_maximal_weekly_hours(float max_hours_per_week) {
+		this.maximal_weekly_hours = max_hours_per_week;
 	} 
 	
 	
