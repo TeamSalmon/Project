@@ -17,23 +17,28 @@ public class Teacher extends User{
 		schedule = Calendar.getInstance();
 	}
 	
-	
-	public String getDegree() {
+	public String getDegree()
+	{
 		return degree;
 	}
-	public void setDegree(String degree) {
+	public void setDegree(String degree)
+	{
 		this.degree = degree;
 	}
-	public float getWeekly_hours() {
+	public float getWeekly_hours()
+	{
 		return weekly_hours;
 	}
-	public void setWeekly_hours(float weekly_hours) {
+	public void setWeekly_hours(float weekly_hours)
+	{
 		this.weekly_hours = weekly_hours;
 	}
-	public float getMax_maximal_weekly_hours() {
+	public float getMax_maximal_weekly_hours()
+	{
 		return maximal_weekly_hours;
 	}
-	public void setMax_maximal_weekly_hours(float max_hours_per_week) {
+	public void setMax_maximal_weekly_hours(float max_hours_per_week)
+	{
 		this.maximal_weekly_hours = max_hours_per_week;
 	} 
 	
