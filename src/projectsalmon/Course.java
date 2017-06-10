@@ -1,11 +1,14 @@
 package projectsalmon;
 
+import java.util.ArrayList;
+
 public class Course
 {
 	private String courseNumber;
 	private String name;
 	private String description;
 	private float weeklyHours;
+	private ArrayList<Assignment> assignments;
 	
 	public Course(String courseNumber, String name, String description, float weeklyHours, String courseName)
 	{
@@ -13,6 +16,7 @@ public class Course
 		this.name = courseName;
 		this.description = description;
 		this.weeklyHours = weeklyHours;
+		assignments = new ArrayList<Assignment>();
 	}
 	public Course(String courseNumber, String name, float weeklyHours, String courseName)
 	{
@@ -20,6 +24,7 @@ public class Course
 		this.name = courseName;
 		this.weeklyHours = weeklyHours;
 		this.description = "";
+		assignments = new ArrayList<Assignment>();
 	}
 	
 	public String getCourseNumber(){return courseNumber;}
