@@ -31,6 +31,7 @@ public class Course
 	public String getName(){return name;}
 	public String getDescription(){return description;}
 	public float getWeeklyHours(){return weeklyHours;}
+	public ArrayList<Assignment> getAssignments(){return assignments;}
 	
 	public void setCourseNumber(String number){this.courseNumber = number;}
 	public void setName(String name){this.name = name;}

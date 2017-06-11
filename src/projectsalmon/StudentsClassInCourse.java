@@ -5,10 +5,10 @@ import java.util.Calendar;
 
 public class StudentsClassInCourse
 {
-	Course course;
-	StudentsClass studentsClass;
+	private Course course;
+	private StudentsClass studentsClass;
 	private ArrayList<Class> classSchedule;
-	Teacher teacher;
+	private Teacher teacher;
 	
 	public StudentsClassInCourse(Course course,StudentsClass studentsClass,ArrayList<Class> classSchedule,Teacher teacher)
 	{

@@ -19,5 +19,14 @@ public class StudentController
 		return null;
 	}
 	
-	
+	public void viewInfo()
+	{
+		
+	}
+	public void addAssignmentToFile(String id, StudentAssignment st)
+	{
+		for(Student s : students)
+			if(s.getId().equals(id))
+				s.getPersonalFile().add(st);
+	}
 }
