@@ -7,8 +7,11 @@ public class StudentsClassInCourse
 {
 	private Course course;
 	private StudentsClass studentsClass;
+	private ArrayList<Student> singleStudentsAdded;
+	private ArrayList<Student> singleStudentsRemoved;
 	private ArrayList<Class> classSchedule;
 	private Teacher teacher;
+	private int studentsAmount;
 	
 	public StudentsClassInCourse(Course course,StudentsClass studentsClass,ArrayList<Class> classSchedule,Teacher teacher)
 	{
@@ -16,28 +19,40 @@ public class StudentsClassInCourse
 		this.studentsClass = studentsClass;
 		this.classSchedule = classSchedule;
 		this.teacher = teacher;
+		singleStudentsAdded = new ArrayList<Student>();
+		singleStudentsRemoved = new ArrayList<Student>();
+		classSchedule = new ArrayList<Class>();
+		studentsAmount = 0;
 	}
 	
-	public boolean addClass(int day, int startHour, int startMinutes, int endHour, int endMinute)
+	public boolean addClass(Class Aclass)
 	{
-		if(studentsClass.getStudentsAmount() >= 30)
-			return false;
-		
-		Calendar cStart = Calendar.getInstance();
-		cStart.set(Calendar.DAY_OF_WEEK, day);
-		cStart.set(Calendar.HOUR, startHour);
-		cStart.set(Calendar.MINUTE, startMinutes);
-		
-		Calendar cEnd = Calendar.getInstance();
-		cEnd.set(Calendar.DAY_OF_WEEK, day);
-		cEnd.set(Calendar.HOUR, endHour);
-		cEnd.set(Calendar.MINUTE, endMinute);
-		
-		classSchedule.add(new Class(cStart, cEnd));
+		classSchedule.add(Aclass);
+		teacher.addClass(Aclass);
 		return true;
 	}
-	public boolean removeClass(){return false;}
 	
+	public boolean addSingleStudent(Student student)
+	{
+		if(studentsAmount<=30 )
+		{
+			singleStudentsAdded.add(student);
+			studentsAmount++;
+			return true;
+		}
+		return false;
+	}
+	public boolean removeSingleStudent(Student student)
+	{
+		int i = singleStudentsRemoved.indexOf(student);
+		
+		if(i == -1)
+			return false;
+		
+		singleStudentsRemoved.remove(i);
+		studentsAmount--;
+		return true;
+	}
 	public void setCourse(Course course){this.course = course;}
 	public void setStudentsClass(StudentsClass studentsClass){this.studentsClass = studentsClass;}
 	public void setClassSchedule(ArrayList<Class> classSchedule){this.classSchedule = classSchedule;}

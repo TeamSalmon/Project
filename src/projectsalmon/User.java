@@ -11,7 +11,7 @@ public abstract class User {
 	private String email;
 	private String phone;
 	private String birthday;
-	private boolean blockedFlag;
+	private boolean lockedFlag;
 	private byte loginBlockCounter;
 	
 	public User(String id,String first, String last, String password)
@@ -20,7 +20,7 @@ public abstract class User {
 		this.first_name = first;
 		this.last_name = last;
 		this.password = password;
-		blockedFlag = false;
+		lockedFlag = false;
 		loginBlockCounter = 0;
 	};
 	public User(String id, byte privilige, String first, String last, String password, String email)
@@ -31,7 +31,7 @@ public abstract class User {
 		this.last_name = last;
 		this.password = password;
 		this.email = email;
-		blockedFlag = false;
+		lockedFlag = false;
 		loginBlockCounter = 0;		
 	}
 	
@@ -84,11 +84,11 @@ public abstract class User {
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-	public boolean isBlockedFlag() {
-		return blockedFlag;
+	public boolean islockedFlag() {
+		return lockedFlag;
 	}
-	public void setBlockedFlag(boolean blockedFlag) {
-		this.blockedFlag = blockedFlag;
+	public void setlockedFlag(boolean lockedFlag) {
+		this.lockedFlag = lockedFlag;
 	}
 	public byte getloginBlockCounter() {
 		return loginBlockCounter;
