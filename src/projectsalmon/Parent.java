@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Parent extends User
 {
 	private ArrayList<Student> children;
+	private boolean blockedFlag = false;
 	
 	public Parent(String id,String first, String last, String password)
 	{
@@ -13,4 +14,7 @@ public class Parent extends User
 	}
 	
 	public ArrayList<Student> getChildren(){return children;}
+	public boolean getBlockedFlag(){return blockedFlag;}
+	
+	public void setBlockedFlag(boolean flag){blockedFlag = flag;}
 }

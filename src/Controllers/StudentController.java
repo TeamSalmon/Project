@@ -1,6 +1,9 @@
-package projectsalmon;
+package Controllers;
 
 import java.util.ArrayList;
+
+import projectsalmon.Student;
+import projectsalmon.StudentAssignment;
 
 public class StudentController
 {

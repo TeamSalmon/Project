@@ -4,7 +4,7 @@ package projectsalmon;
 public abstract class User {
 
 	private String id;
-	private byte privilige;
+	private int permission;
 	private String first_name;
 	private String last_name;
 	private String password;
@@ -12,7 +12,7 @@ public abstract class User {
 	private String phone;
 	private String birthday;
 	private boolean lockedFlag;
-	private byte loginBlockCounter;
+	private int loginLockCounter;
 	
 	public User(String id,String first, String last, String password)
 	{
@@ -21,18 +21,18 @@ public abstract class User {
 		this.last_name = last;
 		this.password = password;
 		lockedFlag = false;
-		loginBlockCounter = 0;
+		loginLockCounter = 0;
 	};
-	public User(String id, byte privilige, String first, String last, String password, String email)
+	public User(String id, int permission, String first, String last, String password, String email)
 	{
 		this.id = id;
-		this.privilige = privilige;
+		this.permission = permission;
 		this.first_name = first;
 		this.last_name = last;
 		this.password = password;
 		this.email = email;
 		lockedFlag = false;
-		loginBlockCounter = 0;		
+		loginLockCounter = 0;		
 	}
 	
 	
@@ -42,11 +42,11 @@ public abstract class User {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public byte getPrivilige() {
-		return privilige;
+	public int getPermission() {
+		return permission;
 	}
-	public void setPrivilige(byte privilige) {
-		this.privilige = privilige;
+	public void setPrivilige(int privilige) {
+		this.permission = privilige;
 	}
 	public String getFirst_name() {
 		return first_name;
@@ -90,11 +90,11 @@ public abstract class User {
 	public void setlockedFlag(boolean lockedFlag) {
 		this.lockedFlag = lockedFlag;
 	}
-	public byte getloginBlockCounter() {
-		return loginBlockCounter;
+	public int getloginLockCounter() {
+		return loginLockCounter;
 	}
-	public void setLoginBlockCounter(byte loginBlockCounter) {
-		this.loginBlockCounter = loginBlockCounter;
+	public void setloginLockCounter(int loginLockCounter) {
+		this.loginLockCounter = loginLockCounter;
 	}
 	
 	
