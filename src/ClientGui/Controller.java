@@ -44,6 +44,7 @@ public class Controller {
 
             try
             {
+            	int b=0;
             ClientConsole con =new ClientConsole(serverip, Integer.parseInt(serverport));	
             myMain.setConnection(con);
             myMain.getConnection();
