@@ -6,8 +6,10 @@ package ClientGui;
 
 import java.io.IOException;
 
+import ServerClient.ClientConsole;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -48,7 +50,8 @@ public class Stage2Controller {
     	}
     	else
     	{
-    		 myMain.getConnection().setLog(InfoLog);	
+    		 myMain.getConnection();
+			ClientConsole.setLog(InfoLog);	
     		//myMain.cc.log=;
     		myMain.getinfo(teachId);
     		
@@ -57,9 +60,11 @@ public class Stage2Controller {
     
 
     @FXML
-    void Stage2exit(ActionEvent event) 
+    void Stage2exit(ActionEvent event) throws IOException 
     {
-    	System.exit(1);
+    	((Node)event.getSource()).getScene().getWindow().hide();
+    	 myMain.changesence(0);
+    	//System.exit(1);
     }
 
     @FXML
@@ -73,8 +78,9 @@ public class Stage2Controller {
     	}
     	else
     	{
-    		 myMain.getConnection().setLog(UpdateLog);
-    		//myMain.cc.log=;
+    		 myMain.getConnection();
+			ClientConsole.setLog(UpdateLog);
+    		
     		myMain.UpdateTeacing(teachId, unitUpdateval);
     	}
     	

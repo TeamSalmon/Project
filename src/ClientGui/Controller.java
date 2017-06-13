@@ -5,19 +5,12 @@
 package ClientGui;
 
 import java.io.IOException;
-import java.net.URL;
-
-
 import ServerClient.ClientConsole;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 public class Controller {
 	
@@ -46,44 +39,36 @@ public class Controller {
     	serverport=portPT.getText();
     	serverip=ipPT.getText();
     	
-    	Stage stage; 
-        Parent root;
-       // if(event.getSource()==connectPT && serverport.length()>0 && serverip.length()>0 )
+    	// if(event.getSource()==connectPT && serverport.length()>0 && serverip.length()>0 )
         {//start if
 
             try
             {
             ClientConsole con =new ClientConsole(serverip, Integer.parseInt(serverport));	
             myMain.setConnection(con);
-            myMain.getConnection().setLog(logPT);	
+            myMain.getConnection();
+			ClientConsole.setLog(logPT);	
             }
             
             
-            catch(RuntimeException e)
+            /*catch(RuntimeException e)
             {
          	   logPT.setText ("Error: Can't setup connection!" + " Terminating client.");
          	  flag=false;
             }
-             
+             */
             catch(IOException e)
             {
          	   logPT.setText ("Error: Can't setup connection!" + " Terminating client.");
          	   flag=false;
             }
-      
-            
             if(flag)
             {
-           //get reference to the button's stage   
-           myMain.getConnection().getClient().sendToServer("bla");
-           stage=(Stage) connectPT.getScene().getWindow();
-           stage.setTitle("stage2");
-           //load up OTHER FXML document
+
            try{
-           root = FXMLLoader.load(getClass().getResource("secondStage.fxml"));
-           Scene scene = new Scene(root);
-           stage.setScene(scene);
-           stage.show();
+
+        	   ((Node)event.getSource()).getScene().getWindow().hide();
+        	   myMain.changesence(1);
            }
            catch(IOException e)
            {
