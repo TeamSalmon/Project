@@ -1,9 +1,11 @@
 package projectsalmon;
 
-public class Secretary {
+public class Secretary extends User{
 
 	
-	public Secretary()
-	{}
+	public Secretary(String id,String first, String last, String password)
+	{
+		super(id,first,last,password);
+	}
 	
 }

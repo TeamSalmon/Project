@@ -6,6 +6,9 @@ public class Report {
 	private String type;
 	private String description;
 	
+	
+	
+	
 	public Report(String id, String type)
 	{
 		supplicant = id;

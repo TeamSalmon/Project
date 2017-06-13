@@ -1,8 +1,11 @@
 package projectsalmon;
 
-public class Admin {
+public class Admin extends User{
 
-	public Admin()
-	{}
-	
+		
+	public Admin(String id,String first, String last, String password)
+	{
+	super(id,first,last,password);
+	}
+
 }
