@@ -28,4 +28,6 @@ public class Student extends User
 	public float getGpa(){return gpa;}
 	public ArrayList<StudentAssignment> getPersonalFile(){return personalFile;}
 	public StudentsClass getStudentClass(){return sClass;}
+	
+	public void AddToPersonalFile(StudentAssignment sa){personalFile.add(sa);}
 }
