@@ -1,0 +1,12 @@
+#test {
+   -fx-background-image: url("bgWithoutLogo.png");
+    -fx-background-size: 640 480;
+}
+
+
+
+.connectPT{
+	
+	 -fx-background-image: url("Button.png");
+
+}
