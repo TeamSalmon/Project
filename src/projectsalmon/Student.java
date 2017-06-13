@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Student extends User
 {
 	private float gpa;
-	private String semesterSchedule;
 	private ArrayList<StudentAssignment> personalFile;
+	private StudentsClass sClass;
 	
 	public Student(String id,String first, String last, String password)
 	{
@@ -15,9 +15,19 @@ public class Student extends User
 		personalFile = new ArrayList<StudentAssignment>();
 	}
 	public void setGpa(float gpa){this.gpa = gpa;}
-	public void setSemesterScheduke(String s){this.semesterSchedule = s;}
+	public boolean setClass(StudentsClass sClass)
+	{
+		if(sClass.addStudent())
+		{
+		this.sClass = sClass;
+		return true;
+		}
+		return false;
+	}
 	
 	public float getGpa(){return gpa;}
-	public String getSemesterSchedule(){return semesterSchedule;}
 	public ArrayList<StudentAssignment> getPersonalFile(){return personalFile;}
+	public StudentsClass getStudentClass(){return sClass;}
+	
+	public void AddToPersonalFile(StudentAssignment sa){personalFile.add(sa);}
 }
