@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="588.0" text="Teacher" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="389.0" prefWidth="549.0">
+         <children>
+            <ImageView fitHeight="77.0" fitWidth="65.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@user_accounts_help.png" />
+               </image>
+            </ImageView>
+            <ComboBox id="UserInformation" fx:id="UserControl" blendMode="HARD_LIGHT" layoutX="14.0" layoutY="79.0" maxWidth="1.7976931348623157E308" onAction="#userControl" prefHeight="25.0" promptText="name" AnchorPane.topAnchor="79.0" />
+         </children></AnchorPane>
+  </content>
+</TitledPane>
