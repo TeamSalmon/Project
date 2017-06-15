@@ -64,8 +64,6 @@ public  class Main extends Application {
 	    root = FXMLLoader.load(getClass().getResource("secondStage.fxml"));
 	    Scene scene2 = new Scene( root );
 	    al.add(scene2);
-    	
-    	
     }
 
 	  public void start(Stage primaryStage) throws IOException 
