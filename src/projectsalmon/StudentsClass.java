@@ -1,8 +1,10 @@
 package projectsalmon;
+import java.util.ArrayList;
 
 
 public class StudentsClass
 {
+	private ArrayList<Student> students;
 	private String studentsClassId;
 	private int grade;
 	private int classNum;
@@ -10,6 +12,7 @@ public class StudentsClass
 	
 	public StudentsClass(int classNum, int grade, String studentsClassId)
 	{
+		students=null;
 		this.classNum = classNum;
 		this.grade = grade;
 		this.studentsAmount = 0;
@@ -37,4 +40,12 @@ public class StudentsClass
 	public int getClassNum(){return classNum;}
 	public int getStudentsAmount(){return studentsAmount;}
 	public String getClassId(){return studentsClassId;}
+
+	public ArrayList<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(ArrayList<Student> students) {
+		this.students = students;
+	}
 }

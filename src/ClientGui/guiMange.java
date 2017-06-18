@@ -64,7 +64,7 @@ public class guiMange
     	CorenSence=i;
         String s;
         s="sence"+" "+i;
-        Main.getTheStage().setScene(al.get(i));
+        Main.getTheStage().setScene(al.get(i-1));
         Main.getTheStage().setTitle(s);
         Main.getTheStage().show();
     	}
