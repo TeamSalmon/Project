@@ -70,12 +70,15 @@ public  class Main extends Application {
 	    root = FXMLLoader.load(getClass().getResource("secondStage.fxml"));
 	    Scene scene2 = new Scene( root );
 	    al.add(scene2);
+<<<<<<< HEAD
+=======
 	    //setting  third
 	    
      	Parent root2;
  	    root2 = FXMLLoader.load(getClass().getResource("halo.fxml"));
  	    Scene scene3 = new Scene( root2 );
  	    al.add(scene3);
+>>>>>>> origin/new_gui_mange(tamir)
     }
 */
 	  public void start(Stage primaryStage) throws IOException 
