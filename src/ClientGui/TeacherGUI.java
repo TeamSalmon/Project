@@ -1,7 +1,7 @@
 package ClientGui;
 
-import java.util.ArrayList;
-
+import Controllers.*;
+import projectsalmon.*;
 import ServerClient.ClientConsole;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,13 +28,18 @@ public class TeacherGUI
 
     @FXML
     private ImageView courses;
-    
-    ObservableList<String> list;
+  
 
     @FXML
     void userControl(ActionEvent event)
     {
+    	String value = (String) userControl.getValue();
+    	if(value.equals("logout"))
+    	{}	//Controllers.UserController.logout();
     	
+    	else if(value.equals("personal info"))
+    	{/*close current window and open the personal info window*/}
+    		
     }
 
     @FXML
@@ -44,18 +49,15 @@ public class TeacherGUI
     }
     public void setComboBox()
     {
-    	ArrayList<String> options = new ArrayList<String>();	
-		options.add("personal info");
-		options.add("logout");
-		list = FXCollections.observableArrayList(options);
-		userControl.setItems(list);
+		userControl.getItems().add("personal info");
+		userControl.getItems().add("logout");	
     }
     public void start(Stage primaryStage) throws Exception {	
-		Parent root = FXMLLoader.load(getClass().getResource("/gui/AcademicFrame.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/TeacherGUI.fxml"));
 				
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/ClientGui/test.css").toExternalForm());
-		primaryStage.setTitle("testt");
+		scene.getStylesheets().add(getClass().getResource("/test.css").toExternalForm());
+		primaryStage.setTitle("test");
 		primaryStage.setScene(scene);
 		
 		primaryStage.show();		
