@@ -16,6 +16,7 @@ public class Secretary extends User{
 		
 		Course chosen_course;
 		StudentsClass chosen_class;
+		Teacher chosen_teacher;
 		
 		// New instance to fill and save to DB
 		StudentsClassInCourse new_class_in_course;
@@ -86,13 +87,26 @@ public class Secretary extends User{
 		
 		// ask DB: Get list of all the teachers that teach this course + have ENOUGH FREE WEEKLY HOURS (not including the current semester)
 		// save it to 'optional_teachers'
-		// ArrayList<Teacher> optional_teachers = DB.optionalTeachers(student);
+		// ArrayList<Teacher> optional_teachers = DB.optionalTeachers(chosen_course);
+		
+		
+		
+		// send to GUI: Show list of optional teachers
+		// Gui returns: chosen_teacher = (Gui_select_teacher_function);
+
+		
+		new_class_in_course  = new StudentsClassInCourse(chosen_course, chosen_class, ArrayList<Class> classSchedule, chosen_teacher);
+
+		
+		
+		// Add weekly hours of 'chosen_course' to 'chosen_teacher''s weekly hours
+		chosen_teacher.setWeekly_hours( chosen_teacher.getWeekly_hours() + chosen_course.getWeeklyHours());
 		
 		
 		
 		
 		
-		// send to DB: 
+		// send 'new_class_in_course' to DB: 
 	}
 	
 	

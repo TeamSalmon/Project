@@ -13,7 +13,7 @@ public class StudentsClassInCourse
 	private Teacher teacher;
 	private int studentsAmount;
 	
-	public StudentsClassInCourse(Course course,StudentsClass studentsClass,ArrayList<Class> classSchedule,Teacher teacher)
+	public StudentsClassInCourse(Course course,StudentsClass studentsClass, ArrayList<Class> classSchedule,Teacher teacher)
 	{
 		this.course = course;
 		this.studentsClass = studentsClass;
