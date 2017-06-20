@@ -44,7 +44,7 @@ public class guiMange
     		break;
     	case 2:
     		xmlNum=Page2;
-    		break;
+    		break;  
     	default:
     		break;
     	}
