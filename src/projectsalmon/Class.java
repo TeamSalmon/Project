@@ -6,7 +6,7 @@ public class Class
 {
 	Calendar startsAt;
 	Calendar endsAt;
-	
+	 
 	public Class(Calendar start, Calendar end)
 	{
 		this.startsAt = start;
