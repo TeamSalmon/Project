@@ -17,6 +17,7 @@ public class guiMange
     public static final String MPAGE    = "ClientXml.fxml";
     public static final String Page1 = "SecondStage.fxml";
     public static final String Page2 = "halo.fxml";	
+    public static final String Page3 = "TeacherGUI.fxml";
     public static final String CSS = "test.css";
 	
 	
@@ -45,6 +46,9 @@ public class guiMange
     	case 2:
     		xmlNum=Page2;
     		break;
+    	case 3:
+    		xmlNum = Page3;
+    		break;
     	default:
     		break;
     	}
@@ -64,7 +68,7 @@ public class guiMange
     	CorenSence=i;
         String s;
         s="sence"+" "+i;
-        Main.getTheStage().setScene(al.get(i));
+        Main.getTheStage().setScene(al.get(i-1));
         Main.getTheStage().setTitle(s);
         Main.getTheStage().show();
     	}
