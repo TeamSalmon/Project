@@ -19,7 +19,7 @@ public  class Main extends Application {
 	  //@Override
 	private final static Main instance = new Main();
 	private static Stage theStage;
-	static guiMange  Mange=new guiMange();
+	private guiMange  Mange=new guiMange();;
 	public static Main getInstance() {
         return instance;
     }
@@ -85,7 +85,7 @@ public  class Main extends Application {
 	  {
 	    // constructing our scene
 		  setTheStage(primaryStage);
-		  Mange.setMainStage();
+		  getMange().setMainStage();
 		  
 		    getTheStage().setScene(guiMange.al.get(0) );
 		    getTheStage().setTitle( "Stage1" );
@@ -139,5 +139,13 @@ public void UpdateTeacing(String id,String unit)//update teaching unit for specp
 	}
 	public static void setTheStage(Stage theStage) {
 		Main.theStage = theStage;
+	}
+
+	public void setMange(guiMange mange) {
+		Mange = mange;
+	}
+	public guiMange getMange() {
+		// TODO Auto-generated method stub
+		return this.Mange;
 	}
 	 }

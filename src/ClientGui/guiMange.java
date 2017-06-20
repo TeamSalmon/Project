@@ -45,15 +45,12 @@ public class guiMange
     		break;
     	case 2:
     		xmlNum=Page2;
-<<<<<<< HEAD
+
     		break;
     	case 3:
     		xmlNum = Page3;
     		break;
-=======
-    		break;  
->>>>>>> new_gui_mange(tamir)
-    	default:
+    		default:
     		break;
     	}
 		Parent root;
