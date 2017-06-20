@@ -17,7 +17,7 @@ public class guiMange
     public static final String MPAGE    = "ClientXml.fxml";
     public static final String Page1 = "SecondStage.fxml";
     public static final String Page2 = "halo.fxml";	
-    public static final String Page3 = "TeacherGUI.fxml";
+    public static final String Page3 = "TeacherGui.fxml";
     public static final String CSS = "test.css";
 	
 	
