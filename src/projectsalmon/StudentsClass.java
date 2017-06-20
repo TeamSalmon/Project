@@ -14,12 +14,12 @@ public class StudentsClass
 	private ArrayList<Student> students;
 	private String studentsClassId;
 	private String grade;
-	private String classNum;
+	private String className;
 	private int studentsAmount;
 	
-	public StudentsClass(String classNum, String grade, String studentsClassId)
+	public StudentsClass(String className, String grade, String studentsClassId)
 	{
-		this.setClassNum(classNum);
+		this.setClassName(className);
 		this.grade = grade;
 		this.studentsAmount = 0;
 		this.studentsClassId = studentsClassId;
@@ -147,10 +147,10 @@ public class StudentsClass
 	public String getGrade(){return grade;}
 	public int getStudentsAmount(){return studentsAmount;}
 	public String getClassId(){return studentsClassId;}
-	public String getClassNum() {
-		return classNum;
+	public String getClassName() {
+		return className;
 	}
-	public void setClassNum(String classNum) {
-		this.classNum = classNum;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 }
