@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 
 public class Controller {
 	
-	Main	myMain=	Main.getInstance();
+	Main myMain = Main.getInstance();
 	boolean flag=true;
 	String serverip,serverport;
     @FXML // fx:id="connectPT"
@@ -70,8 +70,18 @@ public class Controller {
 
         	   ((Node)event.getSource()).getScene().getWindow().hide();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
         	   myMain.getMange().initializationScreens(3);
-        	   myMain.getMange().changesence(3);
+        	   myMain.getMange().changesence(2);
+=======
+        	   myMain.getMange().initializationScreens(4);
+        	   myMain.getMange().changesence(1);
+>>>>>>> 2efc72cd69c2690d67878f58e40539ac91ce8c7e
+=======
+        	   myMain.getMange().initializationScreens(4);
+        	   myMain.getMange().changesence(1);
+>>>>>>> 2efc72cd69c2690d67878f58e40539ac91ce8c7e
            }
            catch(IOException e)
            {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -7,19 +8,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane id="container" fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="682.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ClientGui.Teacher">
+<TabPane id="container" fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.Teacher">
   <tabs>
-    <Tab text="Untitled Tab 1">
+    <Tab id="firstTab" fx:id="firstTab" text="name">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="709.0">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="437.0" prefWidth="643.0">
                <children>
-                  <ComboBox id="userControl" fx:id="userControl" layoutX="14.0" layoutY="96.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#userControl" prefHeight="35.0" prefWidth="87.0" promptText="name" />
+                  <Button fx:id="coursesBtn" layoutX="33.0" layoutY="32.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openCourses" prefHeight="80.0" prefWidth="80.0" text="Courses">
+                     <font>
+                        <Font name="Arial Narrow Bold" size="16.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Untitled Tab 2">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>
     </Tab>
   </tabs>
