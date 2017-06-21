@@ -8,17 +8,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 
 public class Teacher implements Initializable{
 
@@ -32,13 +28,16 @@ public class Teacher implements Initializable{
 
 	    @FXML // fx:id="firstTab"
 	    private Tab firstTab; // Value injected by FXMLLoade
-
+	    
+	    private static Tab coursesTab;
 
     @FXML
     void openCourses(ActionEvent event)
     {		 
+    	if(!container.getTabs().contains(coursesTab))
+    	{
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("CoursesTab.fxml"));
-        Tab coursesTab = new Tab("Courses");
+        coursesTab = new Tab("Courses");
         try {
 			coursesTab.setContent(loader.load());
 		} catch (IOException e) {
@@ -46,6 +45,10 @@ public class Teacher implements Initializable{
 			e.printStackTrace();
 		}
         container.getTabs().add(coursesTab);
+    	}   
+    	else {
+    		container.getSelectionModel().select(coursesTab);
+		}
     }
     
 	@Override
@@ -53,5 +56,6 @@ public class Teacher implements Initializable{
 	{
 		//firstTab.setText(myMain.getUser().getName());	
 	}
+	public static Tab getTab(){return coursesTab;}
 
 }
