@@ -63,7 +63,7 @@ public class Stage2Controller {
     void Stage2exit(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-    	 myMain.changesence(0);
+    	// myMain.changesence(0);
     	//System.exit(1);
     }
 

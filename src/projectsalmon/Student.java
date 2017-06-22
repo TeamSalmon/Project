@@ -8,7 +8,7 @@ public class Student extends User
 	private ArrayList<StudentAssignment> personalFile;
 	private StudentsClass sClass;
 	
-	public Student(String id,String first, String last, String password)
+	public Student(String id, String first, String last, String password)
 	{
 		super(id,first,last,password);
 		gpa = 0;

@@ -19,13 +19,17 @@ public class Course
 		this.weeklyHours = weeklyHours;
 		this.teachingUnit = teachingUnit;
 	}
-	public Course(String courseNumber, TeachingUnit teachingUnit, String name, float weeklyHours, String courseName)
+	public Course(String courseNumber, TeachingUnit teachingUnit, float weeklyHours, String courseName)
 	{
-		this.courseNumber = courseName;
+		this.courseNumber = courseNumber;
 		this.name = courseName;
 		this.weeklyHours = weeklyHours;
 		this.description = "";
 		this.teachingUnit = teachingUnit;
+	}
+	public Course(String courseNumber)
+	{
+		this.courseNumber = courseNumber;
 	}
 	
 	public String getCourseNumber(){return courseNumber;}

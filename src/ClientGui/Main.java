@@ -8,16 +8,18 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 
 public  class Main extends Application {
-	  //@Override
+	//@Override
 	private final static Main instance = new Main();
 	private static Stage theStage;
-	static ArrayList<Scene> al = new ArrayList<Scene>();	
-	private static int CorenSence;
-	private static int lastSence;
+	private guiMange Mange = new guiMange();
 	public static Main getInstance() {
         return instance;
     }
@@ -30,6 +32,8 @@ public  class Main extends Application {
     public ClientConsole getConnection() {
         return con;
     }
+    
+    /**
     public void changesence(int i) throws IOException
     {
     	if(i!=CorenSence||CorenSence==0)
@@ -38,12 +42,14 @@ public  class Main extends Application {
     	CorenSence=i;
         String s;
         s="sence"+" "+i;
-        theStage.setScene(al.get(i));
-        theStage.setTitle(s);
-        theStage.show();
+        getTheStage().setScene(al.get(i));
+        getTheStage().setTitle(s);
+        getTheStage().show();
     	}
-    	
+    	 
     }
+    */
+/**
     public void initializationScreens() throws IOException
     {
     	
@@ -55,67 +61,90 @@ public  class Main extends Application {
 	    Scene scene = new Scene( pane );
 	    scene.getStylesheets().add(this.getClass().getResource("test.css").toExternalForm());
 
-	    theStage.setScene( scene );
-	    theStage.setTitle( "Stage1" );
-	    theStage.show();
+	    getTheStage().setScene( scene );
+	    getTheStage().setTitle( "Stage1" );
+	    getTheStage().show();
 	    al.add(scene);
 	    //setting second sence
     	Parent root;
 	    root = FXMLLoader.load(getClass().getResource("secondStage.fxml"));
 	    Scene scene2 = new Scene( root );
 	    al.add(scene2);
-    	
-    	
+<<<<<<< HEAD
+=======
+	    //setting  third
+	    
+     	Parent root2;
+ 	    root2 = FXMLLoader.load(getClass().getResource("halo.fxml"));
+ 	    Scene scene3 = new Scene( root2 );
+ 	    al.add(scene3);
+>>>>>>> origin/new_gui_mange(tamir)
     }
-
-	  public void start(Stage primaryStage) throws IOException 
-	  {
-	    // constructing our scene
-		  theStage=primaryStage;
-		 
-		  initializationScreens();
-		  lastSence=0;
-
-	  }    
-
-public void  getinfo(String id)//ask from server info about spespeic teacher
-{
+*/
+ 
+    public void start(Stage primaryStage) throws IOException 
+    {
+	// constructing our scene
+    	setTheStage(primaryStage);
+    	getMange().setMainStage();
+		  
+    	getTheStage().setScene(guiMange.al.get(0) );
+    	getTheStage().setTitle( "Stage1" );
+	    getTheStage().show();
+    }    
 	
-	 ArrayList<String> arrsend  =  new ArrayList<String>();
-	 arrsend.add("getinfo");
-	 arrsend.add(id);
+	public void  getinfo(String id)//ask from server info about specific teacher
+	{
+		
+		 ArrayList<String> arrsend  =  new ArrayList<String>();
+		 arrsend.add("getinfo");
+		 arrsend.add(id);
+		
+		try
+		{
+			this.con.getClient().handleMessageFromClientUI(arrsend);
+		}
+		catch(IOException e)
+		{
+			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
+		}
+		ClientConsole.getLog().setText(con.getStringOut());
+	}
 	
-	try
+	public void UpdateTeacing(String id,String unit)//update teaching unit for specific teacher
 	{
-		this.con.getClient().handleMessageFromClientUI(arrsend);
+		
+		 ArrayList<String> arrsend  =  new ArrayList<String>();
+		 arrsend.add("update");
+		 arrsend.add(id);
+		 arrsend.add(unit);
+		try
+		{
+			this.con.getClient().handleMessageFromClientUI(arrsend);
+		}
+		catch(IOException e)
+		{
+			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
+		}
+		ClientConsole.getLog().setText(con.getStringOut());
 	}
-	catch(IOException e)
-	{
-		ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-	}
-	ClientConsole.getLog().setText(con.getStringOut());
+	
+		   public static void main(String[] args) 
+		   {
+			launch(args);
+		   }
+		public static Stage getTheStage() {
+			return theStage;
+		}
+		public static void setTheStage(Stage theStage) {
+			Main.theStage = theStage;
+		}
+	
+		public void setMange(guiMange mange) {
+			Mange = mange;
+		}
+		public guiMange getMange() {
+			// TODO Auto-generated method stub
+			return this.Mange;
+	}	 		
 }
-
-public void UpdateTeacing(String id,String unit)//update teaching unit for specpic teacher
-{
-	
-	 ArrayList<String> arrsend  =  new ArrayList<String>();
-	 arrsend.add("update");
-	 arrsend.add(id);
-	 arrsend.add(unit);
-	try
-	{
-		this.con.getClient().handleMessageFromClientUI(arrsend);
-	}
-	catch(IOException e)
-	{
-		ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-	}
-	ClientConsole.getLog().setText(con.getStringOut());
-}
-
-	   public static void main(String[] args) 
-	   {
-		launch(args);
-	   }
-	 }
