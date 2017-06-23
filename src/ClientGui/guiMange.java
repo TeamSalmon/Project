@@ -20,6 +20,7 @@ public class guiMange
     public static final String Page2 = "halo.fxml";	
     public static final String Page3 = "TeacherGui.fxml";
     public static final String Page4 = "reportMenu.fxml";
+    public static final String Page5 = "assignSingleStudentToCourseGUI.fxml";
     public static final String CSS = "test.css";
     public static   ObjectStack myStack = new  ObjectStack (10);
 	
@@ -53,6 +54,9 @@ public class guiMange
     		break;
     	case 4:
     		xmlNum = Page4;
+    		break;
+    	case 5:
+    		xmlNum = Page5;
     		break;
     		default:
     		break;

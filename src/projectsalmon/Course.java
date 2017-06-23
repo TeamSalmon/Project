@@ -11,7 +11,7 @@ public class Course
 	private TeachingUnit teachingUnit;
 	private ArrayList<Course> preCondition;
 	
-	public Course(String courseNumber, String name,TeachingUnit teachingUnit, String description, float weeklyHours, String courseName)
+	public Course(String courseNumber, String courseName,TeachingUnit teachingUnit, String description, float weeklyHours)
 	{
 		this.courseNumber = courseNumber;
 		this.name = courseName;

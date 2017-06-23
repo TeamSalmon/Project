@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 public class StudentsClassInCourse
 {
+	private String classCourseID;
 	private Course course;
 	private StudentsClass studentsClass;
 	private ArrayList<Student> singleStudentsAdded;
@@ -13,8 +14,9 @@ public class StudentsClassInCourse
 	private Teacher teacher;
 	private int studentsAmount;
 	
-	public StudentsClassInCourse(Course course,StudentsClass studentsClass,ArrayList<Class> classSchedule,Teacher teacher)
+	public StudentsClassInCourse(String classCourseID,Course course,StudentsClass studentsClass,ArrayList<Class> classSchedule,Teacher teacher)
 	{
+		this.classCourseID=classCourseID;
 		this.course = course;
 		this.studentsClass = studentsClass;
 		this.classSchedule = classSchedule;
@@ -53,11 +55,14 @@ public class StudentsClassInCourse
 		studentsAmount--;
 		return true;
 	}
+	
+	public void setclassCourseID(String classCourseID){this.classCourseID = classCourseID;}
 	public void setCourse(Course course){this.course = course;}
 	public void setStudentsClass(StudentsClass studentsClass){this.studentsClass = studentsClass;}
 	public void setClassSchedule(ArrayList<Class> classSchedule){this.classSchedule = classSchedule;}
 	public void setTeacher(Teacher teacher){this.teacher = teacher;}
 	
+	public String getclassCourseID(){return classCourseID;}
 	public Course getCourse(){return course;}
 	public StudentsClass getStudentsClass(){return studentsClass;}
 	public ArrayList<Class> getClassSchedule(){return classSchedule;}

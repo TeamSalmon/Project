@@ -6,21 +6,21 @@ public class StudentsClass
 {
 	private ArrayList<Student> students;
 	private String studentsClassId;
-	private int grade;
-	private int classNum;
+	private String level;
+	private String classNum;
 	private int studentsAmount;
 	
-	public StudentsClass(int classNum, int grade, String studentsClassId)
+	public StudentsClass(String classNum, String level, String studentsClassId)
 	{
 		students=null;
 		this.classNum = classNum;
-		this.grade = grade;
+		this.level = level;
 		this.studentsAmount = 0;
 		this.studentsClassId = studentsClassId;
 	}
 	
-	public void setGrade(int grade){this.grade = grade;}
-	public void setClassNum(int classNum){this.classNum = classNum;}
+	public void setlevel(String level){this.level = level;}
+	public void setClassNum(String classNum){this.classNum = classNum;}
 	public boolean addStudent()
 	{
 		if(studentsAmount>=30)
@@ -36,8 +36,8 @@ public class StudentsClass
 		return true;
 	}
 	
-	public int getGrade(){return grade;}
-	public int getClassNum(){return classNum;}
+	public String getlevel(){return level;}
+	public String getClassNum(){return classNum;}
 	public int getStudentsAmount(){return studentsAmount;}
 	public String getClassId(){return studentsClassId;}
 
