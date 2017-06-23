@@ -1,38 +1,34 @@
 package projectsalmon;
 
+import java.util.ArrayList;
+
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+
 public class Report {
 	
-	private String supplicant;
-	private String type;
-	private String description;
-	
-	
-	
-	
-	public Report(String id, String type)
+	private String xtitle;
+	ArrayList<String> name  =  new ArrayList<String>();
+	ArrayList<String> gpa  =  new ArrayList<String>();
+	XYChart.Series series1 = new XYChart.Series();
+	 public void enterData(ArrayList<String> bla)
 	{
-		supplicant = id;
-		this.type = type;
+	        series1.setName("Gpa");       
+	        series1.getData().add(new XYChart.Data("austria", 50));
 	}
-	
-	public String getSupplicant() {
-		return supplicant;
+	 
+	 public   XYChart.Series getData()
+	 {
+		 return series1;
+	 }
+
+	public String getXtitle() {
+		return xtitle;
 	}
-	public void setSupplicant(String supplicant) {
-		this.supplicant = supplicant;
+
+	public void setXtitle(String xtitle) {
+		this.xtitle = xtitle;
 	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
 
 }

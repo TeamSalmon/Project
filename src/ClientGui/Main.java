@@ -13,13 +13,15 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+import projectsalmon.Report;
 import javafx.scene.layout.AnchorPane;
 
 public  class Main extends Application {
 	  //@Override
 	private final static Main instance = new Main();
 	private static Stage theStage;
-	private guiMange  Mange=new guiMange();;
+	private guiMange  Mange=new guiMange();
+	private Report  myreport=new Report();
 	public static Main getInstance() {
         return instance;
     }
@@ -87,7 +89,7 @@ public  class Main extends Application {
 		  setTheStage(primaryStage);
 		  getMange().setMainStage();
 		  
-		    getTheStage().setScene(guiMange.al.get(0) );
+		    getTheStage().setScene((Scene) guiMange.myStack.peek() );
 		    getTheStage().setTitle( "Stage1" );
 		    getTheStage().show();
 		

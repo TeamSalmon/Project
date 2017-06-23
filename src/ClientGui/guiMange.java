@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -20,8 +21,7 @@ public class guiMange
     public static final String Page3 = "TeacherGui.fxml";
     public static final String Page4 = "reportMenu.fxml";
     public static final String CSS = "test.css";
-	
-	
+    public static   ObjectStack myStack = new  ObjectStack (10);
 	
     public void setMainStage() throws IOException
     {
@@ -31,12 +31,12 @@ public class guiMange
 	    Scene scene = new Scene( pane );
 	    scene.getStylesheets().add(this.getClass().getResource(CSS).toExternalForm());
 
-	    al.add(scene);
+	    myStack.push(scene);
     	
     }
 	
 	
-    public void initializationScreens(int i) throws IOException
+    public Scene initializationScreens(int i) throws IOException
     {
     	String xmlNum = null;
     	switch(i)
@@ -61,27 +61,24 @@ public class guiMange
 		root = FXMLLoader.load(getClass().getResource(xmlNum));
 		Scene scene = new Scene( root );
 		
-		al.add(scene);
+		return scene;
     }
 	
 	
-    public void changesence(int i) throws IOException
+    public void changeScene(Scene sceneUP) throws IOException
     {
-    	if(i!=CorenSence||CorenSence==0)
-    	{
-    	setLastSence(CorenSence);
-    	CorenSence=i;
-        String s;
-        s="sence"+" "+i;
-        Main.getTheStage().setScene(al.get(i));
-        Main.getTheStage().setTitle(s);
+    	
+    	myStack.push(Main.getTheStage().getScene());
+     
+        Main.getTheStage().setScene(sceneUP);
+        
         Main.getTheStage().show();
     	}
     	
-    }
+   
 
 
-	public static int getLastSence() {
+	public static int getLastSence() { 
 		return lastSence;
 	}
 

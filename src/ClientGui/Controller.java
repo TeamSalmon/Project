@@ -68,10 +68,10 @@ public class Controller {
 
            try{
 
-        	   ((Node)event.getSource()).getScene().getWindow().hide();
-
-        	   myMain.getMange().initializationScreens(4);
-        	   myMain.getMange().changesence(1);
+        	  
+        	  ((Node)event.getSource()).getScene().getWindow().hide();
+        	   
+        	   myMain.getMange().changeScene(myMain.getMange().initializationScreens(4));
            }
            catch(IOException e)
            {
