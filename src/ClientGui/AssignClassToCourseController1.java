@@ -1,6 +1,3 @@
-/**
- * Sample Skeleton for 'secondStage.fxml' Controller Class
- */
 
 package ClientGui;
 
@@ -9,7 +6,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import ServerClient.ClientConsole;
+import controllers.SecretaryController;
 import controllers.StudentsClassController;
+import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,47 +24,43 @@ import projectsalmon.StudentsClass;
 import javafx.fxml.Initializable;
 
 
+
 public class AssignClassToCourseController1 implements Initializable{
 	
 	
-	//ArrayList<Student> students = scc.getOptionalStusents();
 	ArrayList<Course> courses;
 	ArrayList<StudentsClass> classes;
 	ArrayList<String> courses_names;
 	ArrayList<String> classes_names;
 
-	ArrayList<String> rightstudents_names = new ArrayList<String>();
-	ArrayList<String> rightselected_names = new ArrayList<String>();
-	
 	
 	Main myMain = Main.getInstance();
 
-	@FXML // fx:id="paneFX"
-    private Pane paneFX; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="requestFX1"
-    private Label requestFX1; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="requestFX2"
-    private Label requestFX2; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="courseFX"
-    private ComboBox<String> courseFX; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="classFX"
-    private ComboBox<String> classFX; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="continuePT"
-    private Button continuePT; // Value injected by FXMLLoader
+	@FXML
+    private Pane paneFX;
 
-    @FXML // fx:id="exitPT"
-    private Button exitPT; // Value injected by FXMLLoader
+    @FXML
+    private Button continuePT;
 
-  
+    @FXML
+    private Label requestFX1;
+
+    @FXML
+    private ComboBox<String> courseFX;
+
+    @FXML
+    private Button exitPT;
+
+    @FXML
+    private ComboBox<String> classFX;
+
+    //private ObservableStringValue a;
+    
+     
     
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {
-    
+	
 		courses = SecretaryController.getOptionalCourses();
 		classes = SecretaryController.getOptionalClasses();
 		
@@ -76,11 +71,18 @@ public class AssignClassToCourseController1 implements Initializable{
 		
 		for (StudentsClass sclass : classes)
     	{
-			courses_names.add(sclass.getClassName());
+			classes_names.add(sclass.getClassName());
     	}
 		
-		courseFX.setItems(FXCollections.observableArrayList(courses_names));
-		classFX.setItems(FXCollections.observableArrayList(classes_names));
+		ObservableList<String> observCoursesNames = FXCollections.observableArrayList(courses_names); 
+
+		
+		//= FXCollections.observableArrayList(courses_names);
+		//ObservableList<String> observClassesNames = FXCollections.observableArrayList(classes_names);
+    
+	
+		courseFX.setItems(FXCollections.observableArrayList(observCoursesNames));
+		//classFX.setItems(observClassesNames);
 
     }
     
@@ -88,43 +90,17 @@ public class AssignClassToCourseController1 implements Initializable{
 
     @FXML void nextFrame(ActionEvent event) throws IOException 
     {
-    	String chosen_course = courseFX.getValue();
-    	String chosen_class = classFX.getValue();
+    	//String chosen_course = courseFX.getValue();
+    	//String chosen_class = classFX.getValue();
 
+    	//SecretaryController.updateChosenCourseAndClass(chosen_course,chosen_class);
     	
-    	ArrayList<Student> chosen_students = new ArrayList<Student>();
-    	// Get the chosen students and pass them to 'scc'
-    	for(Student student: students)
-    	{
-    		String detailsOfStudent = student.getFirst_name() + " " + student.getLast_name() + " " + student.getId();
-    		if( rightstudents_names.contains(detailsOfStudent))
-    			chosen_students.add(student);
-    	}
-    	StudentsClass result = StudentsClassController.createNewClass(chosen_students);
-    	
-    	leftLabelFX.setVisible(false);
-    	rightLabelFX.setVisible(false);
-    	leftListFX.setVisible(false);
-    	rightListFX.setVisible(false);
-    	requestFX2.setVisible(false);
-    	moveFX.setVisible(false);
-    	continuePT.setVisible(false);
-
-    	 if(result != null)
-    	 {
-    		 requestFX1.setText("The class " + result.getClassName() + " (ID: " + result.getClassId() + ") " + "was created successfully.");
-    	 }
-    	 else
-    	 {
-    		 requestFX1.setText("Couldn't create the new class.");
-
-    	 }
-    	
-    	//((Node)event.getSource()).getScene().getWindow().hide();
-		//myMain.getMange().initializationScreens(8);
-		//myMain.getMange().changesence(3);
+    	((Node)event.getSource()).getScene().getWindow().hide();
+		myMain.getMange().initializationScreens(9);
+		myMain.getMange().changesence(2);
  	}
 	
+    
     
     @FXML void exit(ActionEvent event) throws IOException 
     {

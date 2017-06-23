@@ -23,6 +23,7 @@ public class guiMange
     public static final String Page6 = "defineClass1.fxml";
     public static final String Page7 = "defineClass2.fxml";
     public static final String Page8 = "AssignClassToCourse1.fxml";
+    public static final String Page9 = "AssignClassToCourse2.fxml";
 
 	
 	
@@ -69,6 +70,10 @@ public class guiMange
     	
     	case 8:
     		xmlNum = Page8;
+    		break;
+    		
+    	case 9:
+    		xmlNum = Page9;
     		break;
     		
     	default:

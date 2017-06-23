@@ -31,10 +31,8 @@ public class DefineClass2Controller implements Initializable{
 	ArrayList<Student> students;
 	ArrayList<String> details;
 	ObservableList<String> leftstudents_names;
-	ObservableList<String> leftselected_names;
 
 	ArrayList<String> rightstudents_names = new ArrayList<String>();
-	ArrayList<String> rightselected_names = new ArrayList<String>();
 	
 	
 	Main myMain = Main.getInstance();

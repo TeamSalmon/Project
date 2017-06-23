@@ -11,6 +11,7 @@ public class Course
 	private TeachingUnit teachingUnit;
 	private ArrayList<Course> preCondition;
 	
+	// Why name????
 	public Course(String courseNumber, String name,TeachingUnit teachingUnit, String description, float weeklyHours, String courseName)
 	{
 		this.courseNumber = courseNumber;

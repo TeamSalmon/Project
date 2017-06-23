@@ -53,7 +53,7 @@ public class DefineClass1Controller {
     	grade = gradeFX.getText();
     	if(grade.length()<1)
     	{
-    		requestFX.setText("Enter a valid garde please");
+    		requestFX.setText("Enter a valid garde, please.");
     	}
     	else
     	{
@@ -65,7 +65,7 @@ public class DefineClass1Controller {
     		StudentsClassController.setNewGrade(grade);	
     	
     		((Node)event.getSource()).getScene().getWindow().hide();
-    		myMain.getMange().initializationScreens(7);
+    		myMain.getMange().initializationScreens(9);
     		myMain.getMange().changesence(2);
     	
     	}
