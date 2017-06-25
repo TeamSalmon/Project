@@ -1,2 +1,9 @@
 /ClientGui/
+<<<<<<< HEAD
 /controllers/
+=======
+/Controllers/
+/ServerClient/
+/projectsalmon/
+/ocsf/
+>>>>>>> 77e01b5fea49e8a3479998f262ae7138fb915145

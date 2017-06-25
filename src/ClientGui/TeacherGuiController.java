@@ -113,10 +113,19 @@ public class TeacherGuiController implements Initializable{
 		manager.setEditable(true);
 		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
 		
-		currentSemester = new Semester("2015",'a');
+		ArrayList arrsend = new ArrayList<String>();
+		arrsend.add("getCurrentSemester");
+		try {
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//currentSemester = myMain.con.get;
+		
 		presentedSemester = currentSemester;
 		semesterList = FXCollections.observableArrayList();
-		semesterList.add(new Semester("2016", 'b'));
+		//semesterList.add(new Semester("2016", 'b'));
 		semesterList.add(currentSemester);
 		semesterChoice.setItems(semesterList);
 		

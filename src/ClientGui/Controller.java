@@ -14,11 +14,10 @@ import javafx.scene.control.TextField;
 
 public class Controller {
 	
-	Main myMain = Main.getInstance();
-	boolean flag = true;
+	Main	myMain=	Main.getInstance();
+	boolean flag=true;
 	String serverip,serverport;
-
-	@FXML // fx:id="connectPT"
+	 @FXML // fx:id="connectPT"
     private Button connectPT; // Value injected by FXMLLoader
 
     @FXML // fx:id="exitPT"
@@ -66,7 +65,7 @@ public class Controller {
             if(flag)
             {
 
-       
+
 
 
             	try{
