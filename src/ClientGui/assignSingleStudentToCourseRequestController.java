@@ -14,13 +14,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import projectsalmon.Course;
 import projectsalmon.Student;
+import projectsalmon.StudentsClassInCourse;
 
 public class assignSingleStudentToCourseRequestController  implements Initializable{
 
@@ -28,10 +32,12 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
 	Main	myMain=	Main.getInstance();
 	boolean studentIDExists = false;
 	boolean courseNumExists = false;
+	boolean requestSent = false;
+	boolean studentInTheCourse = false;
 	ObservableList<String> list;
 	
 	@FXML
-    private TextArea deacriptionTB;
+    private TextArea descriptionTB;
 	
 	@FXML
     private Button searchStudentIDBt;
@@ -48,8 +54,7 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
     @FXML
     private TextField courseNumberTB;
     
-   
-
+  
     @FXML
     private Button searchCourseBt;
 
@@ -60,15 +65,61 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
     private Button backBt;
 
 
-
     @FXML
     private Button sendRequestBt;
 
    
 
     @FXML
-    void sendRequest(ActionEvent event) {
+    void sendRequest(ActionEvent event) throws IOException {
+    	String description;
+    	
+    	
+    
+    	if(studentIDExists==false &&courseNumExists==false){
+    		Alert alert = new Alert(AlertType.WARNING, "Please fill the form.", ButtonType.OK);
+		alert.showAndWait();
+    	}
+    	else if(studentIDExists==false){
+    		Alert alert = new Alert(AlertType.WARNING, "Wrong student ID.", ButtonType.OK);
+    		alert.showAndWait();
+    	}
+    	else if(courseNumExists==false){
+    		Alert alert = new Alert(AlertType.WARNING, "The couse is not exists.", ButtonType.OK);
+    		alert.showAndWait();
+    	}	
+    	else if(classCMB.getValue()==null){
+    		Alert alert = new Alert(AlertType.WARNING, "Please choose class of the course.", ButtonType.OK);
+    		alert.showAndWait();
+    	}		
+    	else if((description=descriptionTB.getText())!=""){
+    		Alert alert = new Alert(AlertType.WARNING, "Please fill description field.", ButtonType.OK);
+    		alert.showAndWait();
+    	}	
+     		
+    	else{
+    		//check prerequisites********************************************
+    		//if ok continue
+    		//else{
+    		//Alert alert = new Alert(AlertType.WARNING, "Student "+studentNameTB.getText()+" don't have proper prerequisites", ButtonType.OK);
+			// alert.showAndWait();}
+			if (!(studentInTheCourse = SecretayController.searchStudentInCourse(courseNumberTB.getText(),
+					studentIDTB.getText()))) {
 
+				requestSent = SecretayController.sendStudentRequest(studentIDTB.getText(), classCMB.getValue(),
+						descriptionTB.getText());
+				if (requestSent) {
+					Alert alert = new Alert(AlertType.NONE, "Your request has been sent successfully.", ButtonType.OK);
+					alert.showAndWait();
+				}
+
+				else {
+					Alert alert = new Alert(AlertType.WARNING, "Student already in this course.", ButtonType.OK);
+					alert.showAndWait();
+				}
+			}
+		}
+    		
     }
 
     @FXML
@@ -86,7 +137,7 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
     void searchStudentID(ActionEvent event) throws IOException
     {
     	String id;
-    	if ((id = studentIDTB.getText()) != null)
+    	if ((id = studentIDTB.getText()) != "")
     	{
     		Student newStudent = SecretayController.searchStudentID(id);
     		if (newStudent != null){
@@ -102,12 +153,12 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
     
 
 	@FXML
-	void searchCourse(ActionEvent event) throws IOException{
+	void search55Course(ActionEvent event) throws IOException{
 			
 		ArrayList<String> classCourseArr ;
 		String courseNum;
 		
-    	if ((courseNum = courseNumberTB.getText()) != null){
+    	if ((courseNum = courseNumberTB.getText()) != ""){
 			classCourseArr = SecretayController.searchCourseNum(courseNum);
 			
 			if (classCourseArr != null) {
@@ -117,7 +168,7 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
 				classCMB.setItems(list);
 			} else {
 
-				studentNameTB.setText("Incorrect Student ID");
+				studentNameTB.setText("Incorrect course number.");
 			}
 		}
 	}
