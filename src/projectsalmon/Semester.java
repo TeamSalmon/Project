@@ -20,4 +20,5 @@ public class Semester
 	public String getYear(){return year;}
 	public char getSemesterNumber(){return semesterNumber;}
 	public boolean getCorrentSemester(){return correntSemester;}
+	public String toString(){return year + " " + semesterNumber;}
 }

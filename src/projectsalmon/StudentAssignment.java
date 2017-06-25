@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class StudentAssignment
 {//change
-	private Student student;
+	private String studentId;
 	private Assignment assignment;
 	private File submission;
 	private int grade;
@@ -12,16 +12,16 @@ public class StudentAssignment
 	private File evaluationForm;
 	private boolean lateFlag;
 	
-	public StudentAssignment(Student student, Assignment assignment)
+	public StudentAssignment(String student, Assignment assignment)
 	{
-		this.student = student;
+		this.studentId = student;
 		this.assignment = assignment;
 		comments = "";
 		grade = 0;	
 		lateFlag = false;
 	}
 	
-	public Student getStudent(){return student;}
+	public String getStudentId(){return studentId;}
 	public Assignment getAssignment(){return assignment;}
 	public File getSubmission(){return submission;}
 	public int getGrade(){if(grade == -1)return (Integer)null; return grade;}
@@ -38,5 +38,4 @@ public class StudentAssignment
 	public void setGrade(int grade){this.grade = grade;};
 	public void setComments(String comments){this.comments = comments;}
 	public void setEvaluationForm(File evaluationForm){this.evaluationForm = evaluationForm;}
-	
 }

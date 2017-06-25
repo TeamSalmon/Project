@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="640.0" prefWidth="1270.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <TableView fx:id="table" fixedCellSize="80.0" layoutX="99.0" layoutY="49.0" prefHeight="591.0" prefWidth="1270.0" stylesheets="@test.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
+        <columns>
+          <TableColumn fx:id="friday" prefWidth="180.0" text="Friday" />
+          <TableColumn fx:id="thursday" prefWidth="180.0" text="Thursday" />
+            <TableColumn fx:id="wednesday" prefWidth="180.0" text="Wednesday" />
+            <TableColumn fx:id="tuesday" prefWidth="180.0" text="Tuesday" />
+            <TableColumn fx:id="monday" prefWidth="180.0" text="Monday" />
+            <TableColumn fx:id="sunday" prefWidth="180.0" text="Sunday" />
+            <TableColumn fx:id="time" prefWidth="180.0" text="Time" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

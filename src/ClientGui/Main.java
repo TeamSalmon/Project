@@ -13,6 +13,8 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+import projectsalmon.Teacher;
+import projectsalmon.User;
 import javafx.scene.layout.AnchorPane;
 
 public  class Main extends Application {
@@ -20,11 +22,12 @@ public  class Main extends Application {
 	private final static Main instance = new Main();
 	private static Stage theStage;
 	private guiMange  Mange=new guiMange();;
+	private User user = (User)(new Teacher(10,"315314369","Inbar" ,"Alfasi","12345"));
 	public static Main getInstance() {
         return instance;
     }
 
-    private ClientConsole con;
+    ClientConsole con;
     public void setConnection(ClientConsole con)
     {
         this.con=con;
@@ -94,7 +97,7 @@ public  class Main extends Application {
 
 	  }    
 
-public void  getinfo(String id)//ask from server info about spespeic teacher
+public void  getinfo(String id)//ask from server info about specific teacher
 {
 	
 	 ArrayList<String> arrsend  =  new ArrayList<String>();
@@ -148,4 +151,5 @@ public void UpdateTeacing(String id,String unit)//update teaching unit for specp
 		// TODO Auto-generated method stub
 		return this.Mange;
 	}
-	 }
+	public User getUser(){return user;}
+}
