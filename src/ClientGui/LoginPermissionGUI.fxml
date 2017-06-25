@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="permissionWND" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="201.0" prefWidth="338.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.LoginPermissionController">
+   <children>
+      <Text fx:id="welcomTXT" layoutX="15.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="welcom" wrappingWidth="70.21875">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="choosePerTXT" layoutX="15.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please choose the roule you want to log as:" wrappingWidth="319.21875">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="userNameTXT" fill="#2c3299" layoutX="85.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User's Name" wrappingWidth="230.21875">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="perCBX" layoutX="18.0" layoutY="96.0" onAction="#clickPerCBX" prefHeight="27.0" prefWidth="211.0" promptText="Select roule" />
+      <Button fx:id="baclBTN" layoutX="20.0" layoutY="148.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0" prefWidth="59.0" text="Back">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
