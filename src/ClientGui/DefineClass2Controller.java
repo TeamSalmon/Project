@@ -117,7 +117,7 @@ public class DefineClass2Controller implements Initializable{
     @FXML void nextFrame(ActionEvent event) throws IOException 
     {
     	ArrayList<Student> chosen_students = new ArrayList<Student>();
-    	// Get the chosen students and pass them to 'scc'
+    	// Get the chosen students and pass them to the controller
     	for(Student student: students)
     	{
     		String detailsOfStudent = student.getFirst_name() + " " + student.getLast_name() + " " + student.getId();

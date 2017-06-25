@@ -57,12 +57,12 @@ public class AssignClassToCourseController2 implements Initializable{
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {
 	
-		SecretaryController.get_chosen_course();
-		SecretaryController.get_chosen_class();
+		//SecretaryController.get_chosen_course();
+		//SecretaryController.get_chosen_class();
 
 		ArrayList<Student>  misfitStudents = SecretaryController.getMisfitStudents();
 		
-		if (misfitStudents != null)
+		if ( misfitStudents.size() > 0 )
 		{
 			ArrayList<String> misfitNames = new ArrayList<String>(); 
 			for(Student student : misfitStudents)
@@ -74,16 +74,19 @@ public class AssignClassToCourseController2 implements Initializable{
 		}
 		else
 		{
+			leftListFX.setVisible(false);
+			leftLabelFX.setVisible(false);
 			requestFX1.setText("All the students in the calss has the course's preconditions.");
 		}
 		
     }
     
-    
 
     @FXML void nextFrame(ActionEvent event) throws IOException 
     {
-    	
+    	((Node)event.getSource()).getScene().getWindow().hide();
+		myMain.getMange().initializationScreens(10);
+		myMain.getMange().changesence(3);
  	}
 	
     

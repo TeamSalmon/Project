@@ -30,8 +30,8 @@ public class AssignClassToCourseController1 implements Initializable{
 	
 	ArrayList<Course> courses;
 	ArrayList<StudentsClass> classes;
-	ArrayList<String> courses_names;
-	ArrayList<String> classes_names;
+	ArrayList<String> courses_names = new ArrayList<String>();
+	ArrayList<String> classes_names = new ArrayList<String>();
 
 	
 	Main myMain = Main.getInstance();
@@ -53,8 +53,6 @@ public class AssignClassToCourseController1 implements Initializable{
 
     @FXML
     private ComboBox<String> classFX;
-
-    //private ObservableStringValue a;
     
      
     
@@ -75,14 +73,10 @@ public class AssignClassToCourseController1 implements Initializable{
     	}
 		
 		ObservableList<String> observCoursesNames = FXCollections.observableArrayList(courses_names); 
-
-		
-		//= FXCollections.observableArrayList(courses_names);
-		//ObservableList<String> observClassesNames = FXCollections.observableArrayList(classes_names);
-    
-	
-		courseFX.setItems(FXCollections.observableArrayList(observCoursesNames));
-		//classFX.setItems(observClassesNames);
+		ObservableList<String> observClassesNames = FXCollections.observableArrayList(classes_names);
+   
+		courseFX.setItems(observCoursesNames);
+		classFX.setItems(observClassesNames);
 
     }
     
@@ -90,15 +84,22 @@ public class AssignClassToCourseController1 implements Initializable{
 
     @FXML void nextFrame(ActionEvent event) throws IOException 
     {
-    	//String chosen_course = courseFX.getValue();
-    	//String chosen_class = classFX.getValue();
+    	String chosen_course = courseFX.getValue();
+    	String chosen_class = classFX.getValue();
 
-    	//SecretaryController.updateChosenCourseAndClass(chosen_course,chosen_class);
+    	if (chosen_course == null || chosen_class == null)
+    	{
+    		requestFX1.setText("Please fill all the fields and try again.");
+    	}
+    	
+    	else{
+    	SecretaryController.updateChosenCourseAndClass(chosen_course, chosen_class);
     	
     	((Node)event.getSource()).getScene().getWindow().hide();
 		myMain.getMange().initializationScreens(9);
 		myMain.getMange().changesence(2);
- 	}
+    	}
+    }
 	
     
     

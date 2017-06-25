@@ -14,7 +14,7 @@
    <children>
    		<Button fx:id="continuePT" layoutX="305.0" layoutY="343.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
 		<Button fx:id="exitPT" layoutX="249.0" layoutY="343.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-        <Label fx:id="requestFX1" layoutX="65.0" layoutY="46.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="471.0" text="Couldn't assign the following students due to missing preconditions." />
+        <Label fx:id="requestFX1" layoutX="65.0" layoutY="46.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="471.0" text="Couldn't assign the following students due to missing preconditions:" />
         <ListView fx:id="leftListFX" layoutX="65.0" layoutY="122.0" pickOnBounds="false" prefHeight="168.0" prefWidth="200.0" />
         <Label fx:id="leftLabelFX" layoutX="66.0" layoutY="103.0" prefHeight="17.0" prefWidth="200.0" text="Misfit students" />
 	</children>

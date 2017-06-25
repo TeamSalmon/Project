@@ -57,15 +57,11 @@ public class DefineClass1Controller {
     	}
     	else
     	{
-    		//myMain.getConnection();
-			//ClientConsole.setLog(infoLog);
-    		//myMain.cc.log=;
-    		//myMain.getinfo(grade);
     		
     		StudentsClassController.setNewGrade(grade);	
     	
     		((Node)event.getSource()).getScene().getWindow().hide();
-    		myMain.getMange().initializationScreens(9);
+    		myMain.getMange().initializationScreens(7);
     		myMain.getMange().changesence(2);
     	
     	}

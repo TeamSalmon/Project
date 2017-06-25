@@ -9,10 +9,13 @@ public abstract class StudentsClassController {
 	static StudentsClass new_class;
 	static String new_grade;
 	
+	
+	
 	public static void setNewGrade(String grade)
 	{
 		new_grade = grade;
 	}
+	
 	
 	public static ArrayList<Student> getOptionalStudents()
 	{
@@ -65,7 +68,6 @@ public abstract class StudentsClassController {
 		//
 		return new_class;
 	}
-	
 	
 	
 	private static String generateClassID(ArrayList<StudentsClass> list_of_classes)
