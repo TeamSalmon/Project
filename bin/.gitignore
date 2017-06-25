@@ -1,9 +1,6 @@
 /ClientGui/
-<<<<<<< HEAD
-/controllers/
-=======
-/Controllers/
 /ServerClient/
-/projectsalmon/
+/controllers/
 /ocsf/
->>>>>>> 77e01b5fea49e8a3479998f262ae7138fb915145
+/projectsalmon/
+/projectsalmon.rar

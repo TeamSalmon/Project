@@ -35,7 +35,7 @@ public class guiMange
     public void setMainStage() throws IOException
     {
     	URL url = getClass().getResource(MPAGE);
-	    AnchorPane pane = FXMLLoader.load( url );
+	    AnchorPane pane = FXMLLoader.load(url);
 	    pane.setId("test");
 	    Scene scene = new Scene( pane );
 	    scene.getStylesheets().add(this.getClass().getResource(CSS).toExternalForm());
