@@ -1,5 +1,7 @@
 package projectsalmon;
 
+import java.util.ArrayList;
+
 public class Secretary extends User{
 
 	

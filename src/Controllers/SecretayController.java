@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +12,13 @@ public abstract class SecretayController {
 
 	static String searchStudentID;
 		
+
+	public static boolean  deleteStudentfromCourse(String courseNumber, String studentID){
+		
+		
+		return true;
+	}
+	
 	
 	public static Student  searchStudentID(String studentID){
 		

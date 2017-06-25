@@ -17,7 +17,7 @@ public class Controller {
 	Main	myMain=	Main.getInstance();
 	boolean flag=true;
 	String serverip,serverport;
-    @FXML // fx:id="connectPT"
+	 @FXML // fx:id="connectPT"
     private Button connectPT; // Value injected by FXMLLoader
 
     @FXML // fx:id="exitPT"
@@ -44,7 +44,6 @@ public class Controller {
 
             try
             {
-            
             ClientConsole con =new ClientConsole(serverip, Integer.parseInt(serverport));	
             myMain.setConnection(con);
             myMain.getConnection();
@@ -70,8 +69,9 @@ public class Controller {
 
         	   ((Node)event.getSource()).getScene().getWindow().hide();
 
-        	   myMain.getMange().initializationScreens(3); //**masheoo
-        	   myMain.getMange().changesence(1);
+
+        	   myMain.getMange().initializationScreens(-101); //**masheoo
+        	   myMain.getMange().changeScene(1);
            }
            catch(IOException e)
            {
@@ -79,12 +79,20 @@ public class Controller {
            }
 
 
+            	try{
+            		
+            		((Node)event.getSource()).getScene().getWindow().hide();
+            		myMain.getMange().changeScene(myMain.getMange().initializationScreens(6));
+            	}
+            	
+            	catch(IOException e)
+            	{
+            		logPT.setText ("cant load stage2");
+            	}
+
             }
            
-         }//end if
-        
-        
-
+        }//end if
 
     }
 
