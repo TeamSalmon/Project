@@ -1,45 +1,48 @@
 package projectsalmon;
 import java.util.ArrayList;
 
+import java.util.ArrayList;
 
+/**
+ * 
+ * @author Elia
+ */
 public class StudentsClass
 {
 	private ArrayList<Student> students;
 	private String studentsClassId;
 	private String level;
-	private String classNum;
+	private String className;
 	private int studentsAmount;
 	
-	public StudentsClass(String classNum, String level, String studentsClassId)
+	public StudentsClass(String className, String level, String studentsClassId)
 	{
 		students=null;
-		this.classNum = classNum;
-		this.level = level;
+		this.level = level;		
 		this.studentsAmount = 0;
 		this.studentsClassId = studentsClassId;
 	}
 	
 	public void setlevel(String level){this.level = level;}
-	public void setClassNum(String classNum){this.classNum = classNum;}
-	public boolean addStudent()
+
+	public void setStudentsAmount(int amount)
 	{
-		if(studentsAmount>=30)
-			return false;
-		studentsAmount++;
-		return true;
+		studentsAmount = amount;
 	}
-	public boolean removeStudent()
-	{
-		if(studentsAmount == 0)
-			return false;
-		studentsAmount--;
-		return true;
+
+	public void setClassId(String studentsClassId)
+	{this.studentsClassId = studentsClassId;}
+	
+	public String getClassName() {
+		return className;
 	}
 	
 	public String getlevel(){return level;}
-	public String getClassNum(){return classNum;}
 	public int getStudentsAmount(){return studentsAmount;}
 	public String getClassId(){return studentsClassId;}
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
 	public ArrayList<Student> getStudents() {
 		return students;

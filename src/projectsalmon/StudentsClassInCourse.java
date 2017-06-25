@@ -15,6 +15,7 @@ public class StudentsClassInCourse
 	private int studentsAmount;
 	
 	public StudentsClassInCourse(String classCourseID,Course course,StudentsClass studentsClass,ArrayList<Class> classSchedule,Teacher teacher)
+
 	{
 		this.classCourseID=classCourseID;
 		this.course = course;

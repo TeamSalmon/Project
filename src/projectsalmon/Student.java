@@ -8,21 +8,25 @@ public class Student extends User
 	private ArrayList<StudentAssignment> personalFile;
 	private StudentsClass sClass;
 	
-	public Student(String id,String first, String last, String password)
+	public Student(String id, String first, String last, String password)
 	{
 		super(id,first,last,password);
 		gpa = 0;
 		personalFile = new ArrayList<StudentAssignment>();
 	}
+	
 	public void setGpa(float gpa){this.gpa = gpa;}
-	public boolean setClass(StudentsClass sClass)
+	
+	public void setClass(StudentsClass sClass)
 	{
-		if(sClass.addStudent())
+		this.sClass = sClass;		
+		
+		/*if(sClass.addStudent())
 		{
 		this.sClass = sClass;
 		return true;
 		}
-		return false;
+		return false;*/
 	}
 	
 	public float getGpa(){return gpa;}
