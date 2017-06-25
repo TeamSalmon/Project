@@ -38,4 +38,6 @@ public class StudentAssignment
 	public void setGrade(int grade){this.grade = grade;};
 	public void setComments(String comments){this.comments = comments;}
 	public void setEvaluationForm(File evaluationForm){this.evaluationForm = evaluationForm;}
+	public String toString()
+	{return studentId;}
 }

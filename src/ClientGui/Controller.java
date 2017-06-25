@@ -70,7 +70,7 @@ public class Controller {
 
         	   ((Node)event.getSource()).getScene().getWindow().hide();
 
-        	   myMain.getMange().initializationScreens(-101); //**masheoo
+        	   myMain.getMange().initializationScreens(3); //**masheoo
         	   myMain.getMange().changesence(1);
            }
            catch(IOException e)
