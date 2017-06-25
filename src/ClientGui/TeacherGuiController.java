@@ -134,10 +134,10 @@ public class TeacherGuiController implements Initializable{
 		}*/
 		
 		data = FXCollections.observableArrayList();
-		Course course = new Course("123", "Algebra",new TeachingUnit("9", "Math"),"", 8, "Algebra");
-		Course course1 = new Course("1", "Atam",new TeachingUnit("9", "Math"),"", 8, "Atam");
-		data.add(course.getName()+ " " + course.getCourseNumber());
-		data.add(course1.getName()+ " " + course1.getCourseNumber());
+		//Course course = new Course("123", "Algebra",new TeachingUnit("9", "Math"),"", 8, "Algebra");
+		//Course course1 = new Course("1", "Atam",new TeachingUnit("9", "Math"),"", 8, "Atam");
+		//data.add(course.getName()+ " " + course.getCourseNumber());
+		//data.add(course1.getName()+ " " + course1.getCourseNumber());
 		
         coursesList.setItems(data);
 	}

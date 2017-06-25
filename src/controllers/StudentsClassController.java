@@ -119,7 +119,7 @@ public abstract class StudentsClassController {
 		for (StudentsClass sclass : list_of_classes)
 		{
 			// Check only the classes with the same grade
-			if( sclass.getGrade() == new_grade )
+			if( sclass.getlevel() == new_grade )
 			{
 				if (sclass.getClassName() == name)
 				{

@@ -66,17 +66,7 @@ public class Controller {
             if(flag)
             {
 
-           try{
-
-        	   ((Node)event.getSource()).getScene().getWindow().hide();
-
-        	   myMain.getMange().initializationScreens(-101); //**masheoo
-        	   myMain.getMange().changeScene(1);
-           }
-           catch(IOException e)
-           {
-        	   logPT.setText ("cant load stage2");
-           }
+       
 
 
             	try{
