@@ -1,45 +1,49 @@
 package projectsalmon;
 import java.util.ArrayList;
 
+import java.util.ArrayList;
 
+/**
+ * 
+ * @author Elia
+ */
 public class StudentsClass
 {
 	private ArrayList<Student> students;
 	private String studentsClassId;
-	private int grade;
-	private int classNum;
+	private String level;
+	private String className;
 	private int studentsAmount;
 	
-	public StudentsClass(int classNum, int grade, String studentsClassId)
+	public StudentsClass(String className, String level, String studentsClassId)
 	{
+		this.className = className;
 		students=null;
-		this.classNum = classNum;
-		this.grade = grade;
+		this.level = level;		
 		this.studentsAmount = 0;
 		this.studentsClassId = studentsClassId;
 	}
 	
-	public void setGrade(int grade){this.grade = grade;}
-	public void setClassNum(int classNum){this.classNum = classNum;}
-	public boolean addStudent()
+	public void setlevel(String level){this.level = level;}
+
+	public void setStudentsAmount(int amount)
 	{
-		if(studentsAmount>=30)
-			return false;
-		studentsAmount++;
-		return true;
+		studentsAmount = amount;
 	}
-	public boolean removeStudent()
-	{
-		if(studentsAmount == 0)
-			return false;
-		studentsAmount--;
-		return true;
+
+	public void setClassId(String studentsClassId)
+	{this.studentsClassId = studentsClassId;}
+	
+	public String getClassName() {
+		return className;
 	}
 	
-	public int getGrade(){return grade;}
-	public int getClassNum(){return classNum;}
+	public String getlevel(){return level;}
 	public int getStudentsAmount(){return studentsAmount;}
 	public String getClassId(){return studentsClassId;}
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
 	public ArrayList<Student> getStudents() {
 		return students;

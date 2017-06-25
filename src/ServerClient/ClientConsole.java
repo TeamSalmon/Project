@@ -65,13 +65,9 @@ public class ClientConsole implements ChatIF
    *
    * @param message The string to be displayed.
    */
-  public void display(String message) 
+  public Object getAnswer(Object answer) 
   {
-	  if(!(message.equals(getStringOut())))
-    {
-		  setStringOut(message);
-		  this.getLog().setText(getStringOut());
-    }
+	  return answer;
   }
 
 
