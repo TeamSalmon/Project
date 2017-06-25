@@ -20,8 +20,14 @@ public class guiMange
     public static final String Page2 = "halo.fxml";	
     public static final String Page3 = "TeacherGui.fxml";
     public static final String Page4 = "reportMenu.fxml";
+    public static final String Page6 = "defineClass1.fxml";
+    public static final String Page7 = "defineClass2.fxml";
+    public static final String Page8 = "AssignClassToCourse1.fxml";
+    public static final String Page9 = "AssignClassToCourse2.fxml";
+    public static final String Page10 = "AssignClassToCourse3.fxml";
     public static final String CSS = "test.css";
     public static   ObjectStack myStack = new  ObjectStack (10);
+
 	
     public void setMainStage() throws IOException
     {
@@ -45,7 +51,7 @@ public class guiMange
     		xmlNum=Page1;
     		break;
     	case 2:
-    		xmlNum=Page2;
+    		xmlNum=Page2;    		
 
     		break;
     	case 3:
@@ -54,13 +60,33 @@ public class guiMange
     	case 4:
     		xmlNum = Page4;
     		break;
-    		default:
+    		 
+    	case 6:
+    		xmlNum = Page6;
+    		break;
+    	
+    	case 7:
+    		xmlNum = Page7;
+    		break;
+    	
+    	case 8:
+    		xmlNum = Page8;
+    		break;
+    		
+    	case 9:
+    		xmlNum = Page9;
+    		break;
+    		
+    	case 10:
+    		xmlNum = Page10;
+    		break;
+    		
+    	default:
     		break;
     	}
 		Parent root;
 		root = FXMLLoader.load(getClass().getResource(xmlNum));
-		Scene scene = new Scene( root );
-		
+		Scene scene = new Scene( root );	
 		return scene;
     }
 	
@@ -79,6 +105,7 @@ public class guiMange
 
 
 	public static int getLastSence() { 
+
 		return lastSence;
 	}
 

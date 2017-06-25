@@ -11,6 +11,7 @@ public class Course
 	private TeachingUnit teachingUnit;
 	private ArrayList<Course> preCondition;
 	
+	// Why name????
 	public Course(String courseNumber, String name,TeachingUnit teachingUnit, String description, float weeklyHours, String courseName)
 	{
 		this.courseNumber = courseNumber;
@@ -19,13 +20,17 @@ public class Course
 		this.weeklyHours = weeklyHours;
 		this.teachingUnit = teachingUnit;
 	}
-	public Course(String courseNumber, TeachingUnit teachingUnit, String name, float weeklyHours, String courseName)
+	public Course(String courseNumber, TeachingUnit teachingUnit, float weeklyHours, String courseName)
 	{
-		this.courseNumber = courseName;
+		this.courseNumber = courseNumber;
 		this.name = courseName;
 		this.weeklyHours = weeklyHours;
 		this.description = "";
 		this.teachingUnit = teachingUnit;
+	}
+	public Course(String courseNumber)
+	{
+		this.courseNumber = courseNumber;
 	}
 	
 	public String getCourseNumber(){return courseNumber;}

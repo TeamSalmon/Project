@@ -103,8 +103,8 @@ public class reportMenuController implements Initializable {
     
     
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+	public void initialize(URL arg0, ResourceBundle arg1) 
+	{
 		ArrayList<String> al = new ArrayList<String>();	
 		for(int i=0;i<6;i++)
 		{
@@ -115,7 +115,5 @@ public class reportMenuController implements Initializable {
 		comboR1.setItems(list);
 		comboR2.setItems(list);
 		comboR3.setItems(list);
-		}
-	
-
+	}
 }

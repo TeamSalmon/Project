@@ -17,11 +17,12 @@ import projectsalmon.Report;
 import javafx.scene.layout.AnchorPane;
 
 public  class Main extends Application {
-	  //@Override
+	//@Override
 	private final static Main instance = new Main();
 	private static Stage theStage;
 	private guiMange  Mange=new guiMange();
 	private Report  myreport=new Report();
+
 	public static Main getInstance() {
         return instance;
     }
@@ -96,58 +97,65 @@ public  class Main extends Application {
 
 	  }    
 
-public void  getinfo(String id)//ask from server info about spespeic teacher
-{
-	
-	 ArrayList<String> arrsend  =  new ArrayList<String>();
-	 arrsend.add("getinfo");
-	 arrsend.add(id);
-	
-	try
+	public void  getinfo(String id)//ask from server info about specific teacher
 	{
-		this.con.getClient().handleMessageFromClientUI(arrsend);
+	
+		 ArrayList<String> arrsend  =  new ArrayList<String>();
+		 arrsend.add("getinfo");
+		 arrsend.add(id);
+			
+		try
+		{
+			this.con.getClient().handleMessageFromClientUI(arrsend);
+		}
+		catch(IOException e)
+		{
+			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
+		}
+		ClientConsole.getLog().setText(con.getStringOut());
 	}
-	catch(IOException e)
-	{
-		ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
+	
+	public void UpdateTeacing(String id,String unit)//update teaching unit for specific teacher
+	{	
+		 ArrayList<String> arrsend  =  new ArrayList<String>();
+		 arrsend.add("update");
+		 arrsend.add(id);
+		 arrsend.add(unit);
+	
+		 try
+		 {
+			 this.con.getClient().handleMessageFromClientUI(arrsend);
+		 }
+		 catch(IOException e)
+		 {
+			 ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
+		 }
+		ClientConsole.getLog().setText(con.getStringOut());
 	}
-	ClientConsole.getLog().setText(con.getStringOut());
-}
 
-public void UpdateTeacing(String id,String unit)//update teaching unit for specpic teacher
-{
-	
-	 ArrayList<String> arrsend  =  new ArrayList<String>();
-	 arrsend.add("update");
-	 arrsend.add(id);
-	 arrsend.add(unit);
-	try
-	{
-		this.con.getClient().handleMessageFromClientUI(arrsend);
-	}
-	catch(IOException e)
-	{
-		ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-	}
-	ClientConsole.getLog().setText(con.getStringOut());
-}
-
-	   public static void main(String[] args) 
-	   {
+	public static void main(String[] args) 
+    {		
 		launch(args);
-	   }
-	public static Stage getTheStage() {
+    }
+	
+	public static Stage getTheStage() 
+	{
 		return theStage;
 	}
-	public static void setTheStage(Stage theStage) {
+	
+	public static void setTheStage(Stage theStage) 
+	{
 		Main.theStage = theStage;
 	}
-
-	public void setMange(guiMange mange) {
+	
+	public void setMange(guiMange mange) 
+	{
 		Mange = mange;
 	}
-	public guiMange getMange() {
-		// TODO Auto-generated method stub
+		
+	public guiMange getMange() 
+	{
 		return this.Mange;
 	}
-	 }
+}
+

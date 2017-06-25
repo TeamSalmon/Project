@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TabPane;
 
-public class Teacher {
+public class TeacherController {
 
     @FXML // fx:id="container"
     private TabPane container; // Value injected by FXMLLoader
