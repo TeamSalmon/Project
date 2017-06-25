@@ -20,11 +20,13 @@ public class guiMange
     public static final String Page2 = "halo.fxml";	
     public static final String Page3 = "TeacherGui.fxml";
     public static final String Page4 = "reportMenu.fxml";
-    public static final String Page6 = "defineClass1.fxml";
-    public static final String Page7 = "defineClass2.fxml";
-    public static final String Page8 = "AssignClassToCourse1.fxml";
-    public static final String Page9 = "AssignClassToCourse2.fxml";
-    public static final String Page10 = "AssignClassToCourse3.fxml";
+    public static final String Page5 = "assignSingleStudentToCourseGUI.fxml";
+    public static final String Page6 = "removeStudentFromCourseGUI.fxml";
+    public static final String Page7 = "defineClass1.fxml";
+    public static final String Page8 = "defineClass2.fxml";
+    public static final String Page9 = "AssignClassToCourse1.fxml";
+    public static final String Page10 = "AssignClassToCourse2.fxml";
+    public static final String Page11 = "AssignClassToCourse3.fxml";
     public static final String CSS = "test.css";
     public static   ObjectStack myStack = new  ObjectStack (10);
 
@@ -60,7 +62,10 @@ public class guiMange
     	case 4:
     		xmlNum = Page4;
     		break;
-    		 
+    	case 5:
+    		xmlNum = Page5;
+    		break;
+
     	case 6:
     		xmlNum = Page6;
     		break;
@@ -81,6 +86,9 @@ public class guiMange
     		xmlNum = Page10;
     		break;
     		
+    	case 11:
+    		xmlNum = Page11;
+    		break;
     	default:
     		break;
     	}

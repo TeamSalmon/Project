@@ -66,6 +66,7 @@ public class Controller {
             if(flag)
             {
 
+
             	try{
             		
             		((Node)event.getSource()).getScene().getWindow().hide();

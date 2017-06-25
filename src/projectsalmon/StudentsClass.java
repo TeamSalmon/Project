@@ -11,28 +11,25 @@ public class StudentsClass
 {
 	private ArrayList<Student> students;
 	private String studentsClassId;
-	private String grade;
+	private String level;
 	private String className;
 	private int studentsAmount;
 	
-	public StudentsClass(String className, String grade, String studentsClassId)
+	public StudentsClass(String className, String level, String studentsClassId)
 	{
 		this.className = className;
 		students=null;
-		this.grade = grade;
+		this.level = level;		
 		this.studentsAmount = 0;
 		this.studentsClassId = studentsClassId;
 	}
 	
+	public void setlevel(String level){this.level = level;}
 
-	public void setGrade(String grade){this.grade = grade;}
-	public String getGrade(){return grade;}
-	public int getStudentsAmount(){return studentsAmount;}
 	public void setStudentsAmount(int amount)
 	{
 		studentsAmount = amount;
 	}
-	public String getClassId(){return studentsClassId;}
 
 	public void setClassId(String studentsClassId)
 	{this.studentsClassId = studentsClassId;}
@@ -41,6 +38,9 @@ public class StudentsClass
 		return className;
 	}
 	
+	public String getlevel(){return level;}
+	public int getStudentsAmount(){return studentsAmount;}
+	public String getClassId(){return studentsClassId;}
 	public void setClassName(String className) {
 		this.className = className;
 	}
