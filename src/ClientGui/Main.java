@@ -115,7 +115,7 @@ public void  getinfo(String id)//ask from server info about specific teacher
 	ClientConsole.getLog().setText(con.getStringOut());
 }
 
-public void UpdateTeacing(String id,String unit)//update teaching unit for specpic teacher
+public void UpdateTeacing(String id,String unit)//update teaching unit for specific teacher
 {
 	
 	 ArrayList<String> arrsend  =  new ArrayList<String>();

@@ -2,9 +2,9 @@
 package projectsalmon;
 
 public abstract class User {
-
+	
 	private String id;
-	private int permission;
+	private Integer permission;
 	private String first_name;
 	private String last_name;
 	private String password;
@@ -12,7 +12,29 @@ public abstract class User {
 	private String phone;
 	private String birthday;
 	private boolean lockedFlag;
-	private int loginLockCounter;
+	private Integer loginLockCounter;
+	
+
+	public User(String id,String first, String last, String password,Integer loginLockCounter,Integer permission)
+	{/**
+		 * @author Galit
+		 * @param id
+		 * @param first
+		 * @param last
+		 * @param password
+		 * @param lockedFlag
+		 * @param loginLockCounter
+		 * Constructor for LoginUser
+		 */
+		this.id = id;
+		this.first_name = first;
+		this.last_name = last;
+		this.password = password;
+//		this.lockedFlag = lockedFlag;
+		this.loginLockCounter = loginLockCounter;
+		this.permission=permission;
+	}
+
 	
 	public User(String id,String first, String last, String password)
 	{
@@ -23,6 +45,7 @@ public abstract class User {
 		lockedFlag = false;
 		loginLockCounter = 0;
 	};
+	
 	public User(String id, int permission, String first, String last, String password, String email)
 	{
 		this.id = id;
@@ -90,11 +113,11 @@ public abstract class User {
 	public void setlockedFlag(boolean lockedFlag) {
 		this.lockedFlag = lockedFlag;
 	}
-	public int getloginLockCounter() {
+	public Integer getloginLockCounter() {
 		return loginLockCounter;
 	}
-	public void setloginLockCounter(int loginLockCounter) {
-		this.loginLockCounter = loginLockCounter;
+	public void setloginLockCounter(Integer loginLockCounter) {
+		this.loginLockCounter = new Integer(loginLockCounter);
 	}
 	
 	

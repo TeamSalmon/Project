@@ -20,6 +20,8 @@ public class guiMange
     public static final String Page3 = "TeacherGui.fxml";
     public static final String Page4 = "reportMenu.fxml";
     public static final String CSS = "test.css";
+	public static final String PageMinus100 = "LoginGUI.fxml";
+	public static final String PageMinus101 ="LoginPermissionGUI.fxml";
 	
     public void setMainStage() throws IOException
     {
@@ -52,6 +54,13 @@ public class guiMange
     	case 4:
     		xmlNum = Page4;
     		break;
+    	case -100:
+        	xmlNum = PageMinus100;
+        	break;		
+    	case -101:
+        	xmlNum = PageMinus101;
+        	break;	
+
     		default:
     		break;
     	}
