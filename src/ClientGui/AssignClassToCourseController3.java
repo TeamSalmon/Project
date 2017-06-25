@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -30,7 +31,7 @@ import javafx.fxml.Initializable;
 public class AssignClassToCourseController3 implements Initializable{
 		
 	
-	Main myMain = Main.getInstance();
+	public Main myMain = Main.getInstance();
 	
 	@FXML
 	private Pane paneFX;
@@ -107,6 +108,7 @@ public class AssignClassToCourseController3 implements Initializable{
 			leftLabelFX.setVisible(false);
 			continuePT.setVisible(false);
     		mainMenuFX.setVisible(true);
+    		exitPT.setVisible(false);
     		requestFX1.setVisible(false);   	
     		
     		textFX.setText("The class " + SecretaryController.get_chosen_class().getClassName() + 
@@ -117,24 +119,13 @@ public class AssignClassToCourseController3 implements Initializable{
     		textFX.setVisible(true);
 
     	}
-    	
  	}
-	
-    
-    @FXML void mainMenu(ActionEvent event) throws IOException
-    {
-     	// go to main menu of secretary
-    	//((Node)event.getSource()).getScene().getWindow().hide();
-		//myMain.getMange().initializationScreens(9);
-		//myMain.getMange().changesence(2);
-    }
 
-    
     
     @FXML void exit(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-    	 myMain.getMange().changesence(0);
+    	SecretaryController.assignClassToCourseEXIT(3);
     }
 
 }

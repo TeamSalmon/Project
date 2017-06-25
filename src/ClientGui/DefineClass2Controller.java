@@ -64,6 +64,9 @@ public class DefineClass2Controller implements Initializable{
     @FXML // fx:id="exitPT"
     private Button exitPT; // Value injected by FXMLLoader
     
+    @FXML // fx:id="exitPT"
+    private Button exitPT1; // Value injected by FXMLLoader
+    
     @FXML // fx:id="moveFX"
     private Button moveFX; // Value injected by FXMLLoader
   
@@ -133,6 +136,8 @@ public class DefineClass2Controller implements Initializable{
     	requestFX2.setVisible(false);
     	moveFX.setVisible(false);
     	continuePT.setVisible(false);
+    	exitPT.setVisible(false);
+    	exitPT1.setVisible(true);
 
     	 if(result != null)
     	 {
@@ -141,19 +146,14 @@ public class DefineClass2Controller implements Initializable{
     	 else
     	 {
     		 requestFX1.setText("Couldn't create the new class.");
-
     	 }
-    	
-    	//((Node)event.getSource()).getScene().getWindow().hide();
-		//myMain.getMange().initializationScreens(8);
-		//myMain.getMange().changesence(3);
  	}
 	
     
-    @FXML void exit(ActionEvent event) throws IOException 
+    @FXML void exit(ActionEvent event) throws IOException
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-    	 myMain.getMange().changesence(0);
+    	StudentsClassController.defineClassEXIT(2);
     }
 
 }

@@ -22,8 +22,8 @@ import javafx.scene.layout.AnchorPane;
 
 public class reportMenuController implements Initializable {
 
-	Main	myMain=	Main.getInstance();
-	String xname,searchKey;
+	Main myMain = Main.getInstance();
+	String xname, searchKey;
 	String semstersNum;
 	ObservableList<String> list;
     @FXML // fx:id="an1"
@@ -70,8 +70,7 @@ public class reportMenuController implements Initializable {
     	searchKey=teachidPT1.getText();//get teacher id for search
     	semstersNum=comboR1.getValue();
     	//myMain.setReport=
- 	   
- 	  
+
     }
 
     @FXML

@@ -10,6 +10,7 @@ import controllers.StudentsClassController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -61,8 +62,7 @@ public class DefineClass1Controller {
     		StudentsClassController.setNewGrade(grade);	
     	
     		((Node)event.getSource()).getScene().getWindow().hide();
-    		myMain.getMange().initializationScreens(7);
-    		myMain.getMange().changesence(2);
+			myMain.getMange().changeScene(myMain.getMange().initializationScreens(7));
     	
     	}
     }
@@ -71,8 +71,6 @@ public class DefineClass1Controller {
     @FXML void exit(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-    	 myMain.getMange().changesence(0);
-    	//System.exit(1);
+    	StudentsClassController.defineClassEXIT(1);
     }
-
 }

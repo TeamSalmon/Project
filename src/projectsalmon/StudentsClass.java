@@ -17,6 +17,7 @@ public class StudentsClass
 	
 	public StudentsClass(String className, String grade, String studentsClassId)
 	{
+		this.className = className;
 		students=null;
 		this.grade = grade;
 		this.studentsAmount = 0;

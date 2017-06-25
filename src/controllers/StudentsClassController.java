@@ -1,14 +1,19 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import ClientGui.Main;
+import javafx.scene.Scene;
 import projectsalmon.*;
 
 
 public abstract class StudentsClassController {
 		
+	static Main myMain = Main.getInstance();
+	
 	static StudentsClass new_class;
 	static String new_grade;
-	
 	
 	
 	public static void setNewGrade(String grade)
@@ -130,8 +135,15 @@ public abstract class StudentsClassController {
 		}
 		return name;
 	}
-
 	
+
+	public static void defineClassEXIT(int n) throws IOException {
+		for(int i = 0 ; i < n ; i++)
+		{
+			myMain.getMange().myStack.pop();
+		}
+		myMain.getMange().changeScene((Scene)myMain.getMange().myStack.pop());
+	}
 	/* for now not necessary
 	public boolean addStudent(Student student)
 	{

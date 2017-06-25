@@ -1,12 +1,18 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import ClientGui.Main;
+import javafx.scene.Scene;
 import projectsalmon.*;
 import projectsalmon.Class;
 
 
 public abstract class SecretaryController {
+
+	static Main myMain = Main.getInstance();
 
 	private static ArrayList<Course> list_of_courses;
 	private static ArrayList<StudentsClass> list_of_classes;
@@ -17,7 +23,7 @@ public abstract class SecretaryController {
 	private static Course chosen_course;
 	private static StudentsClass chosen_class;
 	private static Teacher chosen_teacher;
-	
+		
 	// New instance to fill and save to DB
 	private static StudentsClassInCourse new_class_in_course;
 		
@@ -222,11 +228,18 @@ public abstract class SecretaryController {
 		return save_changes;
 	}
 
-
-	
 	
 	public static void setSave_changes(boolean save_changes) {
 		SecretaryController.save_changes = save_changes;
+	}
+
+
+	public static void assignClassToCourseEXIT(int n) throws IOException {
+		for(int i = 0 ; i < n ; i++)
+		{
+			myMain.getMange().myStack.pop();
+		}
+		myMain.getMange().changeScene((Scene)myMain.getMange().myStack.pop());
 	}
 
 

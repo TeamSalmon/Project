@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -56,10 +57,6 @@ public class AssignClassToCourseController2 implements Initializable{
     
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {
-	
-		//SecretaryController.get_chosen_course();
-		//SecretaryController.get_chosen_class();
-
 		ArrayList<Student>  misfitStudents = SecretaryController.getMisfitStudents();
 		
 		if ( misfitStudents.size() > 0 )
@@ -85,15 +82,14 @@ public class AssignClassToCourseController2 implements Initializable{
     @FXML void nextFrame(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-		myMain.getMange().initializationScreens(10);
-		myMain.getMange().changesence(3);
+		myMain.getMange().changeScene(myMain.getMange().initializationScreens(10));
  	}
 	
     
     @FXML void exit(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-    	 myMain.getMange().changesence(0);
+    	SecretaryController.assignClassToCourseEXIT(2);
     }
 
 }

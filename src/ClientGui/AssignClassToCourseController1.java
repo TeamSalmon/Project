@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -57,8 +58,7 @@ public class AssignClassToCourseController1 implements Initializable{
      
     
 	@Override public void initialize (URL location, ResourceBundle resoources) 
-    {
-	
+    {			
 		courses = SecretaryController.getOptionalCourses();
 		classes = SecretaryController.getOptionalClasses();
 		
@@ -93,11 +93,11 @@ public class AssignClassToCourseController1 implements Initializable{
     	}
     	
     	else{
-    	SecretaryController.updateChosenCourseAndClass(chosen_course, chosen_class);
-    	
-    	((Node)event.getSource()).getScene().getWindow().hide();
-		myMain.getMange().initializationScreens(9);
-		myMain.getMange().changesence(2);
+	    	SecretaryController.updateChosenCourseAndClass(chosen_course, chosen_class);
+	    	
+	    	((Node)event.getSource()).getScene().getWindow().hide();
+			myMain.getMange().changeScene(myMain.getMange().initializationScreens(9));
+		
     	}
     }
 	
@@ -106,7 +106,7 @@ public class AssignClassToCourseController1 implements Initializable{
     @FXML void exit(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-    	 myMain.getMange().changesence(0);
+    	SecretaryController.assignClassToCourseEXIT(1);
     }
 
 }

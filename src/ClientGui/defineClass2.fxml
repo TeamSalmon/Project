@@ -21,5 +21,6 @@
                   <Label fx:id="rightLabelFX" layoutX="337.0" layoutY="84.0" prefHeight="17.0" prefWidth="200.0" text="New class" />
       <Button fx:id="moveFX" layoutX="278.0" layoutY="136.0" mnemonicParsing="false" onAction="#moveStudents" text="Move" />
       <Label fx:id="requestFX2" layoutX="65.0" layoutY="41.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="355.0" text="Press 'Continue' when done." />
+      <Button fx:id="exitPT1" layoutX="283.0" layoutY="343.0" mnemonicParsing="false" onAction="#exit" text="Exit" visible="false" />
 	</children>
 </Pane>

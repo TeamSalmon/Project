@@ -14,10 +14,10 @@
    <children>
    		<Button fx:id="continuePT" layoutX="326.0" layoutY="343.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
 		<Button fx:id="exitPT" layoutX="228.0" layoutY="343.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-        <Label fx:id="requestFX1" layoutX="65.0" layoutY="46.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="471.0" text="Please select a teacher. Press 'Continue' when done." />
+        <Label fx:id="requestFX1" layoutX="65.0" layoutY="24.0" lineSpacing="2.0" prefHeight="62.0" prefWidth="471.0" text="Please select a teacher. Press 'Continue' when done." />
         <Label fx:id="leftLabelFX" layoutX="66.0" layoutY="103.0" prefHeight="17.0" prefWidth="200.0" text="Optional teachers:" />
       <ComboBox fx:id="teacherFX" layoutX="66.0" layoutY="136.0" prefWidth="150.0" promptText="Teacher" />
-      <Button fx:id="mainMenuFX" layoutX="308.0" layoutY="343.0" mnemonicParsing="false" onAction="#mainMenu" text="Retrun to menu" visible="false" />
-      <Text fx:id="textFX" layoutX="65.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="22.13671875" />
+      <Button fx:id="mainMenuFX" layoutX="251.0" layoutY="343.0" mnemonicParsing="false" onAction="#exit" text="Retrun to menu" visible="false" />
+      <Text fx:id="textFX" layoutX="65.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="471.0" />
 	</children>
 </Pane>
