@@ -1,6 +1,9 @@
 package projectsalmon;
 
-public class Semester
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Semester implements Serializable
 {
 	private String year;
 	private String semesterNumber;

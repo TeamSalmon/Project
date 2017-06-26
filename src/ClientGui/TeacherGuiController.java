@@ -48,9 +48,11 @@ public class TeacherGuiController implements Initializable{
     private static Tab singleCourseTab;
     private ObservableList<String> data;
     private ArrayList<Course> courses;
+    private ArrayList<Semester> semesters;
     private Semester currentSemester;
     private Semester presentedSemester;
 	private ObservableList<Semester> semesterList;
+	private Object object;
 
     @FXML
     void changeSemester(ActionEvent event)
@@ -106,6 +108,7 @@ public class TeacherGuiController implements Initializable{
 		}  
     }
     
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
@@ -113,41 +116,49 @@ public class TeacherGuiController implements Initializable{
 		manager.setEditable(true);
 		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
 		
-		ArrayList arrsend = new ArrayList<String>();
-		arrsend.add("getCurrentSemester");
+		ArrayList<String> arrsend = new ArrayList<String>();
+		arrsend.add("CurrentSemester");
 		try {
 			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//currentSemester = myMain.con.get;
+		} catch (IOException e){e.printStackTrace();}
+		myMain.con.getAnswer(object);
+		currentSemester = (Semester)object;
 		
 		presentedSemester = currentSemester;
+		
+		arrsend = new ArrayList<String>();
+		arrsend.add("getSemesters");
+		arrsend.add(myMain.getUser().getId());
+		try {
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e){e.printStackTrace();}
+		myMain.con.getAnswer(object);
+		semesters = (ArrayList<Semester>)object;
+		
 		semesterList = FXCollections.observableArrayList();
-		//semesterList.add(new Semester("2016", 'b'));
-		semesterList.add(currentSemester);
+		if(semesters!=null)
+		{
+		for(Semester s : semesters)
+			semesterList.add(s);
 		semesterChoice.setItems(semesterList);
-		
-		ArrayList<String> askDB = new ArrayList<String>();
-		askDB.add(myMain.getUser().getId());
-		//add more parameters 
-		
-		/*try
-		{
-			courses = (ArrayList<Course>)myMain.con.getClient().handleMessageFromClientUI(askDB);
 		}
-		catch(IOException e)
-		{
-			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-		}*/
+		/*
+		arrsend = new ArrayList<String>();
+		currentSemester.setYear("2017");
+		currentSemester.setSemesterNumber("A");
+		arrsend.add("courseByTeacher");
+		arrsend.add(myMain.getUser().getId());
+		arrsend.add(currentSemester.getSemesterNumber());
+		
+		try {
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e){e.printStackTrace();}
+		myMain.con.getAnswer(courses);
 		
 		data = FXCollections.observableArrayList();
-		//Course course = new Course("123", "Algebra",new TeachingUnit("9", "Math"),"", 8, "Algebra");
-		//Course course1 = new Course("1", "Atam",new TeachingUnit("9", "Math"),"", 8, "Atam");
-		//data.add(course.getName()+ " " + course.getCourseNumber());
-		//data.add(course1.getName()+ " " + course1.getCourseNumber());
+		for(Course c : courses)
+			data.add(c.getName());
 		
-        coursesList.setItems(data);
+        coursesList.setItems(data);*/
 	}
 }
