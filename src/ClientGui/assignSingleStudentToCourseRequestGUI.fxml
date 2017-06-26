@@ -1,46 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane fx:id="cmbClass" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.assignSingleStudentToCourseRequestController">
    <children>
-      <TextField fx:id="studentIBTB" layoutX="152.0" layoutY="59.0" prefHeight="31.0" prefWidth="147.0" promptText="Student ID" />
-      <Label layoutX="32.0" layoutY="62.0" text="Student ID:">
+      <TextField fx:id="studentIDTB" layoutX="22.0" layoutY="45.0" prefHeight="31.0" prefWidth="147.0" promptText="Search Student ID">
          <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TextArea fx:id="studentNameTB" layoutX="151.0" layoutY="109.0" prefHeight="31.0" prefWidth="351.0" />
-      <Label layoutX="32.0" layoutY="112.0" prefHeight="25.0" prefWidth="112.0" text="Student Name:">
+            <Font size="14.0" />
+         </font></TextField>
+      <TextArea fx:id="studentNameTB" editable="false" layoutX="23.0" layoutY="83.0" prefHeight="30.0" prefWidth="350.0" promptText="Student Name">
          <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="32.0" layoutY="157.0" text="Course Number:">
+            <Font size="14.0" />
+         </font></TextArea>
+      <Button fx:id="sendRequestBt" layoutX="345.0" layoutY="349.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="31.0" prefWidth="112.0" text="Send request">
          <font>
-            <Font size="16.0" />
+            <Font size="12.0" />
          </font>
-      </Label>
-      <TextField fx:id="courseNumberTB" layoutX="152.0" layoutY="151.0" prefHeight="31.0" prefWidth="147.0" promptText="Course number" />
-      <Button fx:id="sendRequestBt" layoutX="311.0" layoutY="316.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="31.0" prefWidth="112.0" text="Send request">
+      </Button>
+      <Button fx:id="backBt" layoutX="485.0" layoutY="349.0" mnemonicParsing="false" onAction="#back" prefHeight="31.0" prefWidth="88.0" text="Back">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="classCMB" layoutX="23.0" layoutY="178.0" onAction="#classList" prefHeight="31.0" prefWidth="147.0" promptText="Class">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></ComboBox>
+      <Button fx:id="searchStudentIDBt" layoutX="198.0" layoutY="48.0" mnemonicParsing="false" onAction="#searchStudentID" text="Search" />
+      <Button fx:id="searchCourseBt" layoutX="198.0" layoutY="138.0" mnemonicParsing="false" onAction="#searchCourse" text="Search" />
+      <Label layoutX="21.0" layoutY="14.0" prefHeight="20.0" prefWidth="442.0" text="Request to assign student to course :">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <TextField fx:id="courseNumberTB" layoutX="23.0" layoutY="135.0" prefHeight="30.0" prefWidth="147.0" promptText="Course Number">
          <font>
             <Font size="14.0" />
          </font>
-      </Button>
-      <Button fx:id="backBt" layoutX="455.0" layoutY="316.0" mnemonicParsing="false" onAction="#back" prefHeight="31.0" prefWidth="88.0" text="Back">
+      </TextField>
+      <TextArea fx:id="descriptionTB" layoutX="22.0" layoutY="260.0" prefHeight="80.0" prefWidth="542.0" />
+      <Label layoutX="23.0" layoutY="233.0" text="Description of the request:">
          <font>
             <Font size="14.0" />
-         </font>
-      </Button>
-      <ComboBox fx:id="classCMB" layoutX="152.0" layoutY="203.0" onAction="#classList" prefHeight="31.0" prefWidth="147.0" />
-      <Label layoutX="32.0" layoutY="206.0" text="Class:">
-         <font>
-            <Font size="16.0" />
          </font>
       </Label>
    </children>
