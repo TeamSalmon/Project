@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import projectsalmon.Assignment;
 import projectsalmon.StudentAssignment;
 
-public class AssignmentController implements Initializable
+public class TeacherAssignmentController implements Initializable
 {
     @FXML
     private ListView<StudentAssignment> submissionsList;
@@ -56,13 +56,13 @@ public class AssignmentController implements Initializable
     private Button closeBtn;
     private Tab current;
     private Assignment assignment;
-    private SingleCourseTabController parentController;
+    private TeacherSingleCourseTabController parentController;
     private boolean editable;
     private TabManager manager;
     private ObservableList<StudentAssignment> data;
     private static Tab singleSubmissionTab;
 
-    public AssignmentController(Assignment assignment, SingleCourseTabController parentController)
+    public TeacherAssignmentController(Assignment assignment, TeacherSingleCourseTabController parentController)
     {
     	this.assignment = assignment;
     	this.parentController = parentController;

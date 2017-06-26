@@ -51,9 +51,9 @@ public class EditAssignmentController implements Initializable
     private Button deleteAssignmentBtn;
     private String assignmentFilePath;
     private Assignment assignment;
-    private AssignmentController parentController;
+    private TeacherAssignmentController parentController;
 
-    public EditAssignmentController(Assignment assignment, AssignmentController parentController)
+    public EditAssignmentController(Assignment assignment, TeacherAssignmentController parentController)
     {
     	this.assignment = assignment;
     	this.parentController = parentController;

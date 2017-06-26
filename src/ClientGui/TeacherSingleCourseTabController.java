@@ -14,14 +14,16 @@ import javafx.scene.control.*;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
-public class SingleCourseTabController implements Initializable
+public class TeacherSingleCourseTabController implements Initializable
 {
 	Main myMain = Main.getInstance();
 	TabManager manager = TabManager.getInstance();
@@ -40,6 +42,7 @@ public class SingleCourseTabController implements Initializable
     private ArrayList<Assignment> assignments;
     private ObservableList<Assignment> data;
 	private static Tab singleAssignmentTab;
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -48,7 +51,8 @@ public class SingleCourseTabController implements Initializable
 		current.setText((String)manager.getLatestSelection());
 		courseNum = ((String)(manager.getLatestSelection())).split(" ")[1];
 		courseName = ((String)(manager.getLatestSelection())).split(" ")[0];
-		
+		Main.getTheStage().setOnCloseRequest(new EventHandler<WindowEvent>()
+		{public void handle(WindowEvent we){System.out.println("Stage is closing");}});
 		/*
 		ArrayList<String> askDB = new ArrayList<String>();
 		askDB.add(myMain.getUser().getId());
@@ -94,7 +98,7 @@ public class SingleCourseTabController implements Initializable
 	{
 		manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentTabs.fxml"));
-    	AssignmentController controller = new AssignmentController(assignmentsList.getSelectionModel().getSelectedItem(),this);
+    	TeacherAssignmentController controller = new TeacherAssignmentController(assignmentsList.getSelectionModel().getSelectedItem(),this);
     	loader.setController(controller);
         singleAssignmentTab = new Tab("View assignment");
         manager.getContainer().getTabs().add(singleAssignmentTab);

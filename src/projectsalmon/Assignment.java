@@ -1,6 +1,7 @@
 package projectsalmon;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Assignment
@@ -23,6 +24,15 @@ public class Assignment
 		this.assignmentName = assignmentName;
 		this.courseId = courseId;
 	}
+	public Assignment(String assignmentId,String courseId,String assignmentName, String deadline, int precentages, String instructions)
+	{
+		this.assignmentId = assignmentId;
+		this.percentageOfFinalGrade = precentages;
+		this.instructionForSubmission = instructions;
+		this.assignmentName = assignmentName;
+		this.courseId = courseId;
+		this.deadline = stringToCalendar(deadline);
+	}
 	
 	public void setFile(String filePath){this.file = new File(filePath);}
 	public void setCourse(String course){this.courseId = course;}
@@ -39,5 +49,15 @@ public class Assignment
 	public String getName(){return assignmentName;}
 	public String getCourse(){return courseId;}
 	public String getDeadlineAsString(){return deadline.get(Calendar.DAY_OF_MONTH) + "/" + deadline.get(Calendar.MONTH) + "/" + deadline.get(Calendar.YEAR);}
-	public String toString(){return assignmentName + ", deadline- " + deadline.get(Calendar.DAY_OF_MONTH) + "/" + deadline.get(Calendar.MONTH) + "/" + deadline.get(Calendar.YEAR);} 	
+	public String toString(){return assignmentName + ", deadline- " + deadline.get(Calendar.DAY_OF_MONTH) + "/" + deadline.get(Calendar.MONTH) + "/" + deadline.get(Calendar.YEAR);} 
+	public static Calendar stringToCalendar(String date)
+	{
+		Calendar c = Calendar.getInstance();
+		String[]time;
+		time = date.split("/");
+		c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(time[0]));		
+		c.set(Calendar.MONTH, Integer.parseInt(time[1]));
+		c.set(Calendar.YEAR, Integer.parseInt(time[2]));
+		return c;
+	}
 }

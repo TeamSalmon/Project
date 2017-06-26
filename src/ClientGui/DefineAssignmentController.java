@@ -52,9 +52,9 @@ public class DefineAssignmentController implements Initializable
     private Assignment assignment;
     private String courseNum;
     private String courseName;
-    private SingleCourseTabController parentController;
+    private TeacherSingleCourseTabController parentController;
 
-    public DefineAssignmentController(String courseNum, String courseName, SingleCourseTabController parentController)
+    public DefineAssignmentController(String courseNum, String courseName, TeacherSingleCourseTabController parentController)
     {
     	this.courseName = courseName;
     	this.courseNum = courseNum;
