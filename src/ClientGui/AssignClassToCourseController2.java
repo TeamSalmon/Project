@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import ServerClient.ClientConsole;
+import ServerClient.ClientConsole; 
 import controllers.SecretaryController;
 import controllers.StudentsClassController;
 import javafx.collections.FXCollections;
@@ -30,34 +30,47 @@ public class AssignClassToCourseController2 implements Initializable {
 	Main myMain = Main.getInstance();
 
 	@FXML
-	private Pane paneFX;
+    private Pane paneFX;
 
-	@FXML
-	private Button continuePT;
+    @FXML
+    private Button continuePT;
 
-	@FXML
-	private ListView<String> leftListFX;
+    @FXML
+    private ListView<String> leftListFX;
 
-	@FXML
-	private Label requestFX2;
+    @FXML
+    private Label requestFX2;
 
-	@FXML
-	private Label requestFX1;
+    @FXML
+    private Label requestFX1;
 
-	@FXML
-	private Button exitPT;
+    @FXML
+    private Button exitPT;
 
-	@FXML
-	private Label leftLabelFX;
+    @FXML
+    private Label leftLabelFX;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resoources) {
+  
+    
+	@Override public void initialize (URL location, ResourceBundle resoources) 
+    {
 		ArrayList<Student> misfitStudents = null;
 		try {
 			misfitStudents = SecretaryController.getMisfitStudents();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		if ( misfitStudents.size() > 0 )
+		{
+			ArrayList<String> misfitNames = new ArrayList<String>(); 
+			for(Student student : misfitStudents)
+			{
+				misfitNames.add( student.getFirst_name() + " " + student.getLast_name() + " " + student.getId() );
+			}
+			
+			leftListFX.setItems(FXCollections.observableArrayList(misfitNames)); 
 		}
 
 		if (misfitStudents.size() > 0) {

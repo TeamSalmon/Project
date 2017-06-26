@@ -35,6 +35,7 @@ public class ClientConsole implements ChatIF
   private ChatClient client;
   private String stringOut;
   private static TextField log;
+  private Object message;
   //Constructors ****************************************************
 
   /**
@@ -65,9 +66,9 @@ public class ClientConsole implements ChatIF
    *
    * @param message The string to be displayed.
    */
-  public Object getAnswer(Object answer) 
+  public void getAnswer(Object answer) 
   {
-	  return answer;
+	  this.setMessage(answer);
   }
 
 
@@ -98,6 +99,16 @@ public String getStringOut() {
 
 public void setStringOut(String stringOut) {
 	this.stringOut = stringOut;
+}
+
+
+public Object getMessage() {
+	return message;
+}
+
+
+public void setMessage(Object message) {
+	this.message = message;
 }
 
   
