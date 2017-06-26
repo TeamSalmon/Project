@@ -19,7 +19,7 @@ public class StudentsClass
 	{
 		this.className = className;
 		students=null;
-		this.level = level;		
+		this.level = level; ///		
 		this.studentsAmount = 0;
 		this.studentsClassId = studentsClassId;
 	}

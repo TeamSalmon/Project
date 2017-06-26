@@ -27,7 +27,7 @@ import projectsalmon.LoginUser;
 import projectsalmon.User;
 
 public class LoginController implements Initializable {
-
+	Main myMain = Main.getInstance();
 	@FXML // fx:id="PasswordTXT"
 	private PasswordField PasswordTXT; // Value injected by FXMLLoader
 
@@ -54,8 +54,9 @@ public class LoginController implements Initializable {
 		String idSTR = idTXT.getText();
 		if (idSTR.length() == 9) {
 			if (!LoginUser.loginUser.getId().equals(idSTR)) {
-			//	Boolean f = searchUser(idSTR);
-				if (!searchUser(idSTR)) {
+				Boolean f = searchUser(idSTR);
+
+				if (!f) {
 					sendErrorMSG(" User's ID does not exist, please try agine");
 					return;
 				}
@@ -63,24 +64,24 @@ public class LoginController implements Initializable {
 
 			// if (LoginUser.loginUser.getId() != "null") {
 			if (LoginUser.loginUser.getLoggedStatus().equals(LoginUser.Locked)) {
-				sendErrorMSG(" User is locked, please contact you'r administrator");
+				sendErrorMSG("User is locked, please contact you'r administrator");
 				return;
 			} else if (LoginUser.loginUser.getLoggedStatus().equals(LoginUser.Loged)) {
-				sendErrorMSG(" User is allready login");
+				sendErrorMSG("User is allready login");
 				return;
 			} else {
 				if (LoginUser.loginUser.getPassword().equals(PasswordTXT.getText())) {
 					LoginUser.loginUser.setloginLockCounter(0);
-					sendErrorMSG("Kaeabangaa->>Login seccess->>move to another window");
-
 					LoginUser.loginUser.setLoggedStatus(LoginUser.Loged);
-					/* call to updateUser method (in UserController class */
-					/* switch to permissionGUI */
+					try {
+						myMain.getMange().changeScene(myMain.getMange().initializationScreens(-101));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					return;
 				} // end of if
-					// (LoginUser.loginUser.getPassword().equals(PasswordTXT.getText()))--->User
-					// logged
-					// (user.getPassword().equals(PasswordTXT.getText()))
+
 				else {
 					LoginUser.loginUser.setloginLockCounter(LoginUser.loginUser.getloginLockCounter() + 1);
 					// updateDB
@@ -119,16 +120,23 @@ public class LoginController implements Initializable {
 	}
 	public Boolean searchUser(String id) {
 
-		ArrayList<LoginUser> dbARR = new ArrayList<LoginUser>(3);
-		dbARR.add(new LoginUser("123456789", "Ash", "Ketchum", "Red", LoginUser.notLoged, 0, LoginUser.StudentPER));
-		dbARR.add(new LoginUser("987654321", "Misty", "Misty's Last Name", "Green", LoginUser.notLoged, 0,
-				LoginUser.ParentPER & LoginUser.SecretaryPER));
-		dbARR.add(new LoginUser("098765432", "Brock", "Brock's Last Name", "Blue", LoginUser.notLoged, 0, LoginUser.TeacherPER));
-
-		for (LoginUser dbUser : dbARR)
+/*		ArrayList<LoginUser> dbARR = new ArrayList<LoginUser>();
+		dbARR.add(new LoginUser("123456789", "Ash", "Ketchum", "Red",0 , LoginUser.StudentPER, LoginUser.logOut));
+		dbARR.add(new LoginUser("987654321", "Misty", "Misty's Last Name", "Green",0 ,36,LoginUser.logOut));
+		dbARR.add(new LoginUser("098765432", "Brock", "Brock's Last Name", "Blue", 0, LoginUser.TeacherPER, LoginUser.logOut));
+*/
+	/*	for (LoginUser dbUser : dbARR)
+			if (dbUser.getId().equals(id)){
+				LoginUser.loginUser.copy(dbUser);
+				return true;*/
+	//	for (LoginUser dbUser : dbARR)
+			myMain.getConnection().getClient().handleMessageFromClientUI(aarayList);
+			myMain.getConnection().
 			if (dbUser.getId().equals(id)){
 				LoginUser.loginUser.copy(dbUser);
 				return true;
+				
+			
 /*				return new LoginUser(id, dbUserID.getFirst_name(), dbUserID.getLast_name(), dbUserID.getPassword(),
 						dbUserID.islockedFlag(), dbUserID.getloginLockCounter(), dbUserID.getPermission());*/
 			}

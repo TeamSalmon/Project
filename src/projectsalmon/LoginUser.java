@@ -1,7 +1,7 @@
 package projectsalmon;
 
 public class LoginUser extends User{
-	public static LoginUser loginUser=new LoginUser("null","Misty","from pokemon", "null",0,3,-1);
+	public static LoginUser loginUser=new LoginUser("null","null","null", "null",LoginUser.logOut,-1,-1);
 	private Integer loggedStatus ;
 	
 	
@@ -11,7 +11,7 @@ public class LoginUser extends User{
 	public static final Integer SchoolManagerPER=8;
 	public static final Integer SystemAdminPER=16;
 	public static final Integer SecretaryPER=32;
-	public static final Integer notLoged=0;
+	public static final Integer logOut=0;
 	public static final Integer Loged=1;
 	public static final Integer Locked=2;
 	

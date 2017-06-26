@@ -25,71 +25,66 @@ import javafx.scene.layout.Pane;
 import projectsalmon.*;
 import javafx.fxml.Initializable;
 
+public class AssignClassToCourseController2 implements Initializable {
 
-public class AssignClassToCourseController2 implements Initializable{
-	
-		
-	
 	Main myMain = Main.getInstance();
 
 	@FXML
-    private Pane paneFX;
+	private Pane paneFX;
 
-    @FXML
-    private Button continuePT;
+	@FXML
+	private Button continuePT;
 
-    @FXML
-    private ListView<String> leftListFX;
+	@FXML
+	private ListView<String> leftListFX;
 
-    @FXML
-    private Label requestFX2;
+	@FXML
+	private Label requestFX2;
 
-    @FXML
-    private Label requestFX1;
+	@FXML
+	private Label requestFX1;
 
-    @FXML
-    private Button exitPT;
+	@FXML
+	private Button exitPT;
 
-    @FXML
-    private Label leftLabelFX;
+	@FXML
+	private Label leftLabelFX;
 
-  
-    
-	@Override public void initialize (URL location, ResourceBundle resoources) 
-    {
-		ArrayList<Student>  misfitStudents = SecretaryController.getMisfitStudents();
-		
-		if ( misfitStudents.size() > 0 )
-		{
-			ArrayList<String> misfitNames = new ArrayList<String>(); 
-			for(Student student : misfitStudents)
-			{
-				misfitNames.add( student.getFirst_name() + " " + student.getLast_name() + " " + student.getId() );
-			}
-			
-			leftListFX.setItems(FXCollections.observableArrayList(misfitNames)); 
+	@Override
+	public void initialize(URL location, ResourceBundle resoources) {
+		ArrayList<Student> misfitStudents = null;
+		try {
+			misfitStudents = SecretaryController.getMisfitStudents();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else
-		{
+
+		if (misfitStudents.size() > 0) {
+			ArrayList<String> misfitNames = new ArrayList<String>();
+			for (Student student : misfitStudents) {
+				misfitNames.add(student.getFirst_name() + " " + student.getLast_name() + " " + student.getId());
+			}
+
+			leftListFX.setItems(FXCollections.observableArrayList(misfitNames));
+		} else {
 			leftListFX.setVisible(false);
 			leftLabelFX.setVisible(false);
 			requestFX1.setText("All the students in the calss has the course's preconditions.");
 		}
-		
-    }
-    
 
-    @FXML void nextFrame(ActionEvent event) throws IOException 
-    {
-    	((Node)event.getSource()).getScene().getWindow().hide();
+	}
+
+	@FXML
+	void nextFrame(ActionEvent event) throws IOException {
+		((Node) event.getSource()).getScene().getWindow().hide();
 		myMain.getMange().changeScene(myMain.getMange().initializationScreens(10));
- 	}
-	
-    
-    @FXML void exit(ActionEvent event) throws IOException 
-    {
-    	((Node)event.getSource()).getScene().getWindow().hide();
-    	SecretaryController.assignClassToCourseEXIT(2);
-    }
+	}
+
+	@FXML
+	void exit(ActionEvent event) throws IOException {
+		((Node) event.getSource()).getScene().getWindow().hide();
+		SecretaryController.assignClassToCourseEXIT(2);
+	}
 
 }
