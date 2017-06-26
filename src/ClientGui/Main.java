@@ -34,6 +34,7 @@ public  class Main extends Application {
     {
         this.con=con;
     }
+    
     public ClientConsole getConnection() {
         return con;
     }

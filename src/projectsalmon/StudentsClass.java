@@ -24,6 +24,17 @@ public class StudentsClass
 		this.studentsClassId = studentsClassId;
 	}
 	
+	
+	public StudentsClass(String className, String level, String studentsClassId, int studentsAmount)
+	{
+		this.className = className;
+		students=null;
+		this.level = level;		
+		this.studentsAmount = studentsAmount;
+		this.studentsClassId = studentsClassId;
+	}
+	
+	
 	public void setlevel(String level){this.level = level;}
 
 	public void setStudentsAmount(int amount)

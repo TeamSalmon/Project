@@ -144,29 +144,6 @@ public abstract class StudentsClassController {
 		}
 		myMain.getMange().changeScene((Scene)myMain.getMange().myStack.pop());
 	}
-	/* for now not necessary
-	public boolean addStudent(Student student)
-	{
-		if(studentsAmount >= 30)
-		{
-			return false;
-		}
-		
-		studentsAmount++;
-		student.setClass(this);
-		return true;
-	}
-	
-	// for now not necessary
-	
-	public boolean removeStudent(Student student)
-	{
-		if(studentsAmount == 0)
-			return false;
-		studentsAmount--;
-		return true;
-	}
-	*/
 	
 }
 
