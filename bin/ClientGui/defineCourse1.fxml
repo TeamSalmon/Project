@@ -10,20 +10,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineClass2Controller">
+<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.defineCourseController1">
    <children>
                   <Button fx:id="continuePT" layoutX="305.0" layoutY="343.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
                   <Button fx:id="exitPT" layoutX="249.0" layoutY="343.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-                  <Label fx:id="requestFX1" layoutX="65.0" layoutY="21.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="471.0" text="Select a student and press 'Move' to transfer him/her between the lists." />
-                  <Label fx:id="leftLabelFX" layoutX="113.0" layoutY="79.0" prefHeight="17.0" prefWidth="200.0" text="Course number:" />
-                  <Label fx:id="rightLabelFX" layoutX="113.0" layoutY="150.0" prefHeight="17.0" prefWidth="200.0" text="Teaching unit:" />
-      <TextField layoutX="113.0" layoutY="106.0" />
-      <TextField layoutX="113.0" layoutY="175.0" />
-      <Label fx:id="leftLabelFX1" layoutX="113.0" layoutY="219.0" prefHeight="17.0" prefWidth="200.0" text="Required courses (precourses)" />
-      <TextField layoutX="113.0" layoutY="245.0" />
-      <TextField layoutX="331.0" layoutY="106.0" />
-      <TextField layoutX="331.0" layoutY="175.0" />
-      <Label fx:id="leftLabelFX2" layoutX="331.0" layoutY="150.0" prefHeight="17.0" prefWidth="200.0" text="Weekly hours:" />
-      <Label fx:id="leftLabelFX3" layoutX="331.0" layoutY="79.0" prefHeight="17.0" prefWidth="200.0" text="Course name:" />
+                  <Label fx:id="requestFX1" layoutX="65.0" layoutY="32.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="471.0" text="Fill the fields and press 'Continue'." />
+                  <Label fx:id="teachingUnitFX" layoutX="113.0" layoutY="177.0" prefHeight="17.0" prefWidth="200.0" text="Teaching unit: *" />
+      <TextField fx:id="nametxtFX" layoutX="113.0" layoutY="123.0" />
+      <TextField fx:id="teachingtxtFX" layoutX="113.0" layoutY="202.0" />
+      <Label fx:id="preconditionsFX" layoutX="331.0" layoutY="177.0" prefHeight="17.0" prefWidth="245.0" text="Required courses as preconditions:" />
+      <TextField fx:id="hourstxtFX" layoutX="331.0" layoutY="123.0" />
+      <TextField fx:id="preconditionstxtFX" layoutX="331.0" layoutY="202.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label fx:id="weeklyHoursFX" layoutX="331.0" layoutY="96.0" prefHeight="17.0" prefWidth="200.0" text="Weekly hours: *" />
+      <Label fx:id="courseNameFX" layoutX="113.0" layoutY="96.0" prefHeight="17.0" prefWidth="200.0" text="Course name: *" />
+      <Label fx:id="requestFX2" layoutX="113.0" layoutY="306.0" text="Required *" textFill="RED">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
 	</children>
 </Pane>
