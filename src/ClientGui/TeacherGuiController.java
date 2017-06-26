@@ -121,8 +121,7 @@ public class TeacherGuiController implements Initializable{
 		try {
 			myMain.con.getClient().handleMessageFromClientUI(arrsend);
 		} catch (IOException e){e.printStackTrace();}
-		myMain.con.getAnswer(object);
-		currentSemester = (Semester)object;
+		currentSemester = (Semester)myMain.con.getMessage();
 		
 		presentedSemester = currentSemester;
 		
@@ -132,8 +131,7 @@ public class TeacherGuiController implements Initializable{
 		try {
 			myMain.con.getClient().handleMessageFromClientUI(arrsend);
 		} catch (IOException e){e.printStackTrace();}
-		myMain.con.getAnswer(object);
-		semesters = (ArrayList<Semester>)object;
+		semesters = (ArrayList<Semester>)myMain.con.getMessage();
 		
 		semesterList = FXCollections.observableArrayList();
 		if(semesters!=null)
@@ -142,7 +140,7 @@ public class TeacherGuiController implements Initializable{
 			semesterList.add(s);
 		semesterChoice.setItems(semesterList);
 		}
-		/*
+		
 		arrsend = new ArrayList<String>();
 		currentSemester.setYear("2017");
 		currentSemester.setSemesterNumber("A");
@@ -156,9 +154,12 @@ public class TeacherGuiController implements Initializable{
 		myMain.con.getAnswer(courses);
 		
 		data = FXCollections.observableArrayList();
+		if(courses!=null)
+		{
 		for(Course c : courses)
 			data.add(c.getName());
 		
-        coursesList.setItems(data);*/
+        coursesList.setItems(data);
+		}
 	}
 }

@@ -74,7 +74,7 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
     @FXML
     void sendRequest(ActionEvent event) throws IOException {
 
-    	String description;
+    	String description = descriptionTB.getText();
        	if(studentIDExists==false &&courseNumExists==false){
     		Alert alert = new Alert(AlertType.WARNING, "Please fill the form.", ButtonType.OK);
 		alert.showAndWait();
@@ -91,13 +91,13 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
     		Alert alert = new Alert(AlertType.WARNING, "Please choose class of the course.", ButtonType.OK);
     		alert.showAndWait();
     	}		
-
-    	else if((description=descriptionTB.getText())!=""){
+    	else if(description.length() == 0){
     		Alert alert = new Alert(AlertType.WARNING, "Please fill description field.", ButtonType.OK);
     		alert.showAndWait();
     	}	
-     		
-    	else{
+	
+    	else
+    	{
     		//check prerequisites********************************************
     		//if ok continue
     		//else{

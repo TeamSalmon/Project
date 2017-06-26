@@ -281,38 +281,7 @@ public abstract class SecretaryController {
 		myMain.getMange().changeScene((Scene)myMain.getMange().myStack.pop());
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+//Mariya
 
 		static String searchStudentID;
 			

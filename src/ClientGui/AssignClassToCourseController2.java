@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import ServerClient.ClientConsole;
+import ServerClient.ClientConsole; 
 import controllers.SecretaryController;
 import controllers.StudentsClassController;
 import javafx.collections.FXCollections;
@@ -25,11 +25,8 @@ import javafx.scene.layout.Pane;
 import projectsalmon.*;
 import javafx.fxml.Initializable;
 
+public class AssignClassToCourseController2 implements Initializable {
 
-public class AssignClassToCourseController2 implements Initializable{
-	
-		
-	
 	Main myMain = Main.getInstance();
 
 	@FXML
@@ -75,27 +72,32 @@ public class AssignClassToCourseController2 implements Initializable{
 			
 			leftListFX.setItems(FXCollections.observableArrayList(misfitNames)); 
 		}
-		else
-		{
+
+		if (misfitStudents.size() > 0) {
+			ArrayList<String> misfitNames = new ArrayList<String>();
+			for (Student student : misfitStudents) {
+				misfitNames.add(student.getFirst_name() + " " + student.getLast_name() + " " + student.getId());
+			}
+
+			leftListFX.setItems(FXCollections.observableArrayList(misfitNames));
+		} else {
 			leftListFX.setVisible(false);
 			leftLabelFX.setVisible(false);
 			requestFX1.setText("All the students in the calss has the course's preconditions.");
 		}
-		
-    }
-    
 
-    @FXML void nextFrame(ActionEvent event) throws IOException 
-    {
-    	((Node)event.getSource()).getScene().getWindow().hide();
+	}
+
+	@FXML
+	void nextFrame(ActionEvent event) throws IOException {
+		((Node) event.getSource()).getScene().getWindow().hide();
 		myMain.getMange().changeScene(myMain.getMange().initializationScreens(10));
- 	}
-	
-    
-    @FXML void exit(ActionEvent event) throws IOException 
-    {
-    	((Node)event.getSource()).getScene().getWindow().hide();
-    	SecretaryController.assignClassToCourseEXIT(2);
-    }
+	}
+
+	@FXML
+	void exit(ActionEvent event) throws IOException {
+		((Node) event.getSource()).getScene().getWindow().hide();
+		SecretaryController.assignClassToCourseEXIT(2);
+	}
 
 }
