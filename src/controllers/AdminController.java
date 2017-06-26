@@ -8,40 +8,57 @@ import projectsalmon.*;
 public abstract class AdminController {
 
 	private static String courseNumber;
-	private static String courseName;
 	private static String teachingUnit;
-	private static int weeklyHours;
 	private static ArrayList<String> preconditions;
 	
 	
+	private static ArrayList<TeachingUnit> tUnits;
 	
-	public static void setNewCourse(String received_courseName, String received_weeklyHours, String received_teachingUnit, String received_preconditions) 
+	
+	public static String setNewCourse(String received_courseName, String received_weeklyHours, String received_teachingUnit, String received_preconditions) 
 	{
-		if(check_teachingUnit(received_teachingUnit))
+		TeachingUnit tu = check_teachingUnit(received_teachingUnit);
+		if(tu == null)
 		{
-			teachingUnit = received_teachingUnit;
-		}
-		else
-		{
-			//return problem with teaching unit!!!
+			// report problem - this teaching unit doesn't exist
+			return "teaching unit";
 		}
 		
-		courseName = received_courseName;
-		
-		weeklyHours = Integer.valueOf(received_weeklyHours);
+		float weeklyHours = Float.valueOf(received_weeklyHours);
 		
 		// split to number of courses and save as an ArrayList
 		String[] splited = received_preconditions.split("\\s*(=>|,|\\s)\\s*");		
 		preconditions = (ArrayList<String>) Arrays.asList(splited);
 		
 		courseNumber = generateCourseNumber();
+		
+		
+		Course new_course = new Course(courseNumber, tu, weeklyHours, received_courseName);
+		System.out.println(new_course.toString());
+		
+		return "ok";
 	}
 
 	
 	// check if the teaching unit number exists in DB
-	private static boolean check_teachingUnit(String received_teachingUnit)
+	private static TeachingUnit check_teachingUnit(String received_teachingUnit)
 	{
-		return false;
+		//ask DB: list of teaching units existing in DB
+		
+		////////////////////////////////////////////////////////////////
+		tUnits = new ArrayList<TeachingUnit>();
+		tUnits.add(new TeachingUnit("01","Math"));
+		tUnits.add(new TeachingUnit("02","Physics"));
+		tUnits.add(new TeachingUnit("01","History"));
+		////////////////////////////////////////////////////////////////
+
+		for(TeachingUnit tu : tUnits)
+		{
+			// the received "
+			if(tu.getNumber() == received_teachingUnit || tu.getName() == received_teachingUnit)
+				return tu;
+		}
+		return null;
 	}
 	
 	
@@ -80,4 +97,5 @@ public abstract class AdminController {
 		}
 		return teachingUnit + id;
 	}
+
 }

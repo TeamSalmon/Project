@@ -15,10 +15,14 @@ public abstract class SecretaryController {
 
 	static Main myMain = Main.getInstance();
 
+	private static Object received_object;
+	
 	private static ArrayList<Course> list_of_courses;
 	private static ArrayList<StudentsClass> list_of_classes;
 	private static ArrayList<Teacher> list_of_teachers;
 	private static ArrayList<Student> all_students_of_class;
+	private static ArrayList<Course> preconditions;
+	private static ArrayList<Course> student_former_courses;
 	
 	private static ArrayList<Student> approved_students;
 	
@@ -41,8 +45,9 @@ public abstract class SecretaryController {
 		ArrayList<String> query_coursesByID = new ArrayList<String>();
 		query_coursesByID.add("courseByID");
 		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_coursesByID);
-		myMain.getConnection().getAnswer(list_of_courses);
-
+		received_object = myMain.getConnection().getMessage();
+		list_of_courses = (ArrayList<Course>)received_object;
+		
 		/////////////////////////////////////////////////////////////////////////////////
 		//list_of_courses = new ArrayList<Course>();
 		//exampli gracia: list_of_courses.add(new Course("999",new TeachingUnit("some","thing"), 2, "poetry"));
@@ -59,7 +64,8 @@ public abstract class SecretaryController {
 		ArrayList<String> query_studentClassesByID = new ArrayList<String>();
 		query_studentClassesByID.add("studentClassesByID");
 		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_studentClassesByID);
-		myMain.getConnection().getAnswer(list_of_classes);
+		received_object = myMain.getConnection().getMessage();
+		list_of_classes = (ArrayList<StudentsClass>)received_object;
 
 		/////////////////////////////////////////////////////////////////////////////////
 		//list_of_classes = new ArrayList<StudentsClass>();
@@ -98,23 +104,33 @@ public abstract class SecretaryController {
 		
 		ArrayList<String> query_studentsOfClass = new ArrayList<String>();
 		query_studentsOfClass.add("studentsOfClass");
-		query_studentsOfClass.add("chosen_class");
+		query_studentsOfClass.add(chosen_class.getClassId().toString());
 		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_studentsOfClass);
-		myMain.getConnection().getAnswer(all_students_of_class);
+		received_object = myMain.getConnection().getMessage();
+		all_students_of_class = (ArrayList<Student>)received_object;
 		
 		/////////////////////////////////////////////////////////////////////////////////////
-		//ArrayList<Student> all_students_of_class = new ArrayList<Student>();
+		//ArrayList<Student> all_students_of_class = new ArsrayList<Student>();
 		//all_students_of_class.add(new Student("001","Hayevgeni","gitin","124"));
 		/////////////////////////////////////////////////////////////////////////////////////
 		
 		
 		// ask DB: Get list the courses that are the preconditions for the specified course
-		ArrayList<Course> preconditions = new ArrayList<Course>();
 		// preconditions = coursePreconditions(chosen_course);
 		
-		preconditions.add(new Course("111",new TeachingUnit("some","thing"), 2, "Robin 101"));
-		preconditions.add(new Course("222",new TeachingUnit("some","thing"), 2, "guitar"));
+		ArrayList<String> query_coursePreconditions = new ArrayList<String>();
+		query_coursePreconditions.add("coursePreconditions");
+		query_coursePreconditions.add(chosen_course.getCourseNumber().toString());
+		myMain.getConnection().getClient().handleMessageFromClientUI((Object) query_coursePreconditions);
+		received_object = myMain.getConnection().getMessage();
+		preconditions = (ArrayList<Course>)received_object;
+
 		
+		/////////////////////////////////////////////////////////////////////////////////////
+		//preconditions.add(new Course("111",new TeachingUnit("some","thing"), 2, "Robin 101"));
+		//preconditions.add(new Course("222",new TeachingUnit("some","thing"), 2, "guitar"));
+		/////////////////////////////////////////////////////////////////////////////////////
+
 		
 		// List of 'Student's that lack the preconditions of the course
 		ArrayList<Student> misfit_students = new ArrayList<Student>();
@@ -132,16 +148,21 @@ public abstract class SecretaryController {
 
 			int exists = 0;
 
-			//ArrayList<Course> student_former_courses;
 			// ask DB: Get list of all the courses that the student ALREADY FINISHED (not including the current semester)
 			// save it to 'student_former_courses'
 			//student_former_courses = DB.studentOldCourses(student);
 			
+			ArrayList<String> query_studentOldCourses = new ArrayList<String>();
+			query_studentOldCourses.add("studentOldCourses");
+			query_studentOldCourses.add(student.getId().toString());
+			myMain.getConnection().getClient().handleMessageFromClientUI((Object) query_studentOldCourses);
+			received_object = myMain.getConnection().getMessage();
+			student_former_courses = (ArrayList<Course>)received_object;
 			
 			/////////////////////////////////////////////////////////////////////////////////////
-			ArrayList<Course> student_former_courses = new ArrayList<Course>();
+			//ArrayList<Course> student_former_courses = new ArrayList<Course>();
 			//student_former_courses.add(new Course("111",new TeachingUnit("some","thing"), 2, "Robin 101"));
-			student_former_courses.add(new Course("222",new TeachingUnit("some","thing"), 2, "guitar"));
+			//student_former_courses.add(new Course("222",new TeachingUnit("some","thing"), 2, "guitar"));
 			/////////////////////////////////////////////////////////////////////////////////////
 			
 			

@@ -59,8 +59,18 @@ public class AssignClassToCourseController1 implements Initializable{
     
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {			
-		courses = SecretaryController.getOptionalCourses();
-		classes = SecretaryController.getOptionalClasses();
+		try {
+			courses = SecretaryController.getOptionalCourses();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			classes = SecretaryController.getOptionalClasses();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		for (Course course : courses)
     	{

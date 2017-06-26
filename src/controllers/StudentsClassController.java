@@ -11,6 +11,11 @@ import projectsalmon.*;
 public abstract class StudentsClassController {
 		
 	static Main myMain = Main.getInstance();
+
+	private static ArrayList<Student> OptionalStudents;
+	private static ArrayList<StudentsClass> list_of_classes;
+	private static Object received_object;	
+	
 	
 	static StudentsClass new_class;
 	static String new_grade;
@@ -22,33 +27,45 @@ public abstract class StudentsClassController {
 	}
 	
 	
-	public static ArrayList<Student> getOptionalStudents()
+	public static ArrayList<Student> getOptionalStudents() throws IOException
 	{
 		// ask DB: get a list of students in this grade that are not attached to 'studentsClass' instance already 
 		//ArrayList<Student> OptionalStudents = DB.studnetsWithoutClass(grade);
 		
+		ArrayList<String> query_studentsWithoutClass = new ArrayList<String>();
+		query_studentsWithoutClass.add("studentClassesByID");
+		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_studentsWithoutClass);
+		received_object = myMain.getConnection().getMessage();
+		OptionalStudents = (ArrayList<Student>)received_object;
+		
 		/////////////////////////////////////////////////////////////////////////////////////
-		ArrayList<Student> OptionalStudents = new ArrayList<Student>();
-		OptionalStudents.add(new Student("001","yevgeni","gitin","124"));
-		OptionalStudents.add(new Student("002","inbar","elfasi","124"));
-		OptionalStudents.add(new Student("003","mariya","portnoy","124"));
-		OptionalStudents.add(new Student("004","galit","elfarsi","124"));
-		OptionalStudents.add(new Student("005","tamir","zamoshzinsky","124"));
-		OptionalStudents.add(new Student("006","elia","amar","124"));    	
+		//ArrayList<Student> OptionalStudents = new ArrayList<Student>();
+		//OptionalStudents.add(new Student("001","yevgeni","gitin","124"));
+		//OptionalStudents.add(new Student("002","inbar","elfasi","124"));
+		//OptionalStudents.add(new Student("003","mariya","portnoy","124"));
+		//OptionalStudents.add(new Student("004","galit","elfarsi","124"));
+		//OptionalStudents.add(new Student("005","tamir","zamoshzinsky","124"));
+		//OptionalStudents.add(new Student("006","elia","amar","124"));    	
 		/////////////////////////////////////////////////////////////////////////////////////
 		
 		return OptionalStudents;
 	}
 	
 	
-	public static StudentsClass createNewClass(ArrayList<Student> chosen_students)
+	public static StudentsClass createNewClass(ArrayList<Student> chosen_students) throws IOException
 	{
 		
 		// ask DB: Get list of all the classes in the DB - SORTED BY 'studentsClassId'
 		//ArrayList<StudentsClass> list_of_classes = DB.classesByID();
 		
+		ArrayList<String> query_studentClassesByID = new ArrayList<String>();
+		query_studentClassesByID.add("studentClassesByID");
+		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_studentClassesByID);
+		received_object = myMain.getConnection().getMessage();
+		list_of_classes = (ArrayList<StudentsClass>)received_object;
+		
 		/////////////////////////////////////////////////////////////////////////////////////
-		ArrayList<StudentsClass> list_of_classes = new ArrayList<StudentsClass>();
+		//ArrayList<StudentsClass> list_of_classes = new ArrayList<StudentsClass>();
 		/////////////////////////////////////////////////////////////////////////////////////
 
 		String className = generateClassName(list_of_classes, new_class);

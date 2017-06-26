@@ -57,7 +57,13 @@ public class AssignClassToCourseController2 implements Initializable{
     
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {
-		ArrayList<Student>  misfitStudents = SecretaryController.getMisfitStudents();
+		ArrayList<Student> misfitStudents = null;
+		try {
+			misfitStudents = SecretaryController.getMisfitStudents();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if ( misfitStudents.size() > 0 )
 		{

@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import controllers.SecretayController;
+import controllers.SecretaryController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,12 +56,12 @@ public class removeStudentFromCourseController   implements Initializable{
     @FXML
     void sendRequest(ActionEvent event) {
     	//check if student in the course group
-    		if(!(studentInTheCourse = SecretayController.searchStudentInCourse(courseNumberTB.getText(),studentIDTB.getText()))){
+    		if(!(studentInTheCourse = SecretaryController.searchStudentInCourse(courseNumberTB.getText(),studentIDTB.getText()))){
     			Alert alert = new Alert(AlertType.WARNING, "Student "+ studentNameTB.getText()+" is not in this course.", ButtonType.OK);
         		alert.showAndWait();
         	}
     		else{
-    			studentDelitedCourse = SecretayController.deleteStudentfromCourse(courseNumberTB.getText(),studentIDTB.getText());
+    			studentDelitedCourse = SecretaryController.deleteStudentfromCourse(courseNumberTB.getText(),studentIDTB.getText());
     			if(studentDelitedCourse){
     				Alert alert = new Alert(AlertType.NONE, "Your request has been sent successfully.", ButtonType.OK);
 					alert.showAndWait();
@@ -81,7 +80,7 @@ public class removeStudentFromCourseController   implements Initializable{
     	String id;
     	if ((id = studentIDTB.getText()) != "")
     	{
-    		Student newStudent = SecretayController.searchStudentID(id);
+    		Student newStudent = SecretaryController.searchStudentID(id);
     		if (newStudent != null){
     			studentIDExists=true;
     			studentNameTB.setText( newStudent.getFirst_name() +" "+ newStudent.getLast_name() );

@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import javax.imageio.IIOException;
 
-import controllers.SecretayController;
+import controllers.SecretaryController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -104,10 +104,10 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
     		//Alert alert = new Alert(AlertType.WARNING, "Student "+studentNameTB.getText()+" don't have proper prerequisites", ButtonType.OK);
 
 			// alert.showAndWait();}
-			if (!(studentInTheCourse = SecretayController.searchStudentInCourse(courseNumberTB.getText(),
+			if (!(studentInTheCourse = SecretaryController.searchStudentInCourse(courseNumberTB.getText(),
 					studentIDTB.getText()))) {
 
-				requestSent = SecretayController.sendStudentRequest(studentIDTB.getText(), classCMB.getValue(),
+				requestSent = SecretaryController.sendStudentRequest(studentIDTB.getText(), classCMB.getValue(),
 						descriptionTB.getText());
 				if (requestSent) {
 					Alert alert = new Alert(AlertType.NONE, "Your request has been sent successfully.", ButtonType.OK);
@@ -141,7 +141,7 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
     	String id;
     	if ((id = studentIDTB.getText()) != "")
     	{
-    		Student newStudent = SecretayController.searchStudentID(id);
+    		Student newStudent = SecretaryController.searchStudentID(id);
     		if (newStudent != null){
     			studentIDExists=true;
     			studentNameTB.setText( newStudent.getFirst_name() +" "+ newStudent.getLast_name() );
@@ -162,7 +162,7 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
 		String courseNum;
 		
     	if ((courseNum = courseNumberTB.getText()) != ""){
-			classCourseArr = SecretayController.searchCourseNum(courseNum);
+			classCourseArr = SecretaryController.searchCourseNum(courseNum);
 			
 			if (classCourseArr != null) {
 				courseNumExists = true;
