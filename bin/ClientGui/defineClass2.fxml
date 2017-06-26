@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineClass2Controller">
+   <children>
+                  <Button fx:id="continuePT" layoutX="305.0" layoutY="343.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
+                  <Button fx:id="exitPT" layoutX="249.0" layoutY="343.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+                  <Label fx:id="requestFX1" layoutX="65.0" layoutY="21.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="471.0" text="Select a student and press 'Move' to transfer him/her between the lists." />
+                  <ListView fx:id="leftListFX" layoutX="65.0" layoutY="101.0" pickOnBounds="false" prefHeight="215.0" prefWidth="200.0" />
+                  <ListView fx:id="rightListFX" layoutX="337.0" layoutY="101.0" prefHeight="215.0" prefWidth="200.0" />
+                  <Label fx:id="leftLabelFX" layoutX="66.0" layoutY="82.0" prefHeight="17.0" prefWidth="200.0" text="Optional students" />
+                  <Label fx:id="rightLabelFX" layoutX="337.0" layoutY="84.0" prefHeight="17.0" prefWidth="200.0" text="New class" />
+      <Button fx:id="moveFX" layoutX="278.0" layoutY="136.0" mnemonicParsing="false" onAction="#moveStudents" text="Move" />
+      <Label fx:id="requestFX2" layoutX="65.0" layoutY="41.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="355.0" text="Press 'Continue' when done." />
+      <Button fx:id="exitPT1" layoutX="283.0" layoutY="343.0" mnemonicParsing="false" onAction="#exit" text="Exit" visible="false" />
+	</children>
+</Pane>

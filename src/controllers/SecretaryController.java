@@ -18,6 +18,7 @@ public abstract class SecretaryController {
 	private static ArrayList<Course> list_of_courses;
 	private static ArrayList<StudentsClass> list_of_classes;
 	private static ArrayList<Teacher> list_of_teachers;
+	private static ArrayList<Student> all_students_of_class;
 	
 	private static ArrayList<Student> approved_students;
 	
@@ -31,24 +32,39 @@ public abstract class SecretaryController {
 	private static boolean save_changes = false;
 	
 	
-	public static ArrayList<Course> getOptionalCourses()
+	public static ArrayList<Course> getOptionalCourses() throws IOException
 	{
+		
 		// ask DB: Get list of all the courses in the DB (sorted by anything???)
 		// save it to 'list_of_courses'
-		//list_of_courses = DB.coursesByID(); 
-		list_of_courses = new ArrayList<Course>();
-		list_of_courses.add(new Course("999",new TeachingUnit("some","thing"), 2, "poetry"));
+		
+		ArrayList<String> query_coursesByID = new ArrayList<String>();
+		query_coursesByID.add("courseByID");
+		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_coursesByID);
+		myMain.getConnection().getAnswer(list_of_courses);
+
+		/////////////////////////////////////////////////////////////////////////////////
+		//list_of_courses = new ArrayList<Course>();
+		//exampli gracia: list_of_courses.add(new Course("999",new TeachingUnit("some","thing"), 2, "poetry"));
+		/////////////////////////////////////////////////////////////////////////////////
 		return list_of_courses;
 	}
 	
 	
-	public static ArrayList<StudentsClass> getOptionalClasses()
+	public static ArrayList<StudentsClass> getOptionalClasses() throws IOException
 	{	
 		// ask DB: Get list of all the classes in the DB (sorted by ID)
 		// save it to 'list_of_courses'
-		// list_of_classes = DB.classesByID();
-		list_of_classes = new ArrayList<StudentsClass>();
-		list_of_classes.add(new StudentsClass("A1","A","5678"));
+	
+		ArrayList<String> query_studentClassesByID = new ArrayList<String>();
+		query_studentClassesByID.add("studentClassesByID");
+		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_studentClassesByID);
+		myMain.getConnection().getAnswer(list_of_classes);
+
+		/////////////////////////////////////////////////////////////////////////////////
+		//list_of_classes = new ArrayList<StudentsClass>();
+		//list_of_classes.add(new StudentsClass("A1","A","5678"));
+		/////////////////////////////////////////////////////////////////////////////////
 		return list_of_classes;
 	}
 	
@@ -75,14 +91,20 @@ public abstract class SecretaryController {
 	}
 	
 	
-	public static ArrayList<Student> getMisfitStudents()
+	public static ArrayList<Student> getMisfitStudents() throws IOException
 	{
 		// ask DB: Get list of all the students in a specified class (sorted ? ? ?)
 		//ArrayList<Student> all_students_of_class = DB.studentsOfClass(StudentsClass);
 		
+		ArrayList<String> query_studentsOfClass = new ArrayList<String>();
+		query_studentsOfClass.add("studentsOfClass");
+		query_studentsOfClass.add("chosen_class");
+		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_studentsOfClass);
+		myMain.getConnection().getAnswer(all_students_of_class);
+		
 		/////////////////////////////////////////////////////////////////////////////////////
-		ArrayList<Student> all_students_of_class = new ArrayList<Student>();
-		all_students_of_class.add(new Student("001","Hayevgeni","gitin","124"));
+		//ArrayList<Student> all_students_of_class = new ArrayList<Student>();
+		//all_students_of_class.add(new Student("001","Hayevgeni","gitin","124"));
 		/////////////////////////////////////////////////////////////////////////////////////
 		
 		
