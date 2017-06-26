@@ -74,7 +74,7 @@ public class Controller {
 
 
             	try{
-            		
+            		/*
             		// file to byte[]  (file-->byte[]-->server)
             		File file = new File("c:/newfile.txt");
             		Path p =Paths.get(file.getAbsolutePath());
@@ -85,7 +85,7 @@ public class Controller {
             		//when get byte[]  (byte[]-->client-->file)
             		//getting from server byte[] and make it file
             		Files.write(new File("c:/newfile.txt").toPath(), data);
-            		
+            		*/
             		
             		
             		
