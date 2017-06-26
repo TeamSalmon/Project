@@ -19,7 +19,7 @@ public class guiMange
     public static final String Page2 = "halo.fxml";	
     public static final String Page3 = "TeacherGui.fxml";
     public static final String Page4 = "reportMenu.fxml";
-    public static final String Page5 = "assignSingleStudentToCourseGUI.fxml";
+    public static final String Page5 = "assignSingleStudentToCourseRequestGUI.fxml";
     public static final String Page6 = "removeStudentFromCourseGUI.fxml";
     public static final String Page7 = "defineClass1.fxml";
     public static final String Page8 = "defineClass2.fxml";
