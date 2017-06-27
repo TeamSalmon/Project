@@ -26,59 +26,75 @@ import projectsalmon.*;
 import projectsalmon.StudentsClass;
 import javafx.fxml.Initializable;
 
+public class defineCourseController1 {
 
-	public class defineCourseController1 {
+	@FXML
+	private TextField nametxtFX;
 
-		   @FXML
-		    private TextField nametxtFX;
+	@FXML
+	private TextField teachingtxtFX;
 
-		    @FXML
-		    private TextField teachingtxtFX;
+	@FXML
+	private Label teachingUnitFX;
 
-		    @FXML
-		    private Label teachingUnitFX;
+	@FXML
+	private Label requestFX2;
 
-		    @FXML
-		    private Label requestFX2;
+	@FXML
+	private Label requestFX1;
 
-		    @FXML
-		    private Label requestFX1;
+	@FXML
+	private Button exitPT;
 
-		    @FXML
-		    private Button exitPT;
+	@FXML
+	private Label preconditionsFX;
 
-		    @FXML
-		    private Label preconditionsFX;
+	@FXML
+	private Label weeklyHoursFX;
 
-		    @FXML
-		    private Label weeklyHoursFX;
+	@FXML
+	private TextField preconditionstxtFX;
 
-		    @FXML
-		    private TextField preconditionstxtFX;
+	@FXML
+	private Pane paneFX;
 
-		    @FXML
-		    private Pane paneFX;
+	@FXML
+	private Button continuePT;
 
-		    @FXML
-		    private Button continuePT;
+	@FXML
+	private TextField hourstxtFX;
 
-		    @FXML
-		    private TextField hourstxtFX;
+	@FXML
+	private Label courseNameFX;
 
-		    @FXML
-		    private Label courseNameFX;
+	
+	
+	@FXML
+	void nextFrame(ActionEvent event) throws IOException {
 
-	    
-	    @FXML
-	    void nextFrame(ActionEvent event) {
+		//if (nametxtFX.getText() == null || hourstxtFX.getText() == null || teachingtxtFX.getText() == null) 
+		{
+			requestFX1.setText("Please fill all the fields and try again.");
+		}
+		else 
+		{
+			String result = AdminController.setNewCourse(courseNameFX.getText(), weeklyHoursFX.getText(),
+					teachingUnitFX.getText(), preconditionstxtFX.getText());
+			if (result == "teaching unit")
+				requestFX1.setText("The chosen teaching unit doesn't exist.");
 
-	    	if(nametxtFX.getText() == null || hourstxtFX.getText() == null || teachingtxtFX.getText() == null)
-	    	{
-	    		requestFX1.setText("Please fill all the fields and try again.");
-	    	}
-	    
-	    	AdminController.setNewCourse(courseNameFX.getText(), weeklyHoursFX.getText(), teachingUnitFX.getText(), preconditionstxtFX.getText());
-	    }
+			else 
+			{
+				if (result == "preconditions")
+					requestFX1.setText("The chosen preconditions courses don't exist.");
+
+				else 
+				{
+					//continue regulary
+				}
+			}
+		}
+	}
 
 	    @FXML
 	    void exit(ActionEvent event) throws IOException 

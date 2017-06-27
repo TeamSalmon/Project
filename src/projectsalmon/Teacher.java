@@ -21,6 +21,13 @@ public class Teacher extends User{
 		teachable = new ArrayList<Course>();
 	}
 	
+	public Teacher(float hours, String id, String first, String last, String password)
+	{
+		super(id,first,last,password);
+		weeklyHours = 0;
+	}
+	
+	
 	public void addTeachable(Course course)
 	{
 		teachable.add(course);
