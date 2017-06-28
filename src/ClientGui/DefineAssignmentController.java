@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import projectsalmon.Assignment;
+import projectsalmon.Course;
 
 public class DefineAssignmentController implements Initializable
 {
@@ -50,19 +51,23 @@ public class DefineAssignmentController implements Initializable
     private Button cancelBtn;
     private String assignmentFilePath;
     private Assignment assignment;
-    private String courseNum;
-    private String courseName;
+    private Course course;
     private TeacherSingleCourseTabController parentController;
 
-    public DefineAssignmentController(String courseNum, String courseName, TeacherSingleCourseTabController parentController)
+    public DefineAssignmentController(Course course, TeacherSingleCourseTabController parentController)
     {
-    	this.courseName = courseName;
-    	this.courseNum = courseNum;
+    	/**
+    	 * Constructor used to get information from a previous window controller
+    	 */
+    	this.course = course;
     	this.parentController = parentController;
     }
     @FXML
     void browse(ActionEvent event)
     {
+    	/**
+    	 * Using fileChooser in order to upload a file
+    	 */
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Open Resource File");
     	Stage s = new Stage();
@@ -73,13 +78,16 @@ public class DefineAssignmentController implements Initializable
     @FXML
     void done(ActionEvent event)
     {
+    	/**
+    	 * Getting all values from the window's fields and creating the new assignment to be added:
+    	 */
     	if(checkFields())
     	{
     	Date date = Date.from(deadlineField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
     	Calendar cal = Calendar.getInstance();
     	cal.setTime(date);
     	File file = new File(assignmentFilePath);
-    	assignment = new Assignment("1",courseNum,nameField.getText(),cal,Integer.parseInt(precentageField.getText()),instructionsField.getText(),file);
+    	assignment = new Assignment("1",course.getCourseNumber(),nameField.getText(),cal,Integer.parseInt(precentageField.getText()),instructionsField.getText(),file);
     	//call controllers to make sure everything is ok
     	//save the assignment in db
     	parentController.addAssignment(assignment);
@@ -95,13 +103,16 @@ public class DefineAssignmentController implements Initializable
     }
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
-		title.setText("Define assignment in " + courseName);
+		title.setText("Define assignment in " + course.getName());
 	}
     @FXML
     void deleteAssignment(ActionEvent event){/*Nothing to see here. move on.*/}
     
     public boolean checkFields()
     {
+    	/**
+    	 * Method used to make sure all received values are valid
+    	 */
     	boolean flag = true;
     	
     	if (nameField.getText() == null || nameField.getText().trim().isEmpty())

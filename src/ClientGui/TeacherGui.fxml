@@ -27,7 +27,6 @@
                      </font>
                   </Label>
                   <Separator layoutY="38.0" prefHeight="3.0" prefWidth="1282.0" />
-                  <Button id="test" fx:id="scheduleBtn" mnemonicParsing="false" onAction="#openSchedule" prefHeight="39.0" prefWidth="106.0" text="Open schedule" textFill="#22078c" />
                   <Separator layoutX="-1.0" layoutY="77.0" prefHeight="3.0" prefWidth="1270.0" />
                </children></AnchorPane>
       </content>
