@@ -27,7 +27,10 @@ public class guiMange
     public static final String Page10 = "AssignClassToCourse2.fxml";
     public static final String Page11 = "AssignClassToCourse3.fxml";
     public static final String Page12 = "StudentGui.fxml";
-    public static final String Page15 = "defineCourse1.fxml";
+    public static final String Page15 = "defineCourse.fxml";
+    public static final String Page16 = "blockOrUnblockUser.fxml";
+    public static final String Page17 = "blockOrUnblockParent.fxml";
+
 
     public static final String CSS = "test.css";
 	public static final String PageMinus100 = "LoginGUI.fxml";
@@ -103,6 +106,14 @@ public class guiMange
     	
     	case 15:
     		xmlNum = Page15;
+    		break;	
+    		
+    	case 16:
+    		xmlNum = Page16;
+    		break;	
+    		
+    	case 17:
+    		xmlNum = Page17;
     		break;	
     		
     	case -100:
