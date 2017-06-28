@@ -25,6 +25,9 @@ import javafx.stage.WindowEvent;
 
 public class TeacherSingleCourseTabController implements Initializable
 {
+	/**
+	 * Controller of the window presenting a single course information, such as assignments defined in the specific course
+	 */
 	Main myMain = Main.getInstance();
 	TabManager manager = TabManager.getInstance();
 	
@@ -37,65 +40,72 @@ public class TeacherSingleCourseTabController implements Initializable
     @FXML
     private AnchorPane pane;
     private Tab current;
-    private String courseNum;
-    private String courseName;
     private ArrayList<Assignment> assignments;
     private ObservableList<Assignment> data;
 	private static Tab singleAssignmentTab;
+	private Course course;
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		current = manager.getContainer().getTabs().get( manager.getContainer().getTabs().size()-1);
-		current.setText((String)manager.getLatestSelection());
-		courseNum = ((String)(manager.getLatestSelection())).split(" ")[1];
-		courseName = ((String)(manager.getLatestSelection())).split(" ")[0];
+		current.setText(((Course)manager.getLatestSelection()).toString());
+		course = (Course)manager.getLatestSelection();
+		if(manager.getEditable())
+			newAssignmentBtn.setVisible(false);
+		else newAssignmentBtn.setVisible(true);
 		Main.getTheStage().setOnCloseRequest(new EventHandler<WindowEvent>()
 		{public void handle(WindowEvent we){System.out.println("Stage is closing");}});
-		/*
-		ArrayList<String> askDB = new ArrayList<String>();
-		askDB.add(myMain.getUser().getId());
-		//add more parameters 
 		
-		try
-		{
-			
-		}
-		catch(IOException e)
-		{
-			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-		}
+		/**
+		 * Getting all assignments defined in the current course:
+		 */
+		ArrayList<String> arrsend = new ArrayList<String>();
+		arrsend.add("getCourseAssignments");
+		arrsend.add(course.getCourseNumber());
+		
+		try {
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e){e.printStackTrace();}
+		assignments = (ArrayList<Assignment>)myMain.con.getMessage();
 		
 		data = FXCollections.observableArrayList();
-		
-		for(Course c : courses)
-			data.add(c);
-		
-        coursesList.setItems(data);*/
-		data = FXCollections.observableArrayList();
+		for(Assignment a : assignments)
+			data.add(a);
         assignmentsList.setItems(data);
-		manager.getContainer().getSelectionModel().select(current);
 	}
 	@FXML
 	void defineNewAssignment(ActionEvent event)
 	{
+		/**
+		 * Given that the information presented belongs to the current semester,
+		 * the teacher is given the option to add a new assignment to the course.
+		 * 
+		 * Since the defining of the new assignment occurs in a new window, in order to be able to
+		 * communicate with the new window, we create an instance of the window's controller,
+		 * and transfer information throw it's constructor.
+		 */
 		try{
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DefineAssignment.fxml"));     
-			DefineAssignmentController controller = new DefineAssignmentController(courseNum,courseName,this);
+			DefineAssignmentController controller = new DefineAssignmentController(course,this);
 			fxmlLoader.setController(controller);
 			Parent root = (Parent)fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));
-	        stage.setTitle("new assignment");
+	        stage.setTitle("New assignment");
 	        	  
 	        stage.show();
-	        }
-	        catch(IOException e){e.printStackTrace();}
+	        }catch(IOException e){e.printStackTrace();}
 	}
 	@FXML
 	void openAssignment(Event event)
 	{
+		/**
+		 * When clicking on an assignment, it's details are presented in a new tab.
+		 * In the new tab, the detail are only editable if the semester is the current one
+		 */
 		manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentTabs.fxml"));
     	TeacherAssignmentController controller = new TeacherAssignmentController(assignmentsList.getSelectionModel().getSelectedItem(),this);
@@ -114,11 +124,18 @@ public class TeacherSingleCourseTabController implements Initializable
 
 	public void addAssignment(Assignment assignment)
 	{
+		/**
+		 * This method is used by the "DefineNewAssignment" controller in order to add the newly defined assignment
+		 * to the list.
+		 */
 		data.add(assignment);
 		assignmentsList.setItems(data);
 	}
 	public void updateAssignment(Assignment assignment)
 	{
+		/**
+		 * This method is used by the "EditAssignment" controller in order to update a changed assignment in the list.
+		 */
 		for(Assignment a : data)
 			if(a.getAssignmntId().equals(assignment.getAssignmntId()))
 			{
@@ -130,7 +147,9 @@ public class TeacherSingleCourseTabController implements Initializable
 	}
 	public void deleteAssignment(Assignment assignment)
 	{
-		//remove assignment from db
+		/**
+		 * This method is used by the "EditAssignment" controller in order to remove an assignment in the list.
+		 */
 		for(Assignment a : data)
 			if(a.getAssignmntId().equals(assignment.getAssignmntId()))
 			{
