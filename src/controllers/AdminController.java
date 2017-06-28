@@ -1,47 +1,77 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ClientGui.Main;
 import projectsalmon.*;
 
 public abstract class AdminController {
 
 	private static String courseNumber;
-	private static String courseName;
 	private static String teachingUnit;
-	private static int weeklyHours;
-	private static ArrayList<String> preconditions;
+	private static ArrayList<String> preconditionsNames;
+	private static ArrayList<Course> preconditionsCourses;
+	private static ArrayList<TeachingUnit> tUnits;
+
+	
+	static Main myMain = Main.getInstance();
+	private static Object received_object;
 	
 	
 	
-	public static void setNewCourse(String received_courseName, String received_weeklyHours, String received_teachingUnit, String received_preconditions) 
+	public static String setNewCourse(String received_courseName, String received_weeklyHours, String received_teachingUnit, String received_preconditions) throws IOException 
 	{
-		if(check_teachingUnit(received_teachingUnit))
+		TeachingUnit tu = check_teachingUnit(received_teachingUnit);
+		if(tu == null)
 		{
-			teachingUnit = received_teachingUnit;
-		}
-		else
-		{
-			//return problem with teaching unit!!!
+			// report problem - this teaching unit doesn't exist
+			return "teaching unit";
 		}
 		
-		courseName = received_courseName;
-		
-		weeklyHours = Integer.valueOf(received_weeklyHours);
+		float weeklyHours = Float.valueOf(received_weeklyHours);
 		
 		// split to number of courses and save as an ArrayList
 		String[] splited = received_preconditions.split("\\s*(=>|,|\\s)\\s*");		
-		preconditions = (ArrayList<String>) Arrays.asList(splited);
+		preconditionsNames = (ArrayList<String>) Arrays.asList(splited);
 		
 		courseNumber = generateCourseNumber();
+		
+		if (set_preconditions() == false)
+		{
+			// report problem - at least one precondition doesn't exist
+			return "preconditions";
+		}
+		
+		Course new_course = new Course(courseNumber, tu, weeklyHours, received_courseName);
+		new_course.setPreCondition(preconditionsCourses);
+		
+		// Send new course to DB
+		
+		return "ok";
 	}
 
 	
 	// check if the teaching unit number exists in DB
-	private static boolean check_teachingUnit(String received_teachingUnit)
+	private static TeachingUnit check_teachingUnit(String received_teachingUnit)
 	{
-		return false;
+		//ask DB: list of teaching units existing in DB
+		
+		////////////////////////////////////////////////////////////////
+		tUnits = new ArrayList<TeachingUnit>();
+		tUnits.add(new TeachingUnit("01","Math"));
+		tUnits.add(new TeachingUnit("02","Physics"));
+		tUnits.add(new TeachingUnit("01","History"));
+		////////////////////////////////////////////////////////////////
+
+		for(TeachingUnit tu : tUnits)
+		{
+			// the received "
+			if(tu.getNumber() == received_teachingUnit || tu.getName() == received_teachingUnit)
+				return tu;
+		}
+		return null;
 	}
 	
 	
@@ -80,4 +110,35 @@ public abstract class AdminController {
 		}
 		return teachingUnit + id;
 	}
+
+
+	// check if the teaching unit number exists in DB
+	private static boolean set_preconditions() throws IOException 
+	{
+		// ask DB: Get list of all the courses in the DB (sorted by anything???)
+		// save it to 'list_of_courses'
+		ArrayList<Course> list_of_courses;
+		ArrayList<String> query_coursesByID = new ArrayList<String>();
+		query_coursesByID.add("courseByID");
+		myMain.getConnection().getClient().handleMessageFromClientUI((Object) query_coursesByID);
+		received_object = myMain.getConnection().getMessage();
+		list_of_courses = (ArrayList<Course>) received_object;
+
+		// Get reference to the courses that their names were received
+		for (Course course : list_of_courses) {
+			for (String precondition : preconditionsNames) {
+				if (precondition == course.getName()) {
+					preconditionsCourses.add(course);
+					break;
+				}
+			}
+		}
+		
+		// meaning: some courses were asked but don't exit
+		if (preconditionsCourses.size() > preconditionsNames.size())
+			return false;
+		else
+			return true;
+	}
+
 }

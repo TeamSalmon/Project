@@ -14,6 +14,7 @@ public class StudentsClass
 	private String level;
 	private String className;
 	private int studentsAmount;
+	private ArrayList<Integer> grades;
 	
 	public StudentsClass(String className, String level, String studentsClassId)
 	{
@@ -62,5 +63,15 @@ public class StudentsClass
 
 	public void setStudents(ArrayList<Student> students) {
 		this.students = students;
+	}
+
+
+	public ArrayList<Integer> getGrades() {
+		return grades;
+	}
+
+
+	public void setGrades(ArrayList<Integer> grades) {
+		this.grades = grades;
 	}
 }

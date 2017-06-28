@@ -75,7 +75,12 @@ public class DefineClass2Controller implements Initializable{
     {
 		//leftListFX.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-    	students = StudentsClassController.getOptionalStudents();
+    	try {
+			students = StudentsClassController.getOptionalStudents();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	details = new ArrayList<String>();
 		
