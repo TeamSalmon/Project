@@ -26,157 +26,148 @@ import projectsalmon.Course;
 import projectsalmon.Student;
 import projectsalmon.StudentsClassInCourse;
 
-public class assignSingleStudentToCourseRequestController  implements Initializable{
+public class assignSingleStudentToCourseRequestController implements Initializable {
 
-	
-	Main	myMain=	Main.getInstance();
+	Main myMain = Main.getInstance();
 	boolean studentIDExists = false;
 	boolean courseNumExists = false;
 	boolean requestSent = false;
 
 	boolean studentInTheCourse = false;
 	ObservableList<String> list;
-	
+
 	@FXML
-    private TextArea descriptionTB;
-	
+	private TextArea descriptionTB;
+
 	@FXML
-    private Button searchStudentIDBt;
+	private Button searchStudentIDBt;
 
-    @FXML
-    private ComboBox<String> classCMB;
+	@FXML
+	private ComboBox<String> classCMB;
 
-    @FXML
-    private TextField studentIDTB;
-    
-    @FXML
-    private TextArea studentNameTB;
+	@FXML
+	private TextField studentIDTB;
 
-    @FXML
-    private TextField courseNumberTB;
-    
-  
-    @FXML
-    private Button searchCourseBt;
+	@FXML
+	private TextArea studentNameTB;
 
-    @FXML
-    private AnchorPane cmbClass;
+	@FXML
+	private TextField courseNumberTB;
 
-    @FXML
-    private Button backBt;
+	@FXML
+	private Button searchCourseBt;
 
+	@FXML
+	private AnchorPane cmbClass;
 
-    @FXML
-    private Button sendRequestBt;
+	@FXML
+	private Button backBt;
 
-   
+	@FXML
+	private Button sendAssignStudentRequestBt;
 
-    @FXML
-    void sendRequest(ActionEvent event) throws IOException {
+	@FXML
+	void sendAssignStudentRequest(ActionEvent event) throws IOException {
 
-    	String description = descriptionTB.getText();
-       	if(studentIDExists==false &&courseNumExists==false){
-    		Alert alert = new Alert(AlertType.WARNING, "Please fill the form.", ButtonType.OK);
-		alert.showAndWait();
-    	}
-    	else if(studentIDExists==false){
-    		Alert alert = new Alert(AlertType.WARNING, "Wrong student ID.", ButtonType.OK);
-    		alert.showAndWait();
-    	}
-    	else if(courseNumExists==false){
-    		Alert alert = new Alert(AlertType.WARNING, "The couse is not exists.", ButtonType.OK);
-    		alert.showAndWait();
-    	}	
-    	else if(classCMB.getValue()==null){
-    		Alert alert = new Alert(AlertType.WARNING, "Please choose class of the course.", ButtonType.OK);
-    		alert.showAndWait();
-    	}		
-    	else if(description.length() == 0){
-    		Alert alert = new Alert(AlertType.WARNING, "Please fill description field.", ButtonType.OK);
-    		alert.showAndWait();
-    	}	
-	
-    	else
-    	{
-    		//check prerequisites********************************************
-    		//if ok continue
-    		//else{
-    		//Alert alert = new Alert(AlertType.WARNING, "Student "+studentNameTB.getText()+" don't have proper prerequisites", ButtonType.OK);
+		String description = descriptionTB.getText();
+		if (studentIDExists == false && courseNumExists == false) {
+			Alert alert = new Alert(AlertType.WARNING, "Please fill the form.", ButtonType.OK);
+			alert.showAndWait();
+		} else if (studentIDExists == false) {
+			Alert alert = new Alert(AlertType.WARNING, "Please enter a valid student ID.", ButtonType.OK);
+			alert.showAndWait();
+		} else if (courseNumExists == false) {
+			Alert alert = new Alert(AlertType.WARNING, "Please enter a valid course number", ButtonType.OK);
+			alert.showAndWait();
+		} else if (classCMB.getValue() == null) {
+			Alert alert = new Alert(AlertType.WARNING, "Please choose group for the course.", ButtonType.OK);
+			alert.showAndWait();
+		} else if (description.length() == 0) {
+			Alert alert = new Alert(AlertType.WARNING, "Please fill description field.", ButtonType.OK);
+			alert.showAndWait();
+		}
+
+		else {
+
+			// check prerequisites********************************************
+			// if ok continue
+			// else{
+			// Alert alert = new Alert(AlertType.WARNING, "Student
+			// "+studentNameTB.getText()+" don't have proper prerequisites",
+			// ButtonType.OK);
 
 			// alert.showAndWait();}
-			if (!(studentInTheCourse = SecretaryController.searchStudentInCourse(courseNumberTB.getText(),
-					studentIDTB.getText()))) {
+			// check if student take this course in this semester
+			if (!(studentInTheCourse = SecretaryController
+					.searchStudentInCourseCurrentSemester(courseNumberTB.getText(), studentIDTB.getText()))) {
 
-				requestSent = SecretaryController.sendStudentRequest(studentIDTB.getText(), classCMB.getValue(),
+				requestSent = SecretaryController.sendAssignStudentRequest(studentIDTB.getText(), classCMB.getValue(),
 						descriptionTB.getText());
 				if (requestSent) {
-					Alert alert = new Alert(AlertType.NONE, "Your request has been sent successfully.", ButtonType.OK);
+					Alert alert = new Alert(AlertType.NONE, "Your request has been successfully sent.", ButtonType.OK);
 					alert.showAndWait();
-				}
-
-				else {
-					Alert alert = new Alert(AlertType.WARNING, "Student already in this course.", ButtonType.OK);
+				} else {
+					Alert alert = new Alert(AlertType.WARNING, "Your request was not sent \n please try again.",
+							ButtonType.OK);
 					alert.showAndWait();
 				}
 			}
+
+			else {
+				Alert alert = new Alert(AlertType.WARNING, "Student already assigned to the chosen course.",
+						ButtonType.OK);
+				alert.showAndWait();
+			}
+
 		}
-    		
-    }
 
-    @FXML
-    void back(ActionEvent event)  throws IOException {
-    	 myMain.getMange().changeScene((Scene) myMain.getMange().myStack.pop());
-    }
-    
-    
-    @FXML
-    void classList(ActionEvent event) {
-
-
-    }
-
-    @FXML
-    void searchStudentID(ActionEvent event) throws IOException
-    {
-    	String id;
-    	if ((id = studentIDTB.getText()) != "")
-    	{
-    		Student newStudent = SecretaryController.searchStudentID(id);
-    		if (newStudent != null){
-    			studentIDExists=true;
-    			studentNameTB.setText( newStudent.getFirst_name() +" "+ newStudent.getLast_name() );
-    		}
-    		else {
-    			
-    			studentNameTB.setText("Incorrect Student ID");
-    		}	
-    	}
-    }
-    
+	}
 
 	@FXML
-	void searchCourse(ActionEvent event) throws IOException{
+	void back(ActionEvent event) throws IOException {
+		myMain.getMange().changeScene((Scene) myMain.getMange().myStack.pop());
+	}
 
-			
-		ArrayList<String> classCourseArr ;
-		String courseNum;
-		
-    	if ((courseNum = courseNumberTB.getText()) != ""){
-			classCourseArr = SecretaryController.searchCourseNum(courseNum);
-			
-			if (classCourseArr != null) {
-				courseNumExists = true;
-				
-				list = FXCollections.observableArrayList(classCourseArr);
-				classCMB.setItems(list);
+	@FXML
+	void classList(ActionEvent event) {
+
+	}
+
+	@FXML
+	void searchStudentID(ActionEvent event) throws IOException {
+		String id;
+		if ((id = studentIDTB.getText()) != "") {
+			Student newStudent = SecretaryController.searchStudentID(id);
+			if (newStudent != null) {
+				studentIDExists = true;
+				studentNameTB.setText(newStudent.getFirst_name() + " " + newStudent.getLast_name());
 			} else {
 
-
-				studentNameTB.setText("Incorrect course number.");
+				studentNameTB.setText("Incorrect Student ID");
 			}
 		}
 	}
 
+	@FXML
+	void searchCourse(ActionEvent event) throws IOException {
+
+		ArrayList<String> classCourseArr;
+		String courseNum;
+
+		if ((courseNum = courseNumberTB.getText()) != "") {
+			classCourseArr = SecretaryController.searchCourseNum(courseNum);
+
+			if (classCourseArr != null) {
+				courseNumExists = true;
+
+				list = FXCollections.observableArrayList(classCourseArr);
+				classCMB.setItems(list);
+			} else {
+
+				studentNameTB.setText("Invalid course number.");
+			}
+		}
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -185,4 +176,3 @@ public class assignSingleStudentToCourseRequestController  implements Initializa
 	}
 
 }
-

@@ -1,6 +1,7 @@
 package ClientGui;
 
 import java.io.IOException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -34,9 +35,6 @@ public class removeStudentFromCourseController   implements Initializable{
     private Button searchStudentIDBt;
 
     @FXML
-    private Button searchCourseBt;
-
-    @FXML
     private TextField courseNumberTB;
 
     @FXML
@@ -52,20 +50,28 @@ public class removeStudentFromCourseController   implements Initializable{
     private TextArea studentNameTB;
 
     @FXML
-    private Button sendRequestBt;
+    private Button sendRemoveStudentRequestBt;
 
     @FXML
-    void sendRequest(ActionEvent event) {
-    	//check if student in the course group
-    		if(!(studentInTheCourse = SecretaryController.searchStudentInCourse(courseNumberTB.getText(),studentIDTB.getText()))){
-    			Alert alert = new Alert(AlertType.WARNING, "Student "+ studentNameTB.getText()+" is not in this course.", ButtonType.OK);
+    void sendRemoveStudentRequest(ActionEvent event) {
+    	//check if the course is exists
+    	if(SecretaryController.searchCourseNum(courseNumberTB.getText()).size()!=0){
+    	courseNumExists=true;
+    	}
+    	//check if student in the course group this semester
+    		if(!(studentInTheCourse = SecretaryController.searchStudentInCourseCurrentSemester(courseNumberTB.getText(),studentIDTB.getText()))){
+    			Alert alert = new Alert(AlertType.WARNING, "Student "+ studentNameTB.getText()+" is not participate in the course on current semester.", ButtonType.OK);
         		alert.showAndWait();
         	}
     		else{
-    			studentDelitedCourse = SecretaryController.deleteStudentfromCourse(courseNumberTB.getText(),studentIDTB.getText());
+    			studentDelitedCourse = SecretaryController.removeStudentfromCourseRequest(courseNumberTB.getText(),studentIDTB.getText(),descriptionTB.getText());
     			if(studentDelitedCourse){
     				Alert alert = new Alert(AlertType.NONE, "Your request has been sent successfully.", ButtonType.OK);
 					alert.showAndWait();
+    			}
+    			else{
+    			Alert alert = new Alert(AlertType.WARNING, "Your request wasn't sent \n please try again.", ButtonType.OK);
+				alert.showAndWait();
     			}
     		}
     }
@@ -94,25 +100,7 @@ public class removeStudentFromCourseController   implements Initializable{
     }
 
     
-    
-    @FXML
-	void searchCourse(ActionEvent event) {}
-	@FXML
-//	void searchCourse(ActionEvent event) throws IOException{
-//			
-//		ArrayList<String> classCourseArr = new ArrayList<String>() ;
-//		String courseNum;
-//		
-//    	if ((courseNum = courseNumberTB.getText()) != "")
-//			classCourseArr = SecretayController.searchCourseNum(courseNum);
-//    	
-//		if(classCourseArr==null){
-//	    	Alert alert = new Alert(AlertType.WARNING, "Wrong course number.", ButtonType.OK);
-//	    	alert.showAndWait();
-//	    }
-//		else courseNumExists=true;
-//
-//	}
+
 
 
 	@Override

@@ -28,6 +28,7 @@ import projectsalmon.User;
 
 public class LoginController implements Initializable {
 	Main myMain = Main.getInstance();
+	ArrayList<String>	forFunc=new ArrayList<String>();
 	@FXML // fx:id="PasswordTXT"
 	private PasswordField PasswordTXT; // Value injected by FXMLLoader
 
@@ -50,7 +51,7 @@ public class LoginController implements Initializable {
 	private AnchorPane LoginWND; // Value injected by FXMLLoader
 
 	@FXML
-	void login(ActionEvent event) {
+	void login(ActionEvent event) throws IOException {
 		String idSTR = idTXT.getText();
 		if (idSTR.length() == 9) {
 			if (!LoginUser.loginUser.getId().equals(idSTR)) {
@@ -73,6 +74,11 @@ public class LoginController implements Initializable {
 				if (LoginUser.loginUser.getPassword().equals(PasswordTXT.getText())) {
 					LoginUser.loginUser.setloginLockCounter(0);
 					LoginUser.loginUser.setLoggedStatus(LoginUser.Loged);
+					forFunc.clear();
+					forFunc.add("updateUser");
+					forFunc.add(LoginUser.loginUser.getloginLockCounter().toString());
+					forFunc.add(LoginUser.Loged.toString());
+					myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
 					try {
 						myMain.getMange().changeScene(myMain.getMange().initializationScreens(-101));
 					} catch (IOException e) {
@@ -88,15 +94,28 @@ public class LoginController implements Initializable {
 					switch (LoginUser.loginUser.getloginLockCounter()) {
 					case 1:
 						sendErrorMSG(" Wrong password, you have left more 2 tries");
-
+						forFunc.clear();
+						forFunc.add("updateUser");
+						forFunc.add(LoginUser.loginUser.getloginLockCounter().toString());
+						forFunc.add(LoginUser.logOut.toString());
+						myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
 						break;
 					case 2:
 						sendErrorMSG(" Wrong password, you have left 1 more try");
+						forFunc.clear();
+						forFunc.add("updateUser");
+						forFunc.add(LoginUser.loginUser.getloginLockCounter().toString());
+						forFunc.add(LoginUser.logOut.toString());
+						myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
 						break;
 					case 3:
 						sendErrorMSG(
 								" Wrong password 3 times, User is locked, please contact you'r administrator");
-						LoginUser.loginUser.setLoggedStatus(LoginUser.Locked);
+						forFunc.clear();
+						forFunc.add("updateUser");
+						forFunc.add(LoginUser.loginUser.getloginLockCounter().toString());
+						forFunc.add(LoginUser.Locked.toString());
+						myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
 						break;
 					default:
 						sendErrorMSG("Programming  user.getloginLockCounter() is NOT 1->3");
@@ -118,7 +137,7 @@ public class LoginController implements Initializable {
 		Alert alert = new Alert(AlertType.ERROR,msg, ButtonType.CANCEL);
 		alert.showAndWait();
 	}
-	public Boolean searchUser(String id) {
+	public Boolean searchUser(String id) throws IOException {
 
 /*		ArrayList<LoginUser> dbARR = new ArrayList<LoginUser>();
 		dbARR.add(new LoginUser("123456789", "Ash", "Ketchum", "Red",0 , LoginUser.StudentPER, LoginUser.logOut));
@@ -129,19 +148,19 @@ public class LoginController implements Initializable {
 			if (dbUser.getId().equals(id)){
 				LoginUser.loginUser.copy(dbUser);
 				return true;*/
-	//	for (LoginUser dbUser : dbARR)
-			myMain.getConnection().getClient().handleMessageFromClientUI(aarayList);
-			myMain.getConnection().
-			if (dbUser.getId().equals(id)){
-				LoginUser.loginUser.copy(dbUser);
-				return true;
-				
-			
-/*				return new LoginUser(id, dbUserID.getFirst_name(), dbUserID.getLast_name(), dbUserID.getPassword(),
-						dbUserID.islockedFlag(), dbUserID.getloginLockCounter(), dbUserID.getPermission());*/
-			}
-//		LoginUser.loginUser.setId("null");;
-		return false;
+
+		forFunc.clear();
+		forFunc.add("searchUser");
+		forFunc.add(id);
+		myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
+		Object dbUserOBJ =  myMain.getConnection().getMessage();
+		LoginUser dbUser=(LoginUser)dbUserOBJ;
+		if (dbUser == null)
+			return false;
+		if (dbUser.getId().equals(id))
+			LoginUser.loginUser.copy(dbUser);
+		return true;
+
 	}// end of searchUser method
 
 	@Override

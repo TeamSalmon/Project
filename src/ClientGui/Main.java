@@ -29,7 +29,7 @@ public  class Main extends Application {
         return instance;
     }
 
-    ClientConsole con;
+	public ClientConsole con;
     public void setConnection(ClientConsole con)
     {
         this.con=con;
