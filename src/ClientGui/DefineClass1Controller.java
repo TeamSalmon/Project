@@ -1,12 +1,19 @@
-/**
- * Sample Skeleton for 'secondStage.fxml' Controller Class
- */
 
 package ClientGui;
 
+/**
+ * This GUI controller is responsible for the first stage of
+ * the the secretary's "Define Class" functionality.
+ * In this screen the user provides the grade/level of the new class.
+ *
+ * @see SecretaryController
+ * @see DefineClass2Controller
+ * @author Elia
+ */
 import java.io.IOException;
 import ServerClient.ClientConsole;
-import controllers.StudentsClassController;
+import controllers.AdminController;
+import controllers.SecretaryController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -17,38 +24,35 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 
 public class DefineClass1Controller {
 	
 	String grade;
 	Main myMain = Main.getInstance();
+  
+	@FXML
+    private Pane paneFX;
 	
-	@FXML // fx:id="tabpaneFX"
-    private TabPane tabpaneFX; // Value injected by FXMLLoader
+	@FXML 
+    private Label requestFX; 
 	
-	@FXML // fx:id="anchorFX"
-    private AnchorPane anchorFX; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="tab1FX"
-    private Tab tab1FX; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="requestFX"
-    private Label requestFX; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="continuePT"
-    private Button continuePT; // Value injected by FXMLLoader
+	@FXML 
+    private Button continuePT; 
 
-    @FXML // fx:id="grade"
-    private TextField gradeFX; // Value injected by FXMLLoader
+    @FXML
+    private TextField gradeFX;
 
-    @FXML // fx:id="InfoLog"
-    private TextField infoLog; // Value injected by FXMLLoader
-
-    @FXML // fx:id="exitPT"
-    private Button exitPT; // Value injected by FXMLLoader
+    @FXML
+    private Button exitPT; 
    
     
+    /**
+     * Update SecretaryController with the new grade/level and move to DefineClass2Controller
+     * @param event
+     * @throws IOException
+     */
     @FXML void nextFrame (ActionEvent event) throws IOException 
     {
     	grade = gradeFX.getText();
@@ -58,19 +62,23 @@ public class DefineClass1Controller {
     	}
     	else
     	{
-    		
-    		StudentsClassController.setNewGrade(grade);	
+    		SecretaryController.setNewGrade(grade);
     	
     		((Node)event.getSource()).getScene().getWindow().hide();
-			myMain.getMange().changeScene(myMain.getMange().initializationScreens(7));
+			myMain.getMange().changeScene(myMain.getMange().initializationScreens(8));
     	
     	}
     }
     
     
+    /**
+     * Return to the main menu of the actor
+     * @param event
+     * @throws IOException
+     */
     @FXML void exit(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-    	StudentsClassController.defineClassEXIT(1);
+    	SecretaryController.defineClassEXIT(1);
     }
 }

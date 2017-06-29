@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import ServerClient.ClientConsole; 
 import controllers.SecretaryController;
-import controllers.StudentsClassController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +24,17 @@ import javafx.scene.layout.Pane;
 import projectsalmon.*;
 import javafx.fxml.Initializable;
 
+/**
+ * This GUI controller is responsible for the second stage of
+ * the secretary's "Assign Class to a Course" functionality.
+ * In this screen the user is informed about the students that
+ * could not be assigned to the course due to lack of preconditions.
+ *
+ * @see SecretaryController
+ * @see AssignClassToCourseController1
+ * @see AssignClassToCourseController3
+ * @author Elia
+ */
 public class AssignClassToCourseController2 implements Initializable {
 
 	Main myMain = Main.getInstance();
@@ -51,7 +61,10 @@ public class AssignClassToCourseController2 implements Initializable {
     private Label leftLabelFX;
 
   
-    
+    /**
+     * Initializes the scene with lists of misfit students or a message
+     * if all the students has the required preconditions.   
+     */
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {
 		ArrayList<Student> misfitStudents = null;
@@ -83,17 +96,25 @@ public class AssignClassToCourseController2 implements Initializable {
 		} else {
 			leftListFX.setVisible(false);
 			leftLabelFX.setVisible(false);
-			requestFX1.setText("All the students in the calss has the course's preconditions.");
+			requestFX1.setText("All the students in the class has the course's preconditions.");
 		}
 
 	}
 
+	
+	/**
+     * Continues to AssignClassToCourseController3.  
+     */
 	@FXML
 	void nextFrame(ActionEvent event) throws IOException {
 		((Node) event.getSource()).getScene().getWindow().hide();
-		myMain.getMange().changeScene(myMain.getMange().initializationScreens(10));
+		myMain.getMange().changeScene(myMain.getMange().initializationScreens(11));
 	}
 
+	
+	  /**
+     *  Return to the main menu of the user.
+     */
 	@FXML
 	void exit(ActionEvent event) throws IOException {
 		((Node) event.getSource()).getScene().getWindow().hide();

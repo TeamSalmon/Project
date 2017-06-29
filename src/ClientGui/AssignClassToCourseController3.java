@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import ServerClient.ClientConsole;
 import controllers.SecretaryController;
-import controllers.StudentsClassController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +26,17 @@ import javafx.scene.text.TextFlow;
 import projectsalmon.*;
 import javafx.fxml.Initializable;
 
-
+/**
+ * This GUI controller is responsible for the third stage of
+ * the secretary's "Assign Class to a Course" functionality.
+ * In this screen the user is selects a teacher for the class
+ * in the specified course from a given list of optional teachers. 
+ *
+ * @see SecretaryController
+ * @see AssignClassToCourseController2
+ * @see AssignClassToCourseController3
+ * @author Elia
+ */
 public class AssignClassToCourseController3 implements Initializable{
 		
 	
@@ -57,12 +66,21 @@ public class AssignClassToCourseController3 implements Initializable{
 	@FXML
 	private Text textFX;
 	
-	 
+	
+	 /**
+     * Initializes the scene with a list of the optional teachers in this course. 
+     */
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {
 		mainMenuFX.setVisible(false);
 
-		ArrayList<Teacher>  optionalTeachers = SecretaryController.getOptionalTeachers();
+		ArrayList<Teacher> optionalTeachers = null;
+		try {
+			optionalTeachers = SecretaryController.getOptionalTeachers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if ( optionalTeachers.size() > 0 )
 		{
@@ -85,8 +103,9 @@ public class AssignClassToCourseController3 implements Initializable{
 		
     }
     
-    
-
+	/**
+     * Continues to a final success or error message and the end of the functionality.  
+     */
     @FXML void nextFrame(ActionEvent event) throws IOException 
     {	
     	
@@ -98,7 +117,7 @@ public class AssignClassToCourseController3 implements Initializable{
     	}
     	
     	else
-    	{		
+    	{
     		// actually update DB with the new details
         	SecretaryController.setSave_changes(true);
         	
@@ -121,7 +140,9 @@ public class AssignClassToCourseController3 implements Initializable{
     	}
  	}
 
-    
+    /**
+     *  Return to the main menu of the user.
+     */
     @FXML void exit(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import ServerClient.ClientConsole;
 import controllers.SecretaryController;
-import controllers.StudentsClassController;
 import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,19 +23,27 @@ import projectsalmon.*;
 import projectsalmon.StudentsClass;
 import javafx.fxml.Initializable;
 
-
+/**
+ * This GUI controller is responsible for the first stage of
+ * the secretary's "Assign Class to a Course" functionality.
+ * In this screen the user selects a chosen StudentsClass and a Course to assign it to. 
+ *
+ * @see SecretaryController
+ * @see AssignClassToCourseController2
+ * @see AssignClassToCourseController3
+ * @author Elia
+ */
 
 public class AssignClassToCourseController1 implements Initializable{
-	
 	
 	ArrayList<Course> courses;
 	ArrayList<StudentsClass> classes;
 	ArrayList<String> courses_names = new ArrayList<String>();
 	ArrayList<String> classes_names = new ArrayList<String>();
-
 	
 	Main myMain = Main.getInstance();
 
+	
 	@FXML
     private Pane paneFX;
 
@@ -56,7 +63,9 @@ public class AssignClassToCourseController1 implements Initializable{
     private ComboBox<String> classFX;
     
      
-    
+    /**
+     * Initializes the scene with lists of optional classes and courses.   
+     */
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {			
 		try {
@@ -90,8 +99,11 @@ public class AssignClassToCourseController1 implements Initializable{
 
     }
     
-    
-
+	
+	/**
+     * Passes the user's choice of class and course to SecretaryController 
+     * and moves to AssignClassToCourseController2.  
+     */
     @FXML void nextFrame(ActionEvent event) throws IOException 
     {
     	String chosen_course = courseFX.getValue();
@@ -106,13 +118,15 @@ public class AssignClassToCourseController1 implements Initializable{
 	    	SecretaryController.updateChosenCourseAndClass(chosen_course, chosen_class);
 	    	
 	    	((Node)event.getSource()).getScene().getWindow().hide();
-			myMain.getMange().changeScene(myMain.getMange().initializationScreens(9));
+			myMain.getMange().changeScene(myMain.getMange().initializationScreens(10));
 		
     	}
     }
 	
     
-    
+    /**
+     *  Return to the main menu of the user.
+     */
     @FXML void exit(ActionEvent event) throws IOException 
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
