@@ -148,23 +148,32 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 		}
 	}
 
+
 	@FXML
 	void searchCourse(ActionEvent event) throws IOException {
 
-		ArrayList<String> classCourseArr;
+		ArrayList<String> classCourseIDArr = new ArrayList<String>();
+		ArrayList<StudentsClassInCourse> StudentsClassInCourseArr= new ArrayList<StudentsClassInCourse>();
+		
+		
+		//ArrayList<String> classCourseArr;
 		String courseNum;
 
 		if ((courseNum = courseNumberTB.getText()) != "") {
-			classCourseArr = SecretaryController.searchCourseNum(courseNum);
+			StudentsClassInCourseArr = SecretaryController.searchCourseNum(courseNum);
+		
+			for(StudentsClassInCourse classCourse:StudentsClassInCourseArr)	
+				classCourseIDArr.add(classCourse.getclassCourseID());
 
-			if (classCourseArr != null) {
+			if (classCourseIDArr.size() != 0) {
 				courseNumExists = true;
 
-				list = FXCollections.observableArrayList(classCourseArr);
+				list = FXCollections.observableArrayList(classCourseIDArr);
 				classCMB.setItems(list);
-			} else {
-
-				studentNameTB.setText("Invalid course number.");
+			} 
+			else {
+				Alert alert = new Alert(AlertType.WARNING, "Invalid course number.",ButtonType.OK);
+				alert.showAndWait();
 			}
 		}
 	}

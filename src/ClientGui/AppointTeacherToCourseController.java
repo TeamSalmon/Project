@@ -25,6 +25,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import projectsalmon.StudentsClassInCourse;
 import projectsalmon.Teacher;
 
 public class AppointTeacherToCourseController implements Initializable {
@@ -32,8 +33,9 @@ public class AppointTeacherToCourseController implements Initializable {
 	Main myMain = Main.getInstance();
 	boolean courseNumExists = false;
 	boolean teacherIDExists = false;
-	boolean teacherInTheCourse = false;
+	boolean teacherInTheClassCourse = false;
 	boolean requestSent = false;
+	
 
 	ObservableList<String> list;
 
@@ -78,7 +80,13 @@ public class AppointTeacherToCourseController implements Initializable {
 
 	@FXML
 	void sendAppointTeacherRequest(ActionEvent event) {
+		
+		
+		Teacher newTeacher ;
+		
 		String description = descriptionTB.getText();
+		float newHours;
+		
 		if (teacherIDExists == false && courseNumExists == false) {
 			Alert alert = new Alert(AlertType.WARNING, "Please fill the form.", ButtonType.OK);
 			alert.showAndWait();
@@ -89,7 +97,7 @@ public class AppointTeacherToCourseController implements Initializable {
 			Alert alert = new Alert(AlertType.WARNING, "Please enter a valid course number", ButtonType.OK);
 			alert.showAndWait();
 		} else if (classCMB.getValue() == null) {
-			Alert alert = new Alert(AlertType.WARNING, "Please choose group for the course.", ButtonType.OK);
+			Alert alert = new Alert(AlertType.WARNING, "Please choose group of the course.", ButtonType.OK);
 			alert.showAndWait();
 		} else if (description.length() == 0) {
 			Alert alert = new Alert(AlertType.WARNING, "Please fill description field.", ButtonType.OK);
@@ -97,24 +105,32 @@ public class AppointTeacherToCourseController implements Initializable {
 		}
 
 		else {
-			if (!(teacherInTheCourse = SecretaryController
-					.searchTeacherInCourseCurrentSemester(courseNumberTB.getText(), teacherIdTB.getText()))) {
-
-				requestSent = SecretaryController.sendAppointTeacherRequest(teacherIdTB.getText(), classCMB.getValue(),
-						descriptionTB.getText());
-				if (requestSent) {
-					Alert alert = new Alert(AlertType.NONE, "Your request has been successfully sent.", ButtonType.OK);
-					alert.showAndWait();
-				} else {
-					Alert alert = new Alert(AlertType.WARNING, "Your request was not sent \n please try again.",
-							ButtonType.OK);
+			teacherInTheClassCourse = SecretaryController.searchTeacherInClassCourseCurrentSemester(classCMB.getValue(),
+					teacherIdTB.getText());
+			if (!(teacherInTheClassCourse)) {
+				newTeacher = SecretaryController.searchTeacherID(teacherIdTB.getText());
+				newHours = newTeacher.getWeekly_hours() + SecretaryController.getCourseWHours(courseNumberTB.getText());
+				if (newTeacher.getMax_maximal_weekly_hours() <= newHours) {
+					requestSent = SecretaryController.sendAppointTeacherRequest(teacherIdTB.getText(),classCMB.getValue(), descriptionTB.getText());
+					if (requestSent) {
+						Alert alert = new Alert(AlertType.NONE, "Your request has been successfully sent.",
+								ButtonType.OK);
+						alert.showAndWait();
+					} else {
+						Alert alert = new Alert(AlertType.WARNING, "Your request was not sent \n please try again.",
+								ButtonType.OK);
+						alert.showAndWait();
+					}
+				}
+				else {
+					Alert alert = new Alert(AlertType.WARNING, "The teacher can not to teach \nabove "+newTeacher.getMax_maximal_weekly_hours()+" hours per week.",ButtonType.OK);
 					alert.showAndWait();
 				}
+				
+				
 			}
-
 			else {
-				Alert alert = new Alert(AlertType.WARNING, "Teacher already assigned to the chosen course.",
-						ButtonType.OK);
+				Alert alert = new Alert(AlertType.WARNING, "Teacher already assigned to the chosen class.",ButtonType.OK);
 				alert.showAndWait();
 			}
 
@@ -153,24 +169,34 @@ public class AppointTeacherToCourseController implements Initializable {
 	}
 
 	@FXML
-	void searchCourse(ActionEvent event) {
-		ArrayList<String> classCourseArr;
+	void searchCourse(ActionEvent event) throws IOException {
+
+		ArrayList<String> classCourseIDArr = new ArrayList<String>();
+		ArrayList<StudentsClassInCourse> StudentsClassInCourseArr= new ArrayList<StudentsClassInCourse>();
+		
+		
+		//ArrayList<String> classCourseArr;
 		String courseNum;
 
 		if ((courseNum = courseNumberTB.getText()) != "") {
-			classCourseArr = SecretaryController.searchCourseNum(courseNum);
+			StudentsClassInCourseArr = SecretaryController.searchCourseNum(courseNum);
+		
+			for(StudentsClassInCourse classCourse:StudentsClassInCourseArr)	
+				classCourseIDArr.add(classCourse.getclassCourseID());
 
-			if (classCourseArr != null) {
+			if (classCourseIDArr.size() != 0) {
 				courseNumExists = true;
 
-				list = FXCollections.observableArrayList(classCourseArr);
+				list = FXCollections.observableArrayList(classCourseIDArr);
 				classCMB.setItems(list);
-			} else {
-
-				TeacherNameTB.setText("Invalid course number.");
+			} 
+			else {
+				Alert alert = new Alert(AlertType.WARNING, "Invalid course number.",ButtonType.OK);
+				alert.showAndWait();
 			}
 		}
 	}
+
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
