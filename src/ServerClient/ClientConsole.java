@@ -113,13 +113,20 @@ public void setMessage(Object message)
 synchronized public void handleMessageFromServer(Object msg) 
 {
 	
-	  ArrayList<String> action =  new ArrayList<String>();
-	  Object answer=new Object();
-	  action=(ArrayList<String>)msg;
-	  String check;
-	  check=action.get(0);
+	  String action ;
+	 
+	  
+	  ArrayList<TeachingUnit> outer = new ArrayList<TeachingUnit>();
+	        
+	  System.out.println("we get here");
+	  outer=(ArrayList<TeachingUnit>)msg;
+	  System.out.println("mayb casting problem");
+	//  outer=(ArrayList<Object>)msg;	  
+	 // inner=(ArrayList<String>) outer.get(0);
+	  
+
 	
-	   this.setMessage(check);
+	   this.setMessage(outer.get(0).getName());
 	   
 	    	notify();
 	}
