@@ -8,6 +8,12 @@ import ocsf.client.*;
 
 import java.io.*;
 
+import ClientGui.Main;
+
+
+
+
+
 /**
  * This class overrides some of the methods defined in the abstract
  * superclass in order to give more functionality to the client.
@@ -26,7 +32,7 @@ public class ChatClient extends AbstractClient
    * the display method in the client.
    */
   ChatIF clientUI; 
-
+ 
   
   //Constructors ****************************************************
   
@@ -56,7 +62,17 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromServer(Object msg) 
   {
-    clientUI.getAnswer(msg);
+	 
+	  clientUI.setMessage(msg);
+	   clientUI.setMessage(msg);
+	    synchronized (Main.con) {
+	    	Main.con.notify();
+	}
+	  
+	  
+	    
+	    
+    
   }
 
   /**
@@ -64,11 +80,20 @@ public class ChatClient extends AbstractClient
    *
    * @param message The message from the UI.    
    */
-  public void handleMessageFromClientUI(Object message) throws IOException
+  public void handleMessageFromClientUI(Object message) 
   {
-
-    	sendToServer(message);
-
+	  
+	  Main.con.setFlag(0);
+	    try
+	    {
+	    	sendToServer(message);
+	    }
+	    catch(IOException e)
+	    {
+	      clientUI.setMessage
+	        ("Could not send message to server.  Terminating client.");
+	      quit();
+	    }
      
     }
  

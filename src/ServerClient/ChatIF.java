@@ -18,5 +18,5 @@ public interface ChatIF
    * Method that when overriden is used to display objects onto
    * a UI.
    */
-  public abstract void getAnswer(Object answer);
+	 public abstract void setMessage(Object message);
 }

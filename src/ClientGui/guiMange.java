@@ -15,7 +15,7 @@ public class guiMange
 	private static int CorenSence=0;
 	private static int lastSence;
     public static final String MPAGE = "ClientXml.fxml";
-    public static final String Page1 = "SecondStage.fxml";
+    public static final String Page1 = "secondStage.fxml";
     public static final String Page2 = "halo.fxml";	
     public static final String Page3 = "TeacherGui.fxml";
     public static final String Page4 = "reportMenu.fxml";

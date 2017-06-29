@@ -29,7 +29,7 @@ public  class Main extends Application {
         return instance;
     }
 
-    ClientConsole con;
+	public static ClientConsole con;
     public void setConnection(ClientConsole con)
     {
         this.con=con;
@@ -106,14 +106,7 @@ public void  getinfo(String id)//ask from server info about specific teacher
 	 arrsend.add("getinfo");
 	 arrsend.add(id);
 	
-	try
-	{
-		this.con.getClient().handleMessageFromClientUI(arrsend);
-	}
-	catch(IOException e)
-	{
-		ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-	}
+	this.con.getClient().handleMessageFromClientUI(arrsend);
 	ClientConsole.getLog().setText(con.getStringOut());
 }
 
@@ -125,14 +118,7 @@ public void  getinfo(String id)//ask from server info about specific teacher
 		 arrsend.add(id);
 		 arrsend.add(unit);
 	
-		 try
-		 {
-			 this.con.getClient().handleMessageFromClientUI(arrsend);
-		 }
-		 catch(IOException e)
-		 {
-			 ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-		 }
+		 this.con.getClient().handleMessageFromClientUI(arrsend);
 		ClientConsole.getLog().setText(con.getStringOut());
 	}
 

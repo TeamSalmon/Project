@@ -1,16 +1,20 @@
 package projectsalmon;
 
+
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Course
+public class Course implements Serializable 
 {
+	private static final long serialVersionUID = 3417367729359854274L;
 	private String courseNumber;
 	private String name;
 	private String description;
 	private float weeklyHours;
 	private TeachingUnit teachingUnit;
 	private ArrayList<Course> preCondition;
-	
+	private ArrayList<Integer> grades;
 	public Course(String courseNumber, String courseName,TeachingUnit teachingUnit, String description, float weeklyHours)
 {
 		this.courseNumber = courseNumber;
@@ -47,4 +51,12 @@ public class Course
 	public void setWeeklyHours(float hours){this.weeklyHours = hours;}
 	public void setPreCondition(ArrayList<Course> preCondition){this.preCondition = preCondition;}
 	public void setTeachingUnit(TeachingUnit teachingUnit){this.teachingUnit = teachingUnit;}
+
+	public ArrayList<Integer> getGrades() {
+		return grades;
+	}
+
+	public void setGrades(ArrayList<Integer> grades) {
+		this.grades = grades;
+	}
 }

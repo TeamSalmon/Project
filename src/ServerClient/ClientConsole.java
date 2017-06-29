@@ -5,6 +5,7 @@ package ServerClient;
 
 import java.io.*;
 
+
 import javafx.scene.control.TextField;
 
 
@@ -36,6 +37,7 @@ public class ClientConsole implements ChatIF
   private String stringOut;
   private static TextField log;
   private Object message;
+  private int flag=0;
   //Constructors ****************************************************
 
   /**
@@ -47,7 +49,16 @@ public class ClientConsole implements ChatIF
   public ClientConsole(String host, int port) throws IOException
   {
 
-      setClient(new ChatClient(host, port, this));
+	    try 
+	    {
+	      client= new ChatClient(host, port, this);
+	    } 
+	    catch(IOException exception) 
+	    {
+	      System.out.println("Error: Can't setup connection!"
+	                + " Terminating client.");
+	      System.exit(1);
+	    }
 
   }
 
@@ -66,10 +77,7 @@ public class ClientConsole implements ChatIF
    *
    * @param message The string to be displayed.
    */
-  public void getAnswer(Object answer) 
-  {
-	  this.setMessage(answer);
-  }
+
 
 
 public ChatClient getClient() {
@@ -103,14 +111,40 @@ public void setStringOut(String stringOut) {
 
 
 public Object getMessage() {
+	
+
 	return message;
 }
 
 
-public void setMessage(Object message) {
-	this.message = message;
+public void setMessage(Object message) 
+{
+	flag=1;
+	  this.message=message;    
+}
+public void sendmsgServer(Object obj) 
+{
+	  
+	  try{
+		  client.handleMessageFromClientUI(obj);
+	  }
+	  catch(Exception ex)
+	  {
+		  System.out.println("error");
+		  ex.printStackTrace();
+	  }
+	  
 }
 
+
+public int getFlag() {
+	return flag;
+}
+
+
+public void setFlag(int flag) {
+	this.flag = flag;
+}
   
   //Class methods ***************************************************
   

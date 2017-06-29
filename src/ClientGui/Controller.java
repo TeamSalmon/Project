@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import ServerClient.ClientConsole;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import projectsalmon.Course;
 
 public class Controller {
 	
@@ -74,7 +76,7 @@ public class Controller {
 
 
             	try{
-            		
+            		/*
             		// file to byte[]  (file-->byte[]-->server)
             		File file = new File("c:/newfile.txt");
             		Path p =Paths.get(file.getAbsolutePath());
@@ -85,16 +87,12 @@ public class Controller {
             		//when get byte[]  (byte[]-->client-->file)
             		//getting from server byte[] and make it file
             		Files.write(new File("c:/newfile.txt").toPath(), data);
+            		*/
             		
             		
-            		
-            		
-            		
-            		
-            		
-            		
+ 
             		((Node)event.getSource()).getScene().getWindow().hide();
-            		myMain.getMange().changeScene(myMain.getMange().initializationScreens(4));
+            		myMain.getMange().changeScene(myMain.getMange().initializationScreens(1));
             	}
             	
             	catch(IOException e)

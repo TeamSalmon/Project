@@ -1,7 +1,15 @@
 package projectsalmon;
 
-public class TeachingUnit
+
+
+import java.io.Serializable;
+
+public class TeachingUnit implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1044475922242648917L;
 	private String name;
 	private String number;
 	
@@ -9,6 +17,11 @@ public class TeachingUnit
 	{
 		this.number = number;
 		this.name = name;
+	}
+	public TeachingUnit()
+	{
+		this.number = null;
+		this.name = null;
 	}
 	
 	public void setName(String name){this.name = name;}
