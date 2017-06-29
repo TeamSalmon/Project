@@ -106,8 +106,8 @@ public void  getinfo(String id)//ask from server info about specific teacher
 	 arrsend.add("getinfo");
 	 arrsend.add(id);
 	
-	this.con.getClient().handleMessageFromClientUI(arrsend);
-	ClientConsole.getLog().setText(con.getStringOut());
+	this.con.handleMessageFromClientUI(arrsend);
+	//ClientConsole.getLog().setText(con.getStringOut());
 }
 
 
@@ -118,8 +118,8 @@ public void  getinfo(String id)//ask from server info about specific teacher
 		 arrsend.add(id);
 		 arrsend.add(unit);
 	
-		 this.con.getClient().handleMessageFromClientUI(arrsend);
-		ClientConsole.getLog().setText(con.getStringOut());
+		 this.con.handleMessageFromClientUI(arrsend);
+		//ClientConsole.getLog().setText(con.getStringOut());
 	}
 
 	public static void main(String[] args) 

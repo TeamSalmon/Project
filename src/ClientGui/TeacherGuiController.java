@@ -115,7 +115,7 @@ public class TeacherGuiController implements Initializable{
 		
 		ArrayList arrsend = new ArrayList<String>();
 		arrsend.add("getCurrentSemester");
-		myMain.con.getClient().handleMessageFromClientUI(arrsend);
+		myMain.con.handleMessageFromClientUI(arrsend);
 		
 		presentedSemester = currentSemester;
 		semesterList = FXCollections.observableArrayList();

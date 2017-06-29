@@ -4,9 +4,12 @@ package ServerClient;
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.util.ArrayList;
 
-
+import ClientGui.Main;
 import javafx.scene.control.TextField;
+import ocsf.client.ObservableClient;
+import projectsalmon.TeachingUnit;
 
 
 /**
@@ -19,7 +22,7 @@ import javafx.scene.control.TextField;
  * @author Dr Robert Lagani&egrave;re
  * @version July 2000
  */
-public class ClientConsole implements ChatIF 
+public class ClientConsole extends ObservableClient 
 {
   //Class variables *************************************************
   
@@ -33,7 +36,7 @@ public class ClientConsole implements ChatIF
   /**
    * The instance of the client that created this ConsoleChat.
    */
-  private ChatClient client;
+  
   private String stringOut;
   private static TextField log;
   private Object message;
@@ -48,17 +51,9 @@ public class ClientConsole implements ChatIF
    */
   public ClientConsole(String host, int port) throws IOException
   {
+	  super(host, port); //Call the superclass constructor
+		openConnection();
 
-	    try 
-	    {
-	      client= new ChatClient(host, port, this);
-	    } 
-	    catch(IOException exception) 
-	    {
-	      System.out.println("Error: Can't setup connection!"
-	                + " Terminating client.");
-	      System.exit(1);
-	    }
 
   }
 
@@ -80,14 +75,6 @@ public class ClientConsole implements ChatIF
 
 
 
-public ChatClient getClient() {
-	return client;
-}
-
-
-public void setClient(ChatClient client) {
-	this.client = client;
-}
 
 
 public static TextField getLog() {
@@ -100,14 +87,7 @@ public static void setLog(TextField log) {
 }
 
 
-public String getStringOut() {
-	return stringOut;
-}
 
-
-public void setStringOut(String stringOut) {
-	this.stringOut = stringOut;
-}
 
 
 public Object getMessage() {
@@ -119,56 +99,48 @@ public Object getMessage() {
 
 public void setMessage(Object message) 
 {
-	flag=1;
+
 	  this.message=message;    
 }
-public void sendmsgServer(Object obj) 
-{
-	  
-	  try{
-		  client.handleMessageFromClientUI(obj);
-	  }
-	  catch(Exception ex)
-	  {
-		  System.out.println("error");
-		  ex.printStackTrace();
-	  }
-	  
-}
 
 
-public int getFlag() {
-	return flag;
-}
 
 
-public void setFlag(int flag) {
-	this.flag = flag;
-}
   
-  //Class methods ***************************************************
   
-  /**
-   * This method is responsible for the creation of the Client UI.
-   *
-   * @param args[0] The host to connect to.
-   */
-  /**public static void main(String[] args) 
-  {
-    String host = "";
-    int port = 0;  //The port number
 
-    try
-    {
-      host = args[0];
-    }
-    catch(ArrayIndexOutOfBoundsException e)
-    {
-      host = "localhost";
-    }
-    ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
-    chat.accept();  //Wait for console data
-  }
-  */
-}
 //End of ConsoleChat class
+synchronized public void handleMessageFromServer(Object msg) 
+{
+	
+	  ArrayList<String> action =  new ArrayList<String>();
+	  Object answer=new Object();
+	  action=(ArrayList<String>)msg;
+	  String check;
+	  check=action.get(0);
+	
+	   this.setMessage(check);
+	   
+	    	notify();
+	}
+	   
+	   
+	   
+	   public void handleMessageFromClientUI(Object message) 
+	   {
+	 	  
+	 	
+	 	    try
+	 	    {
+	 	    	sendToServer(message);
+	 	    }
+	 	    catch(IOException e)
+	 	    {
+	 	    	e.printStackTrace();
+	 	      this.setMessage
+	 	        ("Could not send message to server.  Terminating client.");
+	 	     
+	 	    }
+	      
+	     }
+}

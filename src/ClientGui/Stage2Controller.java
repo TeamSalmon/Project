@@ -59,25 +59,18 @@ public class Stage2Controller {
 		 arrsend.add("coursesByID");
 		
 		
-		try{
-			Main.con.sendmsgServer((Object)arrsend);
+		
+			Main.con.sendToServer(arrsend);
+	
+		
+	    	synchronized (Main.con) {
+	    		
+	    		Main.con.wait();
 			}
-			catch(Exception exp){
-				InfoLog.setText("Send Message To Server Failed!");
-
-			}
-		
-		
-		
-		synchronized (Main.con){
-			try {
-				Main.con.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-}
-		}
-		
-		InfoLog.setText(((String) Main.con.getMessage()));
+	    	
+		//TeachingUnit bla=new TeachingUnit();
+		//bla=(TeachingUnit)Main.con.getMessage();
+		InfoLog.setText((String)Main.con.getMessage());
 	
 		//arrget=(ArrayList<TeachingUnit>) Main.con.getMessage();
 		

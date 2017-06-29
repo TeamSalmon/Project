@@ -1,7 +1,5 @@
 package projectsalmon;
 
-
-
 import java.io.Serializable;
 
 public class TeachingUnit implements Serializable
