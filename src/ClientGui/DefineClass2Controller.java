@@ -1,15 +1,21 @@
-/**
- * Sample Skeleton for 'secondStage.fxml' Controller Class
- */
 
 package ClientGui;
 
+/**
+ * This GUI controller is responsible for the second stage of
+ * the the secretary's "Define Class" functionality.
+ * In this screen the user selects the students that will be in the new class.
+ *
+ * @see SecretaryController
+ * @see DefineClass1Controller
+ * @author Elia
+ */
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import ServerClient.ClientConsole;
-import controllers.StudentsClassController;
+import controllers.SecretaryController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import projectsalmon.Student;
 import projectsalmon.StudentsClass;
 import javafx.fxml.Initializable;
@@ -26,14 +33,13 @@ import javafx.fxml.Initializable;
 
 public class DefineClass2Controller implements Initializable{
 	
-	
-	//ArrayList<Student> students = scc.getOptionalStusents();
 	ArrayList<Student> students;
 	ArrayList<String> details;
 	ObservableList<String> leftstudents_names;
 
 	ArrayList<String> rightstudents_names = new ArrayList<String>();
 	
+	boolean full_alert;
 	
 	Main myMain = Main.getInstance();
 
@@ -71,11 +77,20 @@ public class DefineClass2Controller implements Initializable{
     private Button moveFX; // Value injected by FXMLLoader
   
     
+    /**
+     * Initializes a list of optional students and an empty list for the new class
+     */
 	@Override public void initialize (URL location, ResourceBundle resoources) 
     {
-		//leftListFX.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-    	students = StudentsClassController.getOptionalStudents();
+		try 
+		{
+			students = SecretaryController.getOptionalStudents();
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	details = new ArrayList<String>();
 		
@@ -90,12 +105,21 @@ public class DefineClass2Controller implements Initializable{
  	}
     
     
-	
+	/**
+	 * Handles an attempt of the user to move a student to/from the new class
+	 * @param event
+	 * @throws IOException
+	 */
     @FXML void moveStudents(ActionEvent event) throws IOException 
     {
-    	String name;
+    	if (full_alert == true)
+    	{
+    		rightLabelFX.setText("New class");
+    		rightLabelFX.setTextFill(Color.BLACK);
+    		full_alert = false;
+    	}
+    	String name = leftListFX.getSelectionModel().getSelectedItem();
     	
-    	name = leftListFX.getSelectionModel().getSelectedItem();
     	if(name != null)
     	{
 	    	leftstudents_names.remove(name);
@@ -116,44 +140,61 @@ public class DefineClass2Controller implements Initializable{
     }
     
     
-
-    @FXML void nextFrame(ActionEvent event) throws IOException 
+    /** 
+     *Check the capacity of the new class and move on to get message about success or an error
+     * @param event
+     * @throws IOException 
+     */
+     @FXML void nextFrame(ActionEvent event) throws IOException 
     {
-    	ArrayList<Student> chosen_students = new ArrayList<Student>();
-    	// Get the chosen students and pass them to the controller
-    	for(Student student: students)
-    	{
-    		String detailsOfStudent = student.getFirst_name() + " " + student.getLast_name() + " " + student.getId();
-    		if( rightstudents_names.contains(detailsOfStudent))
-    			chosen_students.add(student);
-    	}
-    	StudentsClass result = StudentsClassController.createNewClass(chosen_students);
     	
-    	leftLabelFX.setVisible(false);
-    	rightLabelFX.setVisible(false);
-    	leftListFX.setVisible(false);
-    	rightListFX.setVisible(false);
-    	requestFX2.setVisible(false);
-    	moveFX.setVisible(false);
-    	continuePT.setVisible(false);
-    	exitPT.setVisible(false);
-    	exitPT1.setVisible(true);
+    	if (rightstudents_names.size() > 30)
+    	{
+    		rightLabelFX.setText("New class - Over 30 students");
+    		rightLabelFX.setTextFill(Color.RED);
+    		full_alert = true;
+    	}
+		else 
+		{
+			ArrayList<Student> chosen_students = new ArrayList<Student>();
+			// Get the chosen students and pass them to the controller
+			for (Student student : students) {
+				String detailsOfStudent = student.getFirst_name() + " " + student.getLast_name() + " "
+						+ student.getId();
+				if (rightstudents_names.contains(detailsOfStudent))
+					chosen_students.add(student);
+			}
+			StudentsClass result = SecretaryController.createNewClass(chosen_students);
 
-    	 if(result != null)
-    	 {
-    		 requestFX1.setText("The class " + result.getClassName() + " (ID: " + result.getClassId() + ") " + "was created successfully.");
-    	 }
-    	 else
-    	 {
-    		 requestFX1.setText("Couldn't create the new class.");
-    	 }
- 	}
+			leftLabelFX.setVisible(false);
+			rightLabelFX.setVisible(false);
+			leftListFX.setVisible(false);
+			rightListFX.setVisible(false);
+			requestFX2.setVisible(false);
+			moveFX.setVisible(false);
+			continuePT.setVisible(false);
+			exitPT.setVisible(false);
+			exitPT1.setVisible(true);
+
+			if (result != null) {
+				requestFX1.setText("The class " + result.getClassName() + " (ID: " + result.getClassId() + ") "
+						+ "was created successfully.");
+			} else {
+				requestFX1.setText("Couldn't create the new class.");
+			}
+		}
+	}
 	
     
+    /**
+     * Return to the main menu of the actor
+     * @param event
+     * @throws IOException
+     */
     @FXML void exit(ActionEvent event) throws IOException
     {
     	((Node)event.getSource()).getScene().getWindow().hide();
-    	StudentsClassController.defineClassEXIT(2);
+    	SecretaryController.defineClassEXIT(2);
     }
 
 }

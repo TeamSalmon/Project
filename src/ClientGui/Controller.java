@@ -74,6 +74,7 @@ public class Controller {
 
 
             	try{
+
             		/*
             		// file to byte[]  (file-->byte[]-->server)
             		File file = new File("c:/newfile.txt");
@@ -85,17 +86,13 @@ public class Controller {
             		//when get byte[]  (byte[]-->client-->file)
             		//getting from server byte[] and make it file
             		Files.write(new File("c:/newfile.txt").toPath(), data);
-            		*/
-            		
-            		
-            		
-            		
-            		
-            		
+*/
+            	
             		
             		((Node)event.getSource()).getScene().getWindow().hide();
+
             		myMain.getMange().changeScene(myMain.getMange().initializationScreens(21));
-        
+
             	}
             	
             	catch(IOException e)

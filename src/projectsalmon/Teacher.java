@@ -10,7 +10,8 @@ public class Teacher extends User{
 	private float maximalWeeklyHours;
 	private ArrayList<Class> schedule;
 	private ArrayList<Course> teachable;
-	
+	private ArrayList<Integer> grades;
+
 	public Teacher(int max_hours,String id,String first, String last, String password)
 	{
 		super(id,first,last,password);
@@ -19,6 +20,13 @@ public class Teacher extends User{
 		schedule = new ArrayList<Class>();
 		teachable = new ArrayList<Course>();
 	}
+	
+	public Teacher(float hours, String id, String first, String last, String password)
+	{
+		super(id,first,last,password);
+		weeklyHours = 0;
+	}
+	
 	
 	public void addTeachable(Course course)
 	{
@@ -62,6 +70,14 @@ public class Teacher extends User{
 	public void setMax_maximal_weekly_hours(float max_hours_per_week)
 	{
 		this.maximalWeeklyHours = max_hours_per_week;
+	}
+
+	public ArrayList<Integer> getGrades() {
+		return grades;
+	}
+
+	public void setGrades(ArrayList<Integer> grades) {
+		this.grades = grades;
 	} 
 	
 	
