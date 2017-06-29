@@ -26,8 +26,6 @@ public class DefineAssignmentController implements Initializable
 	@FXML
 	private Label nameError;
 	@FXML
-	private Label percentageError;
-	@FXML
 	private Label deadlineError;
 	@FXML
 	private Label fileError;
@@ -39,8 +37,6 @@ public class DefineAssignmentController implements Initializable
     private Label title;
     @FXML
     private TextField nameField;
-    @FXML
-    private TextField precentageField;
     @FXML
     private TextField uploadField;
     @FXML
@@ -87,7 +83,7 @@ public class DefineAssignmentController implements Initializable
     	Calendar cal = Calendar.getInstance();
     	cal.setTime(date);
     	File file = new File(assignmentFilePath);
-    	assignment = new Assignment("1",course.getCourseNumber(),nameField.getText(),cal,Integer.parseInt(precentageField.getText()),instructionsField.getText(),file);
+    	assignment = new Assignment("1",course.getCourseNumber(),nameField.getText(),cal,instructionsField.getText(),file);
     	//call controllers to make sure everything is ok
     	//save the assignment in db
     	parentController.addAssignment(assignment);
@@ -128,17 +124,6 @@ public class DefineAssignmentController implements Initializable
     	     flag = false;
     	}
     	else
-    		deadlineError.setVisible(false);
-    	try{
-    	if (precentageField.getText() == null || precentageField.getText().trim().isEmpty() || Integer.parseInt(precentageField.getText())<0 || Integer.parseInt(precentageField.getText())>100)
-    	{
-    	     percentageError.setVisible(true);
-    	     flag = false;
-    	}
-    	else
-    		percentageError.setVisible(false);
-    	}
-    	catch(NumberFormatException e){percentageError.setVisible(true); flag = false;}
     	if (instructionsField.getText() == null || instructionsField.getText().trim().isEmpty())
     	{
     		instructionsField.setText("");

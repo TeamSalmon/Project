@@ -10,24 +10,21 @@ public class Assignment
 	private String courseId;
 	private String assignmentName;
 	private Calendar deadline;
-	private int percentageOfFinalGrade;
 	private String instructionForSubmission;
 	private File file;
 	
-	public Assignment(String assignmentId,String courseId,String assignmentName, Calendar deadline, int precentages, String instructions, File file)
+	public Assignment(String assignmentId,String courseId,String assignmentName, Calendar deadline, String instructions, File file)
 	{
 		this.file = file;
 		this.assignmentId = assignmentId;
 		this.deadline = deadline;
-		this.percentageOfFinalGrade = precentages;
 		this.instructionForSubmission = instructions;
 		this.assignmentName = assignmentName;
 		this.courseId = courseId;
 	}
-	public Assignment(String assignmentId,String courseId,String assignmentName, String deadline, int precentages, String instructions)
+	public Assignment(String assignmentId,String courseId,String assignmentName, String deadline, String instructions)
 	{
 		this.assignmentId = assignmentId;
-		this.percentageOfFinalGrade = precentages;
 		this.instructionForSubmission = instructions;
 		this.assignmentName = assignmentName;
 		this.courseId = courseId;
@@ -37,14 +34,12 @@ public class Assignment
 	public void setFile(String filePath){this.file = new File(filePath);}
 	public void setCourse(String course){this.courseId = course;}
 	public void setDeadline(Calendar deadline){this.deadline = deadline;}
-	public void setPrecentagesOfGrade(int precentage){this.percentageOfFinalGrade = precentage;}
 	public void setInstructions(String instruction){this.instructionForSubmission = instruction;}
 	public void setName(String name){this.assignmentName = name;}
 	
 	public File getfile(){return file;}
 	public String getAssignmntId(){return this.assignmentId;}
 	public Calendar getDeadline(){return this.deadline;}
-	public int getPrecentagesOfFinalGrade(){return this.percentageOfFinalGrade;}
 	public String getInstructions(){return this.instructionForSubmission;}
 	public String getName(){return assignmentName;}
 	public String getCourse(){return courseId;}

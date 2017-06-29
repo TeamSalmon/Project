@@ -2,9 +2,12 @@ package projectsalmon;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
 public class Semester implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String year;
 	private String semesterNumber;
 	private boolean correntSemester;

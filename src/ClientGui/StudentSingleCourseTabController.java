@@ -5,25 +5,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import ServerClient.ClientConsole;
-import projectsalmon.*;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.collections.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import projectsalmon.Assignment;
+import projectsalmon.Course;
 
-
-public class TeacherSingleCourseTabController implements Initializable
+public class StudentSingleCourseTabController implements Initializable
 {
 	/**
 	 * Controller of the window presenting a single course information, such as assignments defined in the specific course
@@ -53,9 +54,8 @@ public class TeacherSingleCourseTabController implements Initializable
 		current = manager.getContainer().getTabs().get( manager.getContainer().getTabs().size()-1);
 		current.setText(((Course)manager.getLatestSelection()).toString());
 		course = (Course)manager.getLatestSelection();
-		if(!manager.getEditable())
-			newAssignmentBtn.setVisible(false);
-		else newAssignmentBtn.setVisible(true);
+		newAssignmentBtn.setVisible(false);
+		
 		Main.getTheStage().setOnCloseRequest(new EventHandler<WindowEvent>()
 		{public void handle(WindowEvent we){System.out.println("Stage is closing");}});
 		
