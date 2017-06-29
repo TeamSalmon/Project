@@ -90,8 +90,9 @@ public class Controller {
             	
             		
             		((Node)event.getSource()).getScene().getWindow().hide();
-            		myMain.getMange().changeScene(myMain.getMange().initializationScreens(7));
 
+
+            		myMain.getMange().changeScene(myMain.getMange().initializationScreens(3));
             	}
             	
             	catch(IOException e)

@@ -17,14 +17,21 @@ public class StudentAssignment
 		this.studentId = student;
 		this.assignment = assignment;
 		comments = "";
-		grade = 0;	
+		grade = -1;	
+		lateFlag = false;
+	}
+	public StudentAssignment(String student)
+	{
+		this.studentId = student;
+		comments = "";
+		grade = -1;	
 		lateFlag = false;
 	}
 	
 	public String getStudentId(){return studentId;}
 	public Assignment getAssignment(){return assignment;}
 	public File getSubmission(){return submission;}
-	public int getGrade(){if(grade == -1)return (Integer)null; return grade;}
+	public int getGrade(){return grade;}
 	public String getComments(){return comments;}
 	public File getEvaluationForm(){return evaluationForm;}
 	public boolean getLateFlag(){return lateFlag;}
@@ -38,6 +45,6 @@ public class StudentAssignment
 	public void setGrade(int grade){this.grade = grade;};
 	public void setComments(String comments){this.comments = comments;}
 	public void setEvaluationForm(File evaluationForm){this.evaluationForm = evaluationForm;}
-	public String toString()
-	{return studentId;}
+	public String toString(){return studentId;}
+	public void setAssignment(Assignment assignment){this.assignment = assignment;}
 }

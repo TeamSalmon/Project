@@ -3,6 +3,7 @@ package ClientGui;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -24,6 +25,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import projectsalmon.Assignment;
+import projectsalmon.Semester;
 import projectsalmon.StudentAssignment;
 
 public class TeacherAssignmentController implements Initializable
@@ -61,6 +63,8 @@ public class TeacherAssignmentController implements Initializable
     private TabManager manager;
     private ObservableList<StudentAssignment> data;
     private static Tab singleSubmissionTab;
+    private Main myMain = Main.getInstance();
+    private ArrayList<StudentAssignment> submissions;
 
     public TeacherAssignmentController(Assignment assignment, TeacherSingleCourseTabController parentController)
     {
@@ -109,7 +113,6 @@ public class TeacherAssignmentController implements Initializable
 		this.assignment = assignment;
 		nameLabel.setText(assignment.getName());
 		deadlineLabel.setText("Deadline - " + assignment.getDeadlineAsString());
-		precentageLabel.setText("Precentage of final grade - " + Integer.toString(assignment.getPrecentagesOfFinalGrade()));
 		instructionsField.setText(assignment.getInstructions());
 		fileLink.setText("Open assignment file");
 		parentController.updateAssignment(assignment);
@@ -125,6 +128,7 @@ public class TeacherAssignmentController implements Initializable
 			singleSubmissionTab.setContent(loader.load());
 		} catch (IOException e){e.printStackTrace();}
     }
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
@@ -139,33 +143,24 @@ public class TeacherAssignmentController implements Initializable
 		
 		nameLabel.setText(assignment.getName());
 		deadlineLabel.setText("Deadline - " + assignment.getDeadlineAsString());
-		precentageLabel.setText("Precentage of final grade - " + Integer.toString(assignment.getPrecentagesOfFinalGrade()));
 		instructionsField.setText(assignment.getInstructions());
 		fileLink.setText("Open assignment file");
 		
-		/*
-		ArrayList<String> askDB = new ArrayList<String>();
-		askDB.add(myMain.getUser().getId());
-		//add more parameters 
-		
-		try
+		ArrayList<String> arrsend = new ArrayList<String>();
+		arrsend.add("getSubmissions");
+		arrsend.add(assignment.getAssignmntId());
+		try {
+			myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
+		} catch (IOException e){e.printStackTrace();}
+		submissions = (ArrayList<StudentAssignment>)myMain.con.getMessage();
+
+		for(StudentAssignment sa : submissions)
 		{
-			
+			sa.setAssignment(assignment);
+			data.add(sa);
 		}
-		catch(IOException e)
-		{
-			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-		}
-		
-		data = FXCollections.observableArrayList();
-		
-		for(Course c : courses)
-			data.add(c);
-		
-        coursesList.setItems(data);*/
-		data = FXCollections.observableArrayList();
-        data.add(new StudentAssignment("123",assignment));
         submissionsList.setItems(data);
+        
         manager.getContainer().getSelectionModel().select(current);
 	}
 }

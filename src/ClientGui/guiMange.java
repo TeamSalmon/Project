@@ -35,6 +35,9 @@ public class guiMange
     public static final String CSS = "test.css";
 	public static final String PageMinus100 = "LoginGUI.fxml";
 	public static final String PageMinus101 ="LoginPermissionGUI.fxml";
+	public static final String Page20 ="AppointTeacherToCourseGUI.fxml";
+	public static final String Page21 ="RemovetTeacherFromCourseGUI.fxml";
+	
     public static ObjectStack myStack = new ObjectStack (10);
 
 	
@@ -123,6 +126,14 @@ public class guiMange
     	case -101:
         	xmlNum = PageMinus101;
         	break;	
+        	
+    	case 20:
+    		xmlNum = Page20;
+    		break;	
+    		
+    	case 21:
+    		xmlNum = Page21;
+    		break;
     		
     	default:
     		break;
