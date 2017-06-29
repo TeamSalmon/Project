@@ -128,7 +128,7 @@ public class TeacherGuiController implements Initializable{
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("CurrentSemester");
 		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);
+			myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
 		} catch (IOException e){e.printStackTrace();}
 		currentSemester = (Semester)myMain.con.getMessage();
 		
@@ -138,7 +138,7 @@ public class TeacherGuiController implements Initializable{
 		 * Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
 		 */
 		
-		arrsend = new ArrayList<String>();
+		/*arrsend = new ArrayList<String>();
 		arrsend.add("getSemesters");
 		arrsend.add(myMain.getUser().getId());
 		try {
@@ -158,7 +158,7 @@ public class TeacherGuiController implements Initializable{
 		 * Getting the information matching the semester:
 		 */
 		
-		arrsend = new ArrayList<String>();
+		/*arrsend = new ArrayList<String>();
 		arrsend.add("courseByTeacher");
 		arrsend.add(myMain.getUser().getId());
 		arrsend.add(currentSemester.getSemesterNumber());
@@ -175,6 +175,6 @@ public class TeacherGuiController implements Initializable{
 			data.add(c);
 		
         coursesList.setItems(data);
-		}
+		}*/
 	}
 }
