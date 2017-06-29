@@ -39,12 +39,8 @@ public class SchoolManagerController {
 		received_object = myMain.getConnection().getMessage();
 		LoginUser user = (LoginUser)received_object;
 			
-		if (user.getPermission() == 2)
-		{
-			//The user is a parent
-			return true;
-		}
-		return false;
+		return ((user.getPermission() & LoginUser.ParentPER)!=0);
+	
 	}
 	
 	

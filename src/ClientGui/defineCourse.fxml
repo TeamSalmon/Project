@@ -10,19 +10,48 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineCourseController">
+<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineCourseController">
    <children>
                  <Button fx:id="continuePT" layoutX="305.0" layoutY="343.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
                   <Button fx:id="exitPT" layoutX="249.0" layoutY="343.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-                  <Label fx:id="requestFX1" layoutX="76.0" layoutY="33.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="471.0" text="Fill the fields and press 'Continue'." />
-                  <Label fx:id="teachingUnitFX" layoutX="76.0" layoutY="185.0" prefHeight="17.0" prefWidth="200.0" text="Teaching unit: (number or name) *" />
-     <TextField fx:id="nametxtFX" layoutX="76.0" layoutY="123.0" prefHeight="25.0" prefWidth="186.0" promptText="example:     Poetry" />
-      <TextField fx:id="teachingtxtFX" layoutX="76.0" layoutY="210.0" prefHeight="25.0" prefWidth="186.0" promptText="example:     01     or     Math" />
-      <Label fx:id="preconditionsFX" layoutX="331.0" layoutY="185.0" prefHeight="17.0" prefWidth="245.0" text="Required courses as preconditions:" />
-      <TextField fx:id="hourstxtFX" layoutX="331.0" layoutY="123.0" prefHeight="25.0" prefWidth="186.0" promptText="example:     2.5" />
-      <TextField fx:id="preconditionstxtFX" layoutX="331.0" layoutY="210.0" prefHeight="25.0" prefWidth="186.0" promptText="example:     01001, 02001" />
-      <Label fx:id="weeklyHoursFX" layoutX="331.0" layoutY="96.0" prefHeight="17.0" prefWidth="200.0" text="Weekly hours: *" />
-      <Label fx:id="courseNameFX" layoutX="76.0" layoutY="96.0" prefHeight="17.0" prefWidth="200.0" text="Course name: *" />
+                 
+                 <Label fx:id="requestFX3" layoutX="230.0" layoutY="37.0" lineSpacing="2.0" prefHeight="27.0" prefWidth="180.0" text="Define a New Course"> 
+                    <font>
+           			 <Font name="System Bold" size="18.0" />
+       			  </font>
+                  </Label>
+                 
+                  <Label fx:id="requestFX1" layoutX="65.0" layoutY="76.0" lineSpacing="2.0" prefHeight="17.0" prefWidth="471.0" text="Fill the fields and press 'Continue'."> 
+                    <font>
+           			 <Font name="System Bold" size="14.0" />
+       			  </font>
+                  </Label>
+                  
+                  <Label fx:id="teachingUnitFX" layoutX="76.0" layoutY="185.0" prefHeight="17.0" prefWidth="200.0" text="Teaching unit: (number or name) *">
+                   <font>
+           			 <Font name="System Bold" size="14.0" />
+       			  </font>
+                  </Label>
+                  
+     <TextField fx:id="nametxtFX" layoutX="76.0" layoutY="135.0" prefHeight="25.0" prefWidth="186.0" promptText="example:     Poetry" />
+      <TextField fx:id="teachingtxtFX" layoutX="76.0" layoutY="375.0" prefHeight="25.0" prefWidth="186.0" promptText="example:     01     or     Math" />
+      <Label fx:id="preconditionsFX" layoutX="331.0" layoutY="185.0" prefHeight="17.0" prefWidth="245.0" text="Required courses as preconditions:">
+       <font>
+           			 <Font name="System Bold" size="14.0" />
+       			  </font>
+                  </Label>
+      <TextField fx:id="hourstxtFX" layoutX="331.0" layoutY="215.0" prefHeight="25.0" prefWidth="186.0" promptText="example:     2.5" />
+      <TextField fx:id="preconditionstxtFX" layoutX="331.0" layoutY="374.0" prefHeight="25.0" prefWidth="186.0" promptText="example:     01001, 02001" />
+      <Label fx:id="weeklyHoursFX" layoutX="331.0" layoutY="185.0" prefHeight="17.0" prefWidth="200.0" text="Weekly hours: *">
+       <font>
+           			 <Font name="System Bold" size="14.0" />
+       			  </font>
+                  </Label>
+      <Label fx:id="courseNameFX" layoutX="76.0" layoutY="185.0" prefHeight="17.0" prefWidth="200.0" text="Course name: *">
+       <font>
+           			 <Font name="System Bold" size="14.0" />
+       			  </font>
+                  </Label>
      <Label fx:id="requestFX2" layoutX="76.0" layoutY="290.0" prefHeight="17.0" prefWidth="47.0" text="Required *" textFill="RED">
          <font>
             <Font size="10.0" />

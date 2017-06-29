@@ -231,7 +231,7 @@ public abstract class SecretaryController {
 		return misfit_students;		
 		
 	}
-
+	
 	/**
 	 * Checks for optional teachers shows the user.
 	 * @return ArrayList<Teacher> list of optional teachers for the class in this course.
@@ -445,47 +445,52 @@ public abstract class SecretaryController {
 
 		// Add chosen students to the new class
 		new_class.setStudents(chosen_students);
-
 		new_class.setStudentsAmount(chosen_students.size());
 
 		// Send to DB: the instance 'new_class' to add to DB
-		/*
-		 * ArrayList<String> query_addNewClass = new ArrayList<String>();
-		 * query_addNewClass.add("addNewClass"); query_addNewClass.add(classID);
-		 * query_addNewClass.add(((Integer)
-		 * new_class.getStudentsAmount()).toString());
-		 * query_addNewClass.add(new_grade); query_addNewClass.add(className);
-		 * 
-		 * myMain.getConnection().getClient().handleMessageFromClientUI((Object)
-		 * query_addNewClass); received_object =
-		 * myMain.getConnection().getMessage(); boolean answer1 = (boolean)
-		 * received_object;
-		 * 
-		 * if (answer1 == false) { System.out.println(
-		 * "Couldn't define new class (DB error");
-		 * 
-		 * for (Student student : chosen_students) { // Connect class to student
-		 * and increase amount of students in class student.setClass(new_class);
-		 * new_class.setStudentsAmount( new_class.getStudentsAmount() + 1 );
-		 * 
-		 * 
-		 * // Send to DB: the instance 'new_class' to add to DB
-		 * ArrayList<String> query_updateClassOfStudent = new
-		 * ArrayList<String>();
-		 * query_updateClassOfStudent.add("updateClassOfStudent");
-		 * query_updateClassOfStudent.add(student.getId().toString());
-		 * query_updateClassOfStudent.add(new_class.getClassId().toString());
-		 * 
-		 * myMain.getConnection().getClient().handleMessageFromClientUI((Object)
-		 * query_updateClassOfStudent); received_object =
-		 * myMain.getConnection().getMessage(); boolean answer2 =
-		 * (boolean)received_object;
-		 * 
-		 * if(answer2 == false) System.out.println(
-		 * "Couldn't assign student to new class (DB error");
-		 * 
-		 * } }
-		 */
+		
+		  ArrayList<String> query_addNewClass = new ArrayList<String>();
+		  query_addNewClass.add("addNewClass"); query_addNewClass.add(classID);
+		  query_addNewClass.add(((Integer)
+		  new_class.getStudentsAmount()).toString());
+		  query_addNewClass.add(new_grade); query_addNewClass.add(className);
+		  
+		  myMain.getConnection().getClient().handleMessageFromClientUI((Object)
+		  query_addNewClass); received_object =
+		  myMain.getConnection().getMessage(); boolean answer1 = (boolean)
+		  received_object;
+		  
+		  if (answer1 == false)
+		  {
+			  System.out.println("Couldn't define new class (DB error");
+			  return null;
+		  }
+		  
+		  for (Student student : chosen_students)
+		  { 
+			  // Connect class to student and increase amount of students in class student.setClass(new_class);
+			  new_class.setStudentsAmount( new_class.getStudentsAmount() + 1 );
+		  
+		  
+			  // Send to DB: the instance 'new_class' to add to DB
+			  ArrayList<String> query_updateClassOfStudent = new
+			  ArrayList<String>();
+			  query_updateClassOfStudent.add("updateClassOfStudent");
+			  query_updateClassOfStudent.add(student.getId().toString());
+			  query_updateClassOfStudent.add(new_class.getClassId().toString());
+			  
+			  myMain.getConnection().getClient().handleMessageFromClientUI((Object)
+			  query_updateClassOfStudent); received_object =
+			  myMain.getConnection().getMessage(); boolean answer2 =
+			  (boolean)received_object;
+			  
+			  if(answer2 == false)
+			  {
+				  System.out.println("Couldn't assign student to new class (DB error");
+				  return null;
+			  }
+		  }
+		 
 		return new_class;
 	}
 
@@ -518,6 +523,12 @@ public abstract class SecretaryController {
 			}
 
 		}
+		//set 'newid' to have a length of 3 digits
+		if (newid.length() < 2)
+			newid = "00" + newid; 
+		else if (newid.length() < 3)
+			newid = "0" + newid; 
+		
 		return newid;
 	}
 
@@ -531,21 +542,29 @@ public abstract class SecretaryController {
 	{
 		// List is empty, this s_class will be the first
 		if (list_of_classes.isEmpty() == true)
-			return new_grade + "1";
+			return new_grade + "A";
 
-		int i = 1;
-		String name = new_grade + i;
+		char c = 'A';
+		String name = new_grade + c;
 
 		// Scan the SORTED list of existing classes and return the
 		// smallest unused className (starting at 1)
-		for (StudentsClass sclass : list_of_classes) {
+		for (StudentsClass sclass : list_of_classes) 
+		{
 			// Check only the classes with the same grade
-			if (sclass.getlevel() == new_grade) {
-				if (sclass.getClassName() == name) {
+			if (sclass.getlevel().equals(new_grade)) 
+			{
+				if (sclass.getClassName().equals(name)) 
+				{
+					// passed on all the ABC and couldn't find a free letter
+					if (c == 'Z') return null;
+					
 					// Increment 'name'
-					i++;
+					c++;
+					name = new_grade + c;
 				}
-				if (sclass.getClassId() != name) {
+				else if ( ! sclass.getClassId().equals(name) ) 
+				{
 					// Found an unused name
 					break;
 				}
@@ -553,7 +572,7 @@ public abstract class SecretaryController {
 		}
 		return name;
 	}
-
+	
 	
 	/**
 	 * Return to the main menu of the actor. 

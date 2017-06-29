@@ -9,6 +9,11 @@ public class Course
 	private String description;
 	private float weeklyHours;
 	private TeachingUnit teachingUnit;
+
+	// to return 
+	private String year;
+	private String semester;
+
 	private ArrayList<Course> preCondition;
 	private ArrayList<Integer> grades;
 
@@ -56,5 +61,21 @@ public class Course
 
 	public void setGrades(ArrayList<Integer> grades) {
 		this.grades = grades;
+	}
+
+	public String getSemester() {
+		return semester;
+	}
+
+	public void setSemester(String semester) {
+		this.semester = semester;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 }

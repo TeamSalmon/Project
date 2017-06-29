@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.OpenNewSemesterController">
+   <children>
+                  <Button fx:id="unblockFX" layoutX="229.0" layoutY="140.0" mnemonicParsing="false" onAction="#nextFrame" text="Create a new semester" />
+                  <Button fx:id="exitPT" layoutX="280.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+                  <Label fx:id="requestFX" layoutX="79.0" layoutY="60.0" prefHeight="17.0" prefWidth="442.0" text="Opening a new semester will set all the former semesters to &quot;read only&quot; status." />
+	</children>
+</Pane>

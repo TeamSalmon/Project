@@ -11,9 +11,9 @@
 
 <Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineClass1Controller">
    <children>
-                  <Button fx:id="continuePT" layoutX="339.0" layoutY="123.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
-                  <TextField fx:id="gradeFX" layoutX="149.0" layoutY="123.0" promptText="Grade" />
-                  <Button fx:id="exitPT" layoutX="260.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-                  <Label fx:id="requestFX" layoutX="205.0" layoutY="61.0" text="Enter the new class's grade" />
+                  <Button fx:id="continuePT" layoutX="365.0" layoutY="123.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
+                  <TextField fx:id="gradeFX" layoutX="180.0" layoutY="123.0" promptText="Grade" />
+                  <Button fx:id="exitPT" layoutX="280.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+                  <Label fx:id="requestFX" layoutX="180.0" layoutY="61.0" text="Enter the new class's grade (in the range: 10-12)" />
 	</children>
 </Pane>

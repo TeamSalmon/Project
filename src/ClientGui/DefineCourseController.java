@@ -39,6 +39,10 @@ public class DefineCourseController {
 
 	@FXML
 	private Label requestFX2;
+	
+
+	@FXML
+	private Label requestFX3;
 
 	@FXML
 	private Label requestFX1;
