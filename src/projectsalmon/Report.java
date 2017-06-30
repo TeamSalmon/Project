@@ -9,8 +9,8 @@ import javafx.scene.chart.XYChart;
 public class Report {
 	
 	private String xtitle;
-	ArrayList<String> name  =  new ArrayList<String>();
-	ArrayList<String> gpa  =  new ArrayList<String>();
+	ArrayList<String> name = new ArrayList<String>();
+	ArrayList<String> gpa = new ArrayList<String>();
 	XYChart.Series series1 = new XYChart.Series();
 	 public void enterData(ArrayList<String> bla)
 	{

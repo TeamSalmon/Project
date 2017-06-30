@@ -15,7 +15,7 @@ import projectsalmon.*;
  * 
  * @see DefineCourseController
  * @see BlockOrUnblockUserController
-
+ * 
  * @author Elia
  */
 public abstract class AdminController {
@@ -25,7 +25,7 @@ public abstract class AdminController {
 	
 	
 	/* Block or Unblock User */
-						
+	
 	
 	/**
 	 * Checks if the given user has an administrator permission.
@@ -42,13 +42,8 @@ public abstract class AdminController {
 		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_searchUser);
 		received_object = myMain.getConnection().getMessage();
 		LoginUser user = (LoginUser)received_object;
-			
-		if (user.getPermission() == 16)
-		{
-			//The user is an administrator
-			return true;
-		}
-		return false;
+		
+		return ((user.getPermission() & LoginUser.SystemAdminPER)!=0);
 	}
 	
 	
@@ -106,7 +101,7 @@ public abstract class AdminController {
 	
 	
 	/**
-	 * Checks that the received parameters are valid an
+	 * Checks that the received parameters are valid and updates the DB
 	 * @param received_courseName
 	 * @param received_weeklyHours
 	 * @param received_teachingUnit
@@ -149,7 +144,13 @@ public abstract class AdminController {
 		Course new_course = new Course(courseNumber, tu, weeklyHours, received_courseName);
 		new_course.setPreCondition(preconditionsCourses);
 		
+		//
+		//
+		//
 		// Send new course to DB
+		//
+		//
+		//
 		
 		return "ok";
 	}
@@ -172,6 +173,8 @@ public abstract class AdminController {
 		//received_object = myMain.getConnection().getMessage();
 		//list_of_teaching_units = (ArrayList<TeachingUnit>) received_object;
 		///////////////////////////////////////////////////////////////////
+		
+		
 		
 		
 		
