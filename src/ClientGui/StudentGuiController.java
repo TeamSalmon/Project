@@ -57,9 +57,7 @@ public class StudentGuiController implements Initializable
 		//get courses according to chosen semester
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add(myMain.getUser().getId());
-		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 
-		catch (IOException e){e.printStackTrace();}
+		myMain.con.handleMessageFromClientUI(arrsend);
 		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
 		data = FXCollections.observableArrayList();
@@ -112,9 +110,7 @@ public class StudentGuiController implements Initializable
 		
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("getCurrentSemester");
-		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e){e.printStackTrace();}
+		myMain.con.handleMessageFromClientUI(arrsend);
 		currentSemester = (Semester)myMain.con.getMessage();
 		presentedSemester = currentSemester;
 		
@@ -123,9 +119,7 @@ public class StudentGuiController implements Initializable
 		arrsend = new ArrayList<String>();
 		arrsend.add("getSemesters");
 		arrsend.add(myMain.getUser().getId());
-		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e){e.printStackTrace();}
+		myMain.con.handleMessageFromClientUI(arrsend);
 		semesters = (ArrayList<Semester>)myMain.con.getMessage();
 		
 		semesterList = FXCollections.observableArrayList();
@@ -140,10 +134,7 @@ public class StudentGuiController implements Initializable
 		arrsend.add("courseByStudent");
 		arrsend.add(myMain.getUser().getId());
 		arrsend.add(currentSemester.getSemesterNumber());
-		
-		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 
-		catch (IOException e){e.printStackTrace();}
+		myMain.con.handleMessageFromClientUI(arrsend);
 		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
 		data = FXCollections.observableArrayList();

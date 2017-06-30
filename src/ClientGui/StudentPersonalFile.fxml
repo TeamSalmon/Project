@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1270.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ClientGui.StudentPersonalFileController">
    <children>
-      <Separator layoutY="40.0" prefHeight="0.0" prefWidth="1270.0" />
+      <Separator layoutY="42.0" prefHeight="0.0" prefWidth="1270.0" />
       <Label layoutX="14.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="270.0" text="Assignments in personal file">
          <font>
             <Font name="System Bold" size="20.0" />
