@@ -62,14 +62,24 @@ public class RemovetTeacherFromCourseController implements Initializable {
 		ArrayList<String> teacherClassCourseArr = new ArrayList<String>();
 		String courseNum = courseNumberTB.getText();
 		String teacherID = teacherIDTB.getText();
+		if(teacherID.length()!= 0){
 		Teacher newTeacher = SecretaryController.searchTeacherID(teacherID);
 		if (newTeacher != null)
-			teacherIDExists = true;
-
-		ArrayList<StudentsClassInCourse> classCourseArr = SecretaryController.searchCourseNum(courseNum);
-		if (classCourseArr.size() != 0) {
-			courseNumExists = true;
-
+			teacherIDExists = true;}
+		else{
+			Alert alert = new Alert(AlertType.WARNING, "Please fill teacher ID text box.", ButtonType.OK);
+			alert.showAndWait();
+		}
+		if(courseNum.length()!= 0){
+			ArrayList<StudentsClassInCourse> classCourseArr = SecretaryController.searchCourseNum(courseNum);
+			if (classCourseArr.size() != 0) {
+				courseNumExists = true;
+		}
+		else{
+			Alert alert = new Alert(AlertType.WARNING, "Please fill course number text box.", ButtonType.OK);
+			alert.showAndWait();
+		}
+		
 			if ((courseNumExists) && (teacherIDExists)) {
 
 				for (StudentsClassInCourse classCourse : classCourseArr)
