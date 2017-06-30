@@ -63,8 +63,13 @@ public class TeacherAssignmentController implements Initializable
     private TabManager manager;
     private ObservableList<StudentAssignment> data;
     private static Tab singleSubmissionTab;
+<<<<<<< HEAD
     private Main myMain = Main.getInstance();
     private ArrayList<StudentAssignment> submissions;
+=======
+    private Main myMain;
+    private ArrayList<StudentAssignment>submissions;
+>>>>>>> working-ArrayList-String-motherfucker
 
     public TeacherAssignmentController(Assignment assignment, TeacherSingleCourseTabController parentController)
     {
@@ -132,6 +137,7 @@ public class TeacherAssignmentController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
+		myMain = Main.getInstance();
 		manager = TabManager.getInstance();
 		manager.setSubContainer(tabPane);
 		current = manager.getContainer().getTabs().get( manager.getContainer().getTabs().size()-1);
@@ -150,6 +156,7 @@ public class TeacherAssignmentController implements Initializable
 		arrsend.add("getSubmissions");
 		arrsend.add(assignment.getAssignmntId());
 		try {
+<<<<<<< HEAD
 			myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
 		} catch (IOException e){e.printStackTrace();}
 		submissions = (ArrayList<StudentAssignment>)myMain.con.getMessage();
@@ -159,6 +166,15 @@ public class TeacherAssignmentController implements Initializable
 			sa.setAssignment(assignment);
 			data.add(sa);
 		}
+=======
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e){e.printStackTrace();}
+		submissions = (ArrayList<StudentAssignment>)myMain.con.getMessage();
+		
+		for(StudentAssignment st: submissions)
+			data.add(st);
+		
+>>>>>>> working-ArrayList-String-motherfucker
         submissionsList.setItems(data);
         
         manager.getContainer().getSelectionModel().select(current);

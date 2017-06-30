@@ -46,12 +46,12 @@ public class TeacherGuiController implements Initializable{
     @FXML
     private Button goBtn;
     private static Tab singleCourseTab;
-    private ObservableList<Course> data;
-    private ArrayList<Course> courses;
-    private ArrayList<Semester> semesters;
     private Semester currentSemester;
     private Semester presentedSemester;
 	private ObservableList<Semester> semesterList;
+	private ObservableList<Course> data;
+    private ArrayList<Course> courses;
+    private ArrayList<Semester> semesters;
 
     @SuppressWarnings("unchecked")
 	@FXML
@@ -71,6 +71,7 @@ public class TeacherGuiController implements Initializable{
     	ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("courseByTeacher");
 		arrsend.add(myMain.getUser().getId());
+		arrsend.add(presentedSemester.getYear());
 		arrsend.add(presentedSemester.getSemesterNumber());
 		
 		myMain.con.handleMessageFromClientUI(arrsend);
@@ -119,19 +120,24 @@ public class TeacherGuiController implements Initializable{
 		manager.setContainer(container);
 		manager.setEditable(true);
 		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
+<<<<<<< HEAD
 
 		/**
 		 * Since the default semester for presenting is the current one, we have to get it from the DB:
 		 */
+=======
+		
+		// Since the default semester for presenting is the current one, we have to get it from the DB:
+		 
+>>>>>>> working-ArrayList-String-motherfucker
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("CurrentSemester");
 		myMain.con.handleMessageFromClientUI(arrsend);
 		currentSemester = (Semester)myMain.con.getMessage();
 		presentedSemester = currentSemester;
 		
-		/**
-		 * Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
-		 */
+		
+		//Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
 		
 		arrsend = new ArrayList<String>();
 		arrsend.add("getSemesters");
@@ -147,11 +153,16 @@ public class TeacherGuiController implements Initializable{
 		semesterChoice.setItems(semesterList);
 		}
 		
+<<<<<<< HEAD
 		// Getting the information matching the semester:
+=======
+		 //Getting the information matching the semester:
+>>>>>>> working-ArrayList-String-motherfucker
 		
 		arrsend = new ArrayList<String>();
 		arrsend.add("courseByTeacher");
 		arrsend.add(myMain.getUser().getId());
+		arrsend.add(presentedSemester.getYear());
 		arrsend.add(currentSemester.getSemesterNumber());
 		myMain.con.handleMessageFromClientUI(arrsend);
 		courses = (ArrayList<Course>)myMain.con.getMessage();

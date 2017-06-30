@@ -18,6 +18,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
+<<<<<<< HEAD
+=======
+import javafx.scene.input.MouseEvent;
+>>>>>>> working-ArrayList-String-motherfucker
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -55,7 +59,10 @@ public class StudentSingleCourseTabController implements Initializable
 		current.setText(((Course)manager.getLatestSelection()).toString());
 		course = (Course)manager.getLatestSelection();
 		newAssignmentBtn.setVisible(false);
+<<<<<<< HEAD
 		
+=======
+>>>>>>> working-ArrayList-String-motherfucker
 		Main.getTheStage().setOnCloseRequest(new EventHandler<WindowEvent>()
 		{public void handle(WindowEvent we){System.out.println("Stage is closing");}});
 		
@@ -77,6 +84,7 @@ public class StudentSingleCourseTabController implements Initializable
         assignmentsList.setItems(data);
 	}
 	@FXML
+<<<<<<< HEAD
 	void defineNewAssignment(ActionEvent event)
 	{
 		/**
@@ -101,14 +109,22 @@ public class StudentSingleCourseTabController implements Initializable
 	}
 	@FXML
 	void openAssignment(Event event)
+=======
+	void openAssignment(MouseEvent event)
+>>>>>>> working-ArrayList-String-motherfucker
 	{
 		/**
 		 * When clicking on an assignment, it's details are presented in a new tab.
 		 * In the new tab, the detail are only editable if the semester is the current one
 		 */
 		manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
+<<<<<<< HEAD
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentTabs.fxml"));
     	TeacherAssignmentController controller = new TeacherAssignmentController(assignmentsList.getSelectionModel().getSelectedItem(),this);
+=======
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("SubmissionTab.fxml"));
+    	SubmissionController controller = new SubmissionController(assignmentsList.getSelectionModel().getSelectedItem(),this);
+>>>>>>> working-ArrayList-String-motherfucker
     	loader.setController(controller);
         singleAssignmentTab = new Tab("View assignment");
         manager.getContainer().getTabs().add(singleAssignmentTab);
@@ -121,6 +137,7 @@ public class StudentSingleCourseTabController implements Initializable
 	{
 		manager.getContainer().getTabs().remove(current);
     }
+<<<<<<< HEAD
 
 	public void addAssignment(Assignment assignment)
 	{
@@ -159,3 +176,6 @@ public class StudentSingleCourseTabController implements Initializable
 		assignmentsList.setItems(data);
 	}
 }
+=======
+}
+>>>>>>> working-ArrayList-String-motherfucker

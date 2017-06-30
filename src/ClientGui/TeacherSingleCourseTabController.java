@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -100,7 +101,7 @@ public class TeacherSingleCourseTabController implements Initializable
 	        }catch(IOException e){e.printStackTrace();}
 	}
 	@FXML
-	void openAssignment(Event event)
+	void openAssignment(MouseEvent event)
 	{
 		/**
 		 * When clicking on an assignment, it's details are presented in a new tab.
