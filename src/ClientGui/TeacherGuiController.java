@@ -73,9 +73,7 @@ public class TeacherGuiController implements Initializable{
 		arrsend.add(myMain.getUser().getId());
 		arrsend.add(presentedSemester.getSemesterNumber());
 		
-		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 
-		catch (IOException e){e.printStackTrace();}
+		myMain.con.handleMessageFromClientUI(arrsend);
 		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
 		/**
@@ -114,36 +112,31 @@ public class TeacherGuiController implements Initializable{
     	}
     }
     
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		manager.setContainer(container);
 		manager.setEditable(true);
 		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
-		
+
 		/**
 		 * Since the default semester for presenting is the current one, we have to get it from the DB:
 		 */
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("CurrentSemester");
-		try {
-			myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
-		} catch (IOException e){e.printStackTrace();}
+		myMain.con.handleMessageFromClientUI(arrsend);
 		currentSemester = (Semester)myMain.con.getMessage();
-		
 		presentedSemester = currentSemester;
 		
 		/**
 		 * Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
 		 */
 		
-		/*arrsend = new ArrayList<String>();
+		arrsend = new ArrayList<String>();
 		arrsend.add("getSemesters");
 		arrsend.add(myMain.getUser().getId());
-		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e){e.printStackTrace();}
+		myMain.con.handleMessageFromClientUI(arrsend);
 		semesters = (ArrayList<Semester>)myMain.con.getMessage();
 		
 		semesterList = FXCollections.observableArrayList();
@@ -154,18 +147,13 @@ public class TeacherGuiController implements Initializable{
 		semesterChoice.setItems(semesterList);
 		}
 		
-		/**
-		 * Getting the information matching the semester:
-		 */
+		// Getting the information matching the semester:
 		
-		/*arrsend = new ArrayList<String>();
+		arrsend = new ArrayList<String>();
 		arrsend.add("courseByTeacher");
 		arrsend.add(myMain.getUser().getId());
 		arrsend.add(currentSemester.getSemesterNumber());
-		
-		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 
-		catch (IOException e){e.printStackTrace();}
+		myMain.con.handleMessageFromClientUI(arrsend);
 		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
 		data = FXCollections.observableArrayList();
@@ -175,6 +163,6 @@ public class TeacherGuiController implements Initializable{
 			data.add(c);
 		
         coursesList.setItems(data);
-		}*/
+		}
 	}
 }
