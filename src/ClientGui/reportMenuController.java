@@ -17,52 +17,65 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import projectsalmon.*;
 
-public class reportMenuController implements Initializable {
 
-	Main myMain = Main.getInstance();
-	String xname, searchKey;
-	String semstersNum;
-	ObservableList<String> list;
-    @FXML // fx:id="an1"
-    private AnchorPane an1; // Value injected by FXMLLoader
-    @FXML // fx:id="backPT"
-    private Button backPT; // Value injected by FXMLLoader
-    @FXML // fx:id="classID3"
-    private TextField classID3; // Value injected by FXMLLoader
+public class reportMenuController implements Initializable
+{
+    @FXML
+    private AnchorPane an32;
+    @FXML
+    private ComboBox<Semester> comboR31;
+    @FXML
+    private ListView<Course> coursesList;
+    @FXML
+    private AnchorPane an31;
+    @FXML
+    private Button closeBtn;
+    @FXML
+    private AnchorPane an3;
+    @FXML
+    private Button go1;
+    @FXML
+    private ListView<Teacher> teachersList1;
+    @FXML
+    private Label title1;
+    @FXML
+    private Label title2;
+    @FXML
+    private Label title;
+    @FXML
+    private ComboBox<Semester> comboR3;
+    @FXML
+    private Button closeBtn1;
+    @FXML
+    private ComboBox<Semester> semesterChoice1;
+    @FXML
+    private Tab classList3;
+    @FXML
+    private ListView<StudentsClass> classList2;
+    private Main myMain = Main.getInstance();
+	private String xname;
+	private String searchKey;
+	private String semstersNum;
+	private ObservableList<String> list;
+	private TabManager manager;
 
-    @FXML // fx:id="calcPT3"
-    private Button calcPT3; // Value injected by FXMLLoader
-
-    @FXML // fx:id="and2"
-    private AnchorPane and2; // Value injected by FXMLLoader
-
-    @FXML // fx:id="calcPT2"
-    private Button calcPT2; // Value injected by FXMLLoader
-
-    @FXML // fx:id="calcPT1"
-    private Button calcPT1; // Value injected by FXMLLoader
-
-    @FXML // fx:id="an3"
-    private AnchorPane an3; // Value injected by FXMLLoader
-
-    @FXML // fx:id="classID2"
-    private TextField classID2; // Value injected by FXMLLoader
-
-    @FXML // fx:id="comboR1"
-    private ComboBox<String> comboR1; // Value injected by FXMLLoader
-
-    @FXML // fx:id="teachidPT1"
-    private TextField teachidPT1; // Value injected by FXMLLoader
-
-    @FXML // fx:id="comboR3"
-    private ComboBox<String> comboR3; // Value injected by FXMLLoader
-
-    @FXML // fx:id="comboR2"
-    private ComboBox<String> comboR2; // Value injected by FXMLLoader
-
+    @FXML
+    void closeTab(ActionEvent event)
+    {
+    	
+    }
+    @FXML
+    void chageSemester1(ActionEvent event)
+    {
+    	
+    }
     @FXML
     void calcReport1(ActionEvent event) throws IOException 
     {
@@ -72,7 +85,6 @@ public class reportMenuController implements Initializable {
     	//myMain.setReport=
 
     }
-
     @FXML
     void calcReport2(ActionEvent event) 
     {
@@ -90,29 +102,11 @@ public class reportMenuController implements Initializable {
     	semstersNum= comboR3.getValue();
     	//myMain.setReport=
     }
-
-    
-    
-    @FXML
-    void goBack(ActionEvent event) throws IOException 
-    {
-    	 myMain.getMange().changeScene((Scene) myMain.getMange().myStack.pop());
-    } 
-    
-    
-    
-	@Override
+    @Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
-		ArrayList<String> al = new ArrayList<String>();	
-		for(int i=0;i<6;i++)
-		{
-			al.add(" "+i);
-		}
-		
-		list = FXCollections.observableArrayList(al);
-		comboR1.setItems(list);
-		comboR2.setItems(list);
-		comboR3.setItems(list);
+    	
+    	//report1:
+    	
 	}
 }

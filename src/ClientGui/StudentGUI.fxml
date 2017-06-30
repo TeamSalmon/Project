@@ -8,15 +8,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane id="test" fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.TeacherGuiController">
+<TabPane id="test" fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1270.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.StudentGuiController">
   <tabs>
     <Tab id="test" fx:id="mainTab" text="name">
       <content>
         <AnchorPane id="test" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="1039.0" prefWidth="1920.0">
                <children>
                   <ListView fx:id="coursesList" fixedCellSize="50.0" layoutX="15.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#openSingleCourseTab" prefHeight="517.0" prefWidth="1238.0" stylesheets="@test.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="78.0" />
-                  <ComboBox fx:id="semesterChoice" layoutX="1082.0" layoutY="38.0" prefHeight="39.0" prefWidth="140.0" promptText="semester" />
-                  <Button id="test" fx:id="goBtn" layoutX="1222.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#changeSemester" prefHeight="40.0" prefWidth="42.0" text="GO" textFill="#22078c">
+                  <ComboBox fx:id="semesterChoice" layoutX="1086.0" layoutY="38.0" prefHeight="39.0" prefWidth="140.0" promptText="semester" />
+                  <Button id="test" fx:id="goBtn" layoutX="1226.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#changeSemester" prefHeight="39.0" prefWidth="43.0" text="GO" textFill="#22078c">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -27,7 +27,8 @@
                      </font>
                   </Label>
                   <Separator layoutY="38.0" prefHeight="3.0" prefWidth="1282.0" />
-                  <Separator layoutX="-1.0" layoutY="77.0" prefHeight="0.0" prefWidth="1287.0" />
+                  <Button id="test" fx:id="personalFileBtn" mnemonicParsing="false" onAction="#openPersonalFile" prefHeight="39.0" prefWidth="176.0" text="View personal file" textFill="#22078c" />
+                  <Separator layoutX="-1.0" layoutY="77.0" prefHeight="3.0" prefWidth="1270.0" />
                </children></AnchorPane>
       </content>
     </Tab>

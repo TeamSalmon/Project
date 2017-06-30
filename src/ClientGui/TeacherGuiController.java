@@ -73,8 +73,12 @@ public class TeacherGuiController implements Initializable{
 		arrsend.add(myMain.getUser().getId());
 		arrsend.add(presentedSemester.getYear());
 		arrsend.add(presentedSemester.getSemesterNumber());
-		
-		myMain.con.handleMessageFromClientUI(arrsend);
+		try {
+			myMain.getConnection().getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
 		/**
@@ -120,29 +124,34 @@ public class TeacherGuiController implements Initializable{
 		manager.setContainer(container);
 		manager.setEditable(true);
 		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
-<<<<<<< HEAD
-
-		/**
-		 * Since the default semester for presenting is the current one, we have to get it from the DB:
-		 */
-=======
 		
 		// Since the default semester for presenting is the current one, we have to get it from the DB:
 		 
->>>>>>> working-ArrayList-String-motherfucker
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("CurrentSemester");
-		myMain.con.handleMessageFromClientUI(arrsend);
-		currentSemester = (Semester)myMain.con.getMessage();
+		try {
+			myMain.getConnection().getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		myMain.getConnection().getMessage();
+		ArrayList<String> answer = (ArrayList<String>) myMain.getConnection().getMessage();
+		currentSemester = new Semester(answer.get(0), answer.get(1));
 		presentedSemester = currentSemester;
 		
 		
 		//Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
-		
+		/*
 		arrsend = new ArrayList<String>();
 		arrsend.add("getSemesters");
 		arrsend.add(myMain.getUser().getId());
-		myMain.con.handleMessageFromClientUI(arrsend);
+		try {
+			myMain.getConnection().getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		semesters = (ArrayList<Semester>)myMain.con.getMessage();
 		
 		semesterList = FXCollections.observableArrayList();
@@ -152,19 +161,20 @@ public class TeacherGuiController implements Initializable{
 			semesterList.add(s);
 		semesterChoice.setItems(semesterList);
 		}
-		
-<<<<<<< HEAD
-		// Getting the information matching the semester:
-=======
+
 		 //Getting the information matching the semester:
->>>>>>> working-ArrayList-String-motherfucker
 		
 		arrsend = new ArrayList<String>();
 		arrsend.add("courseByTeacher");
 		arrsend.add(myMain.getUser().getId());
 		arrsend.add(presentedSemester.getYear());
 		arrsend.add(currentSemester.getSemesterNumber());
-		myMain.con.handleMessageFromClientUI(arrsend);
+		try {
+			myMain.getConnection().getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
 		data = FXCollections.observableArrayList();
@@ -174,6 +184,6 @@ public class TeacherGuiController implements Initializable{
 			data.add(c);
 		
         coursesList.setItems(data);
-		}
+		}*/
 	}
 }

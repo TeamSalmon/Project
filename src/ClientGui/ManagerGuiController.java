@@ -1,5 +1,6 @@
 package ClientGui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -8,11 +9,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import projectsalmon.Course;
 import projectsalmon.Semester;
 
 public class ManagerGuiController implements Initializable
@@ -46,6 +49,7 @@ public class ManagerGuiController implements Initializable
     private ObservableList<Semester> semesterList;
     private Semester presentedSemester;
     private Semester currentSemester;
+    private Tab reportTabs;
 
     @FXML
     void openBlockTab(ActionEvent event)
@@ -85,7 +89,11 @@ public class ManagerGuiController implements Initializable
     @FXML
     void openReportTabs(ActionEvent event)
     {
-    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("reportMenu.fxml"));
+        reportTabs = new Tab("Statistical reports");
+        manager.getContainer().getTabs().add(reportTabs);
+        try {reportTabs.setContent(loader.load());} 
+        catch (IOException e){e.printStackTrace();}
     }
 	@SuppressWarnings("unchecked")
 	@Override
