@@ -1,15 +1,9 @@
-/**
- * Sample Skeleton for 'TeacherGui.fxml' Controller Class
- */
-
 package ClientGui;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import projectsalmon.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,43 +14,64 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.MouseEvent;
-/**
- * this controller is responsible for the first screen a teacher sees after logging in
- * @author inbar
- */
-public class TeacherGuiController implements Initializable{
-
-	Main myMain = Main.getInstance();
-	TabManager manager = TabManager.getInstance();
+import javafx.scene.layout.AnchorPane;
+import projectsalmon.Course;
+import projectsalmon.Semester;
+import projectsalmon.Student;
 	
+public class ParentGuiController implements Initializable
+{
 	@FXML
     private TabPane container;
-	@FXML
-	private ListView<Course> coursesList;
+    @FXML
+    private ListView<Course> coursesList;
     @FXML
     private Tab mainTab;
     @FXML
+    private ComboBox<Student> childChoice;
+    @FXML
     private ComboBox<Semester> semesterChoice;
+    @FXML
+    private Button goBtn;
     @FXML
     private AnchorPane pane;
     @FXML
-    private Button goBtn;
-    private static Tab singleCourseTab;
-    private Semester currentSemester;
+    private Button personalFileBtn;
+    private Main myMain;
+    private TabManager manager;
     private Semester presentedSemester;
 	private ObservableList<Semester> semesterList;
 	private ObservableList<Course> data;
     private ArrayList<Course> courses;
     private ArrayList<Semester> semesters;
+    private ArrayList<Student> children;
+    private ObservableList<Student> cdata;
+    private Student presentedChild;
+    private Tab personalFileTab;
+    private Tab singleCourseTab;
 
+    @FXML
+    void openSingleCourseTab(ActionEvent event)
+    {
+    	/**
+    	 * Once a course was chosen from the courses list, a new tab opens- containing information about said course:
+    	 */
+    	if(coursesList.getSelectionModel().getSelectedItem()!=null)
+    	{
+    	manager.setLatestSelection(coursesList.getSelectionModel().getSelectedItem());
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentSingleCourseTab.fxml"));
+        singleCourseTab = new Tab(((Course)(coursesList.getSelectionModel().getSelectedItem())).getName());
+        manager.getContainer().getTabs().add(singleCourseTab);
+        try {singleCourseTab.setContent(loader.load());} 
+        catch (IOException e) {e.printStackTrace();}  
+    	}
+    }
     @SuppressWarnings("unchecked")
 	@FXML
-    void changeSemester(ActionEvent event)
-    {        
+    void changeSemesterOrChild(ActionEvent event)
+    {
     	/**
     	 * A teacher has the option to change the semester of which the information is presented to him
     	 * The default semester for presentation is the current one
@@ -64,13 +79,13 @@ public class TeacherGuiController implements Initializable{
     	 * Once a teacher goes on to a different semester than the current one, the information becomes uneditable 
     	 */
     	presentedSemester = semesterChoice.getSelectionModel().getSelectedItem();
+    	presentedChild = childChoice.getSelectionModel().getSelectedItem();
     	
-    	/**
-    	 * Getting information according to the chosen semester from the DB:
-    	 */
+    	//Getting information according to the chosen semester and child from the DB:
+    	 
     	ArrayList<String> arrsend = new ArrayList<String>();
-		arrsend.add("courseByTeacher");
-		arrsend.add(myMain.getUser().getId());
+		arrsend.add("courseByStudent");
+		arrsend.add(presentedChild.getId());
 		arrsend.add(presentedSemester.getYear());
 		arrsend.add(presentedSemester.getSemesterNumber());
 		
@@ -79,9 +94,8 @@ public class TeacherGuiController implements Initializable{
 		catch (IOException e){e.printStackTrace();}
 		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
-		/**
-		 * Presenting the information:
-		 */
+		//Presenting the information:
+		 
 		data = FXCollections.observableArrayList();
 		if(courses!=null)
 		{
@@ -90,56 +104,53 @@ public class TeacherGuiController implements Initializable{
 		
         coursesList.setItems(data);
 		}
-		/**
-		 * Making sure the information is only editable for the current semester:
-		 */
-        if(presentedSemester == currentSemester)
-        	manager.setEditable(true);
-        else
-        	manager.setEditable(false);
     }
     @FXML
-    void openSingleCourseTab(MouseEvent event)
+    void openPersonalFile(ActionEvent event)
     {
-    	/**
-    	 * Once a course was chosen from the courses list, a new tab opens- containing information about said course:
-    	 */
-    	if(coursesList.getSelectionModel().getSelectedItem()!=null)
-    	{
-    	manager.setLatestSelection(coursesList.getSelectionModel().getSelectedItem());
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("TeacherSingleCourseTab.fxml"));
-        singleCourseTab = new Tab(((Course)(coursesList.getSelectionModel().getSelectedItem())).getName());
-        manager.getContainer().getTabs().add(singleCourseTab);
-        try {singleCourseTab.setContent(loader.load());} 
-        catch (IOException e) {e.printStackTrace();}  
-    	}
+    	manager.setLatestSelection(presentedChild);
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentPersonalFile.fxml"));
+        personalFileTab = new Tab("Personal file");
+        manager.getContainer().getTabs().add(personalFileTab);
+        try {personalFileTab.setContent(loader.load());} 
+        catch (IOException e) {e.printStackTrace();}
     }
-    
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		manager.setContainer(container);
-		manager.setEditable(true);
+		manager.setEditable(false);
 		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
 		
 		// Since the default semester for presenting is the current one, we have to get it from the DB:
 		 
 		ArrayList<String> arrsend = new ArrayList<String>();
+		arrsend.add("getChildren");
+		arrsend.add(myMain.getUser().getId());
+		try {
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e){e.printStackTrace();}
+		children = (ArrayList<Student>)myMain.con.getMessage();
+		
+		presentedChild = children.get(0);
+		cdata = FXCollections.observableArrayList();
+		for(Student s : children)
+			cdata.add(s);
+		childChoice.setItems(cdata);
+		
+		arrsend = new ArrayList<String>();
 		arrsend.add("CurrentSemester");
 		try {
 			myMain.con.getClient().handleMessageFromClientUI(arrsend);
 		} catch (IOException e){e.printStackTrace();}
-		currentSemester = (Semester)myMain.con.getMessage();
+		presentedSemester = (Semester)myMain.con.getMessage();		
 		
-		presentedSemester = currentSemester;
-		
-		
-		//Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
+		//Getting from the DB all relevant semesters to the child (semesters in which he/she was active in the system):
 		
 		arrsend = new ArrayList<String>();
 		arrsend.add("getSemesters");
-		arrsend.add(myMain.getUser().getId());
+		arrsend.add(presentedChild.getId());
 		try {
 			myMain.con.getClient().handleMessageFromClientUI(arrsend);
 		} catch (IOException e){e.printStackTrace();}
@@ -156,10 +167,10 @@ public class TeacherGuiController implements Initializable{
 		 //Getting the information matching the semester:
 		
 		arrsend = new ArrayList<String>();
-		arrsend.add("courseByTeacher");
-		arrsend.add(myMain.getUser().getId());
+		arrsend.add("courseByStudent");
+		arrsend.add(presentedChild.getId());
 		arrsend.add(presentedSemester.getYear());
-		arrsend.add(currentSemester.getSemesterNumber());
+		arrsend.add(presentedSemester.getSemesterNumber());
 		
 		try {
 			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 

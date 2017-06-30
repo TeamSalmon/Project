@@ -86,7 +86,6 @@ public class EditAssignmentController implements Initializable
     	assignment.setName(nameField.getText());
     	assignment.setDeadline(cal);
     	assignment.setInstructions(instructionsField.getText());
-    	assignment.setPrecentagesOfGrade(Integer.parseInt(precentageField.getText()));
     	assignment.setFile(uploadField.getText());
     	//call controllers to make sure everything is ok
     	//save the assignment in db
@@ -106,7 +105,6 @@ public class EditAssignmentController implements Initializable
 		title.setText("Edit " + assignment.getName());
 		nameField.setText(assignment.getName());
 		deadlineField.setValue(assignment.getDeadline().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-		precentageField.setText(Integer.toString(assignment.getPrecentagesOfFinalGrade()));
 		instructionsField.setText(assignment.getInstructions());
 		deleteAssignmentBtn.setVisible(true);
 		uploadField.setText(assignment.getfile().getPath());

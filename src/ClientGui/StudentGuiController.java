@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import projectsalmon.Course;
 import projectsalmon.Semester;
@@ -31,7 +32,7 @@ public class StudentGuiController implements Initializable
 	@FXML
 	private TabPane container;
 	@FXML
-	private ListView<String> coursesList;
+	private ListView<Course> coursesList;
 	@FXML
 	private Tab mainTab;
 	@FXML
@@ -42,107 +43,145 @@ public class StudentGuiController implements Initializable
 	private Button goBtn;
 	private static Tab singleCourseTab;
 	private static Tab personalFileTab;
-	private ObservableList<String> data;
+	private ObservableList<Course> data;
 	private ArrayList<Course> courses;
 	private Semester currentSemester;
 	private Semester presentedSemester;
 	private ObservableList<Semester> semesterList;
+	private ArrayList<Semester> semesters;
 
+	@SuppressWarnings("unchecked")
 	@FXML
 	void changeSemester(ActionEvent event)
-	{        
-		presentedSemester = semesterChoice.getSelectionModel().getSelectedItem();
+    {        
+    	/**
+    	 * A teacher has the option to change the semester of which the information is presented to him
+    	 * The default semester for presentation is the current one
+    	 * According to the demand, a teacher is able to edit information of the current semester
+    	 * Once a teacher goes on to a different semester than the current one, the information becomes uneditable 
+    	 */
+    	presentedSemester = semesterChoice.getSelectionModel().getSelectedItem();
+    	
+    	/**
+    	 * Getting information according to the chosen semester from the DB:
+    	 */
+    	ArrayList<String> arrsend = new ArrayList<String>();
+		arrsend.add("courseByStudent");
+		arrsend.add(myMain.getUser().getId());
+		arrsend.add(presentedSemester.getYear());
+		arrsend.add(presentedSemester.getSemesterNumber());
 		
-		//get courses according to chosen semester
-		ArrayList<String> askDB = new ArrayList<String>();
-		askDB.add(myMain.getUser().getId());
-		//add more parameters 
+		try {
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 
+		catch (IOException e){e.printStackTrace();}
+		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
-		/*try
-		{
-			courses = (ArrayList<Course>)myMain.con.getClient().handleMessageFromClientUI(askDB);
-		}
-		catch(IOException e)
-		{
-			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-		}*/
+		/**
+		 * Presenting the information:
+		 */
 		data = FXCollections.observableArrayList();
+		if(courses!=null)
+		{
 		for(Course c : courses)
-			data.add(c.getName()+ " " + c.getCourseNumber());
-	    coursesList.setItems(data);
-	    
-	    if(presentedSemester == currentSemester)
-	    	manager.setEditable(true);
-	    else
-	    	manager.setEditable(false);
-	}
+			data.add(c);
+		
+        coursesList.setItems(data);
+		}
+		/**
+		 * Making sure the information is only editable for the current semester:
+		 */
+        if(presentedSemester == currentSemester)
+        	manager.setEditable(true);
+        else
+        	manager.setEditable(false);
+    }
+    @FXML
+    void openSingleCourseTab(MouseEvent event)
+    {
+    	/**
+    	 * Once a course was chosen from the courses list, a new tab opens- containing information about said course:
+    	 */
+    	if(coursesList.getSelectionModel().getSelectedItem()!=null)
+    	{
+    	manager.setLatestSelection(coursesList.getSelectionModel().getSelectedItem());
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentSingleCourseTab.fxml"));
+        singleCourseTab = new Tab(((Course)(coursesList.getSelectionModel().getSelectedItem())).getName());
+        manager.getContainer().getTabs().add(singleCourseTab);
+        try {singleCourseTab.setContent(loader.load());} 
+        catch (IOException e) {e.printStackTrace();}  
+    	}
+    }
     @FXML
     void openPersonalFile(ActionEvent event)
-    {
-    	manager.setLatestSelection(coursesList.getSelectionModel().getSelectedItem());
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentPersonalFile.fxml"));
-	    personalFileTab = new Tab("Personal file");
-	    manager.getContainer().getTabs().add(personalFileTab);
-	    try {
-			singleCourseTab.setContent(loader.load());
-		} catch (IOException e) {e.printStackTrace();} 
-    }
-	@FXML
-	void openSingleCourseTab(Event event)
 	{
-		manager.setLatestSelection(coursesList.getSelectionModel().getSelectedItem());
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentSingleCourseTab.fxml"));
-	    singleCourseTab = new Tab("new");
-	    manager.getContainer().getTabs().add(singleCourseTab);
-	    try {
-			singleCourseTab.setContent(loader.load());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-	}
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentPersonalFile.fxml"));
+        personalFileTab = new Tab("Personal file");
+        manager.getContainer().getTabs().add(personalFileTab);
+        try {personalFileTab.setContent(loader.load());} 
+        catch (IOException e) {e.printStackTrace();} 
+    }
+    @SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		manager.setContainer(container);
 		manager.setEditable(true);
-		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
+		mainTab.setText(myMain.getUser().getFirst_name()+ " " + myMain.getUser().getLast_name());
 		
-		ArrayList arrsend = new ArrayList<String>();
-		arrsend.add("getCurrentSemester");
+		/**
+		 * Since the default semester for presenting is the current one, we have to get it from the DB:
+		 */
+		ArrayList<String> arrsend = new ArrayList<String>();
+		arrsend.add("CurrentSemester");
 		try {
 			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//currentSemester = myMain.con.get;
+		} catch (IOException e){e.printStackTrace();}
+		currentSemester = (Semester)myMain.con.getMessage();
 		
 		presentedSemester = currentSemester;
+		
+		/**
+		 * Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
+		 */
+		
+		arrsend = new ArrayList<String>();
+		arrsend.add("getSemesters");
+		arrsend.add(myMain.getUser().getId());
+		try {
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);
+		} catch (IOException e){e.printStackTrace();}
+		semesters = (ArrayList<Semester>)myMain.con.getMessage();
+		
 		semesterList = FXCollections.observableArrayList();
-		//semesterList.add(new Semester("2016", 'b'));
-		semesterList.add(currentSemester);
+		if(semesters!=null)
+		{
+		for(Semester s : semesters)
+			semesterList.add(s);
 		semesterChoice.setItems(semesterList);
-		
-		ArrayList<String> askDB = new ArrayList<String>();
-		askDB.add(myMain.getUser().getId());
-		//add more parameters 
-		
-		/*try
-		{
-			courses = (ArrayList<Course>)myMain.con.getClient().handleMessageFromClientUI(askDB);
 		}
-		catch(IOException e)
-		{
-			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-		}*/
+		
+		/**
+		 * Getting the information matching the semester:
+		 */
+		
+		arrsend = new ArrayList<String>();
+		arrsend.add("courseByTeacher");
+		arrsend.add(myMain.getUser().getId());
+		arrsend.add(presentedSemester.getYear());
+		arrsend.add(currentSemester.getSemesterNumber());
+		
+		try {
+			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 
+		catch (IOException e){e.printStackTrace();}
+		courses = (ArrayList<Course>)myMain.con.getMessage();
 		
 		data = FXCollections.observableArrayList();
-		//Course course = new Course("123", "Algebra",new TeachingUnit("9", "Math"),"", 8, "Algebra");
-		//Course course1 = new Course("1", "Atam",new TeachingUnit("9", "Math"),"", 8, "Atam");
-		//data.add(course.getName()+ " " + course.getCourseNumber());
-		//data.add(course1.getName()+ " " + course1.getCourseNumber());
+		if(courses!=null)
+		{
+		for(Course c : courses)
+			data.add(c);
 		
-	    coursesList.setItems(data);
+        coursesList.setItems(data);
+		}
 	}
 }
