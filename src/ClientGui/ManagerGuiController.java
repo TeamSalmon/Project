@@ -49,7 +49,6 @@ public class ManagerGuiController implements Initializable
     private ObservableList<Semester> semesterList;
     private Semester presentedSemester;
     private Semester currentSemester;
-    private Tab reportTabs;
 
     @FXML
     void openBlockTab(ActionEvent event)
@@ -74,7 +73,11 @@ public class ManagerGuiController implements Initializable
     @FXML
     void openClassesTab(ActionEvent event)
     {
-    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewClassesGui.fxml"));
+        Tab viewClassesTab = new Tab("View classes");
+        manager.getContainer().getTabs().add(viewClassesTab);
+        try {viewClassesTab.setContent(loader.load());} 
+        catch (IOException e){e.printStackTrace();}
     }
     @FXML
     void openTeachingUnitsTabs(ActionEvent event)
@@ -90,7 +93,7 @@ public class ManagerGuiController implements Initializable
     void openReportTabs(ActionEvent event)
     {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("reportMenu.fxml"));
-        reportTabs = new Tab("Statistical reports");
+        Tab reportTabs = new Tab("Statistical reports");
         manager.getContainer().getTabs().add(reportTabs);
         try {reportTabs.setContent(loader.load());} 
         catch (IOException e){e.printStackTrace();}
@@ -99,30 +102,61 @@ public class ManagerGuiController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
+		manager = TabManager.getInstance();
 		manager.setContainer(container);
-		manager.setEditable(true);
+		myMain = Main.getInstance();
 		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
 
 		//Since the default semester for presenting is the current one, we have to get it from the DB:
 		 
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("CurrentSemester");
-		myMain.con.handleMessageFromClientUI(arrsend);
-		currentSemester = (Semester)myMain.con.getMessage();
-		presentedSemester = currentSemester;
+		try {
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		ArrayList<String> answer = new ArrayList<String>();
+		answer = (ArrayList<String>)Main.con.getMessage();
+		presentedSemester = new Semester(answer.get(0), answer.get(1));
+		manager.setCurrentSemester(presentedSemester);
 		
+		//Get semesters:
 		arrsend = new ArrayList<String>();
 		arrsend.add("getSemesters");
 		arrsend.add(myMain.getUser().getId());
-		myMain.con.handleMessageFromClientUI(arrsend);
-		semesters = (ArrayList<Semester>)myMain.con.getMessage();
+		try {
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con)
+    	{
+    		try {Main.con.wait();} catch (InterruptedException e){e.printStackTrace();}
+		}
+    	ArrayList<ArrayList<String>> answer2 = new ArrayList<ArrayList<String>>();
+		answer2 = (ArrayList<ArrayList<String>>)Main.con.getMessage();
+		semesters = new ArrayList<Semester>();
+		if(answer2!=null)
+			for(ArrayList<String> semester : answer2)
+			{
+				semesters.add(new Semester(semester.get(0),semester.get(1)));
+			}
 		
 		semesterList = FXCollections.observableArrayList();
-		if(semesters!=null)
-		{
 		for(Semester s : semesters)
 			semesterList.add(s);
 		semesterChoice.setItems(semesterList);
-		}
 	}
 }

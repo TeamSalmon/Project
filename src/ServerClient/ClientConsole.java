@@ -4,8 +4,12 @@ package ServerClient;
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.util.ArrayList;
 
+import ClientGui.Main;
 import javafx.scene.control.TextField;
+import ocsf.client.ObservableClient;
+import projectsalmon.TeachingUnit;
 
 
 /**
@@ -18,7 +22,7 @@ import javafx.scene.control.TextField;
  * @author Dr Robert Lagani&egrave;re
  * @version July 2000
  */
-public class ClientConsole implements ChatIF 
+public class ClientConsole extends ObservableClient 
 {
   //Class variables *************************************************
   
@@ -32,10 +36,11 @@ public class ClientConsole implements ChatIF
   /**
    * The instance of the client that created this ConsoleChat.
    */
-  private ChatClient client;
+  
   private String stringOut;
   private static TextField log;
   private Object message;
+  private int flag=0;
   //Constructors ****************************************************
 
   /**
@@ -46,8 +51,9 @@ public class ClientConsole implements ChatIF
    */
   public ClientConsole(String host, int port) throws IOException
   {
+	  super(host, port); //Call the superclass constructor
+		openConnection();
 
-      setClient(new ChatClient(host, port, this));
 
   }
 
@@ -66,20 +72,9 @@ public class ClientConsole implements ChatIF
    *
    * @param message The string to be displayed.
    */
-  public void getAnswer(Object answer) 
-  {
-	  this.setMessage(answer);
-  }
 
 
-public ChatClient getClient() {
-	return client;
-}
 
-
-public void setClient(ChatClient client) {
-	this.client = client;
-}
 
 
 public static TextField getLog() {
@@ -91,50 +86,25 @@ public static void setLog(TextField log) {
 	ClientConsole.log = log;
 }
 
-
-public String getStringOut() {
-	return stringOut;
-}
-
-
-public void setStringOut(String stringOut) {
-	this.stringOut = stringOut;
-}
-
-
-public Object getMessage() {
+public Object getMessage()
+{
 	return message;
 }
 
 
-public void setMessage(Object message) {
-	this.message = message;
+public void setMessage(Object message) 
+{
+
+	  this.message=message;    
 }
 
-  
-  //Class methods ***************************************************
-  
-  /**
-   * This method is responsible for the creation of the Client UI.
-   *
-   * @param args[0] The host to connect to.
-   */
-  /**public static void main(String[] args) 
-  {
-    String host = "";
-    int port = 0;  //The port number
-
-    try
-    {
-      host = args[0];
-    }
-    catch(ArrayIndexOutOfBoundsException e)
-    {
-      host = "localhost";
-    }
-    ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
-    chat.accept();  //Wait for console data
-  }
-  */
-}
 //End of ConsoleChat class
+synchronized public void handleMessageFromServer(Object msg) 
+{
+	 String action ;
+	 
+	 ArrayList<TeachingUnit> outer = new ArrayList<TeachingUnit>(); 
+	 this.setMessage(msg);
+	 notify();
+}
+}

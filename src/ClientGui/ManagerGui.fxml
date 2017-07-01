@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.ManagerGuiController">
+<TabPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.ManagerGuiController">
   <tabs>
-    <Tab fx:id="mainTab" text="Untitled Tab 1">
+    <Tab fx:id="mainTab" text="Manager">
       <content>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0">
                <children>
@@ -23,18 +23,13 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="goBtn" layoutX="1238.0" mnemonicParsing="false" onAction="#changeSemester" prefHeight="40.0" prefWidth="42.0" text="GO">
+                  <Button fx:id="goBtn" layoutX="1238.0" mnemonicParsing="false" onAction="#changeSemester" prefHeight="38.0" prefWidth="42.0" text="GO">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <ComboBox fx:id="semesterChoice" layoutX="1098.0" prefHeight="40.0" prefWidth="140.0" promptText="Semester" />
+                  <ComboBox fx:id="semesterChoice" layoutX="1098.0" prefHeight="39.0" prefWidth="140.0" promptText="Semester" />
                   <Button fx:id="unblockParentBtn" layoutX="140.0" layoutY="143.0" mnemonicParsing="false" onAction="#openUnblockBtn" prefHeight="60.0" prefWidth="1000.0" text="Unblock parent" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="viewCourseBtn" layoutX="140.0" layoutY="227.0" mnemonicParsing="false" onAction="#openCoursesTab" prefHeight="60.0" prefWidth="1000.0" text="View courses" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -59,7 +54,7 @@
                         <Font size="28.0" />
                      </font>
                   </Button>
-                  <Button layoutX="140.0" layoutY="664.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="1000.0" text="Respond to requests">
+                  <Button layoutX="140.0" layoutY="230.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="1000.0" text="Respond to requests">
                      <font>
                         <Font size="28.0" />
                      </font>

@@ -1,8 +1,12 @@
 package ClientGui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -20,6 +24,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import projectsalmon.Assignment;
 import projectsalmon.Course;
+import projectsalmon.Semester;
 
 public class DefineAssignmentController implements Initializable
 {
@@ -71,7 +76,8 @@ public class DefineAssignmentController implements Initializable
     	assignmentFilePath = file.getPath();
     	uploadField.setText(assignmentFilePath);
     }
-    @FXML
+    @SuppressWarnings("unchecked")
+	@FXML
     void done(ActionEvent event)
     {
     	/**
@@ -80,13 +86,36 @@ public class DefineAssignmentController implements Initializable
     	if(checkFields())
     	{
     	Date date = Date.from(deadlineField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+    	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
     	Calendar cal = Calendar.getInstance();
     	cal.setTime(date);
-    	File file = new File(assignmentFilePath);
-    	assignment = new Assignment("1",course.getCourseNumber(),nameField.getText(),cal,instructionsField.getText(),file);
-    	//call controllers to make sure everything is ok
-    	//save the assignment in db
+    	ArrayList<String> arrsend = new ArrayList<String>();
+		arrsend.add("createAssignment");
+		arrsend.add(course.getCourseNumber());
+		arrsend.add(nameField.getText());
+		arrsend.add(df.format(date));
+		arrsend.add(instructionsField.getText());
+		arrsend.add(assignmentFilePath);
+		try {
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		ArrayList<String> answer = new ArrayList<String>();
+		answer = (ArrayList<String>)Main.con.getMessage();
+		assignment = new Assignment(answer.get(0),course.getCourseNumber(),nameField.getText(),cal,instructionsField.getText(),new File(assignmentFilePath));
     	parentController.addAssignment(assignment);
+    	
     	Stage stage = (Stage)doneBtn.getScene().getWindow();
    	    stage.close();
     	}

@@ -36,8 +36,6 @@ public class reportMenuController implements Initializable
     @FXML
     private AnchorPane an31;
     @FXML
-    private Button closeBtn;
-    @FXML
     private AnchorPane an3;
     @FXML
     private Button go1;
@@ -51,8 +49,6 @@ public class reportMenuController implements Initializable
     private Label title;
     @FXML
     private ComboBox<Semester> comboR3;
-    @FXML
-    private Button closeBtn1;
     @FXML
     private ComboBox<Semester> semesterChoice1;
     @FXML

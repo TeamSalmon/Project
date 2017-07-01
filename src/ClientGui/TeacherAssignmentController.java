@@ -54,8 +54,6 @@ public class TeacherAssignmentController implements Initializable
     private Label nameLabel;
     @FXML
     private Label precentageLabel;
-    @FXML
-    private Button closeBtn;
     private Tab current;
     private Assignment assignment;
     private TeacherSingleCourseTabController parentController;
@@ -63,23 +61,13 @@ public class TeacherAssignmentController implements Initializable
     private TabManager manager;
     private ObservableList<StudentAssignment> data;
     private static Tab singleSubmissionTab;
-<<<<<<< HEAD
     private Main myMain = Main.getInstance();
     private ArrayList<StudentAssignment> submissions;
-=======
-    private Main myMain;
-    private ArrayList<StudentAssignment>submissions;
->>>>>>> working-ArrayList-String-motherfucker
 
     public TeacherAssignmentController(Assignment assignment, TeacherSingleCourseTabController parentController)
     {
     	this.assignment = assignment;
     	this.parentController = parentController;
-    }
-    @FXML
-    void close(ActionEvent event)
-    {
-    	manager.getContainer().getTabs().remove(current);
     }
     @FXML
     void openFile(ActionEvent event)
@@ -156,25 +144,32 @@ public class TeacherAssignmentController implements Initializable
 		arrsend.add("getSubmissions");
 		arrsend.add(assignment.getAssignmntId());
 		try {
-<<<<<<< HEAD
-			myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
-		} catch (IOException e){e.printStackTrace();}
-		submissions = (ArrayList<StudentAssignment>)myMain.con.getMessage();
-
-		for(StudentAssignment sa : submissions)
-		{
-			sa.setAssignment(assignment);
-			data.add(sa);
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-=======
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e){e.printStackTrace();}
-		submissions = (ArrayList<StudentAssignment>)myMain.con.getMessage();
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    	ArrayList<ArrayList<String>> answer2 = new ArrayList<ArrayList<String>>();
+		answer2 = (ArrayList<ArrayList<String>>)Main.con.getMessage();
+		submissions = new ArrayList<StudentAssignment>();
+		if(answer2!=null)
+			for(ArrayList<String> s : answer2)
+			{
+				submissions.add(new Assignment(assignment.get(0),assignment.get(1),assignment.get(2),assignment.get(3),assignment.get(5)));
+			}
 		
-		for(StudentAssignment st: submissions)
-			data.add(st);
-		
->>>>>>> working-ArrayList-String-motherfucker
+		data = FXCollections.observableArrayList();
+		for(StudentAssignment sa : submissions)
+			data.add(sa);
         submissionsList.setItems(data);
         
         manager.getContainer().getSelectionModel().select(current);

@@ -1,6 +1,7 @@
 package ClientGui;
 
 import javafx.scene.control.TabPane;
+import projectsalmon.Semester;
 
 public class TabManager
 {
@@ -11,6 +12,10 @@ public class TabManager
 	private TabPane subContainer;
 	private Object latestSelection;
 	private boolean editable;
+	private Semester currentSemester;
+	
+	public void setCurrentSemester(Semester current){this.currentSemester = current;}
+	public Semester getCurrentSemester(){return this.currentSemester;}
 	
 	public void setSubContainer(TabPane tabPane){this.subContainer = tabPane;}
 	public TabPane getSubContainer(){return subContainer;}

@@ -26,8 +26,6 @@ public class SubmissionController implements Initializable
     @FXML
     private Button cancelBtn;
     @FXML
-    private Button closeBtn;
-    @FXML
     private Label lateLabel;
     @FXML
     private Label title;
@@ -70,11 +68,6 @@ public class SubmissionController implements Initializable
     {
     	assignment.setFile(uploadField.getText());
     	
-    }
-    @FXML
-    void close(ActionEvent event)
-    {
-    	manager.getContainer().getTabs().remove(current);
     }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)

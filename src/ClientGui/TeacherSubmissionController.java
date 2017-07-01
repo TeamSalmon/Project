@@ -36,8 +36,6 @@ public class TeacherSubmissionController implements Initializable
 	@FXML
 	private Button cancelBtn;
 	@FXML
-	private Button closeBtn;
-	@FXML
 	private Label lateLabel;
 	@FXML
 	private Label studentsName;
@@ -93,11 +91,6 @@ public class TeacherSubmissionController implements Initializable
         		studentAssignment.setComments("");
         	studentAssignment.setEvaluationForm(new File(uploadField.getText()));
     	}
-    }
-    @FXML
-    void close(ActionEvent event)
-    {
-    	manager.getSubContainer().getTabs().remove(current);
     }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)

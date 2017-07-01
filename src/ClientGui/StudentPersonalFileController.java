@@ -23,8 +23,6 @@ public class StudentPersonalFileController implements Initializable
     @FXML
     private ListView<StudentAssignment> assignmentsList;
     @FXML
-    private Button closeBtn;
-    @FXML
     private Label avgField;
     private TabManager manager;
     private Main myMain;
@@ -34,11 +32,6 @@ public class StudentPersonalFileController implements Initializable
     
     @FXML
     void StudentShowAssignment(MouseEvent event)
-    {
-    	
-    }
-    @FXML
-    void closeTab(ActionEvent event)
     {
     	
     }
