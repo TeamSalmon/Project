@@ -113,13 +113,16 @@ public class TeacherAssignmentController implements Initializable
     @FXML
     void showSubmission(Event event)
     {
-    	manager.setLatestSelection(submissionsList.getSelectionModel().getSelectedItem());
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("SingleSubmissionGui.fxml"));
-        singleSubmissionTab = new Tab("Submission");
-        tabPane.getTabs().add(singleSubmissionTab);
-        try {
-			singleSubmissionTab.setContent(loader.load());
-		} catch (IOException e){e.printStackTrace();}
+    	if(submissionsList.getSelectionModel().getSelectedItem()!=null)
+    	{
+        	manager.setLatestSelection(submissionsList.getSelectionModel().getSelectedItem());
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("SingleSubmissionGui.fxml"));
+            singleSubmissionTab = new Tab("Submission");
+            tabPane.getTabs().add(singleSubmissionTab);
+            try {
+    			singleSubmissionTab.setContent(loader.load());
+    		} catch (IOException e){e.printStackTrace();}
+    	}
     }
 	@SuppressWarnings("unchecked")
 	@Override
@@ -164,7 +167,8 @@ public class TeacherAssignmentController implements Initializable
 		if(answer2!=null)
 			for(ArrayList<String> s : answer2)
 			{
-				submissions.add(new Assignment(assignment.get(0),assignment.get(1),assignment.get(2),assignment.get(3),assignment.get(5)));
+				//[0]= assignmentId,[1]=studentId,[2]=grade,[3]=comments,[4]=evaluationFormPath,[5]=lateFlag;
+				submissions.add(new StudentAssignment(s.get(0),assignment));
 			}
 		
 		data = FXCollections.observableArrayList();

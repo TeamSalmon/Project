@@ -92,6 +92,7 @@ public class TeacherSubmissionController implements Initializable
         	studentAssignment.setEvaluationForm(new File(uploadField.getText()));
     	}
     }
+	@SuppressWarnings({ "unchecked", "unused" })
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
@@ -108,11 +109,24 @@ public class TeacherSubmissionController implements Initializable
 		arrsend.add("searchStudentID");
 		arrsend.add(studentAssignment.getStudentId());
 		try {
-			myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
-		} catch (IOException e){e.printStackTrace();}
-		student = (Student)myMain.con.getMessage();
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    	ArrayList<String> answer = new ArrayList<String>();
+		answer = (ArrayList<String>)Main.con.getMessage();
 
-		studentsName.setText("Students name- " + student.getFirst_name() + student.getLast_name());
+		studentsName.setText("Students name- " + answer.get(1) + answer.get(2));
 		if(studentAssignment.getGrade() != -1)
 			gradeField.setText(Integer.toString(studentAssignment.getGrade()));
 		commentsField.setText(studentAssignment.getComments());

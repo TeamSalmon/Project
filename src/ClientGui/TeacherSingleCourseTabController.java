@@ -41,7 +41,7 @@ public class TeacherSingleCourseTabController implements Initializable
     private Tab current;
     private ArrayList<Assignment> assignments;
     private ObservableList<Assignment> data;
-	private static Tab singleAssignmentTab;
+	private Tab singleAssignmentTab;
 	private Course course;
 	
 
@@ -124,15 +124,18 @@ public class TeacherSingleCourseTabController implements Initializable
 		 * When clicking on an assignment, it's details are presented in a new tab.
 		 * In the new tab, the detail are only editable if the semester is the current one
 		 */
-		manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentTabs.fxml"));
-    	TeacherAssignmentController controller = new TeacherAssignmentController(assignmentsList.getSelectionModel().getSelectedItem(),this);
-    	loader.setController(controller);
-        singleAssignmentTab = new Tab("View assignment");
-        manager.getContainer().getTabs().add(singleAssignmentTab);
-        try {
-			singleAssignmentTab.setContent(loader.load());
-		} catch (IOException e){e.printStackTrace();}
+		if(assignmentsList.getSelectionModel().getSelectedItem()!=null)
+		{
+			manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentTabs.fxml"));
+	    	TeacherAssignmentController controller = new TeacherAssignmentController(assignmentsList.getSelectionModel().getSelectedItem(),this);
+	    	loader.setController(controller);
+	        singleAssignmentTab = new Tab("View assignment");
+	        manager.getContainer().getTabs().add(singleAssignmentTab);
+	        try {
+				singleAssignmentTab.setContent(loader.load());
+			} catch (IOException e){e.printStackTrace();}
+		}
 	}
 	public void addAssignment(Assignment assignment)
 	{

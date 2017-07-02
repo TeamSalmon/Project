@@ -41,8 +41,8 @@ public class StudentGuiController implements Initializable
 	private AnchorPane pane;
 	@FXML
 	private Button goBtn;
-	private static Tab singleCourseTab;
-	private static Tab personalFileTab;
+	private Tab singleCourseTab;
+	private Tab personalFileTab;
 	private ObservableList<Course> data;
 	private ArrayList<Course> courses;
 	private Semester currentSemester;
@@ -65,7 +65,7 @@ public class StudentGuiController implements Initializable
     	presentedSemester = semesterChoice.getSelectionModel().getSelectedItem();
     	
     	ArrayList<String> arrsend = new ArrayList<String>();
-		arrsend.add("courseByTeacher");
+		arrsend.add("courseByStudent");
 		arrsend.add(myMain.getUser().getId());
 		arrsend.add(presentedSemester.getYear());
 		arrsend.add(presentedSemester.getSemesterNumber());
@@ -119,6 +119,7 @@ public class StudentGuiController implements Initializable
     	 */
     	if(coursesList.getSelectionModel().getSelectedItem()!=null)
     	{
+    		manager.setLatestSelection(coursesList.getSelectionModel().getSelectedItem());
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentSingleCourseTab.fxml"));
         singleCourseTab = new Tab(((Course)(coursesList.getSelectionModel().getSelectedItem())).getName());
         manager.getContainer().getTabs().add(singleCourseTab);

@@ -23,19 +23,14 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="precentageLabel" layoutX="347.0" layoutY="262.0" text="Percentages of final grade -">
+                  <Label fx:id="instructionsLabel" layoutX="350.0" layoutY="267.0" text="Instructions :">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="instructionsLabel" layoutX="350.0" layoutY="363.0" text="Instructions :">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="instructionsField" editable="false" layoutX="350.0" layoutY="398.0" prefHeight="105.0" prefWidth="539.0" />
-                  <Hyperlink fx:id="fileLink" alignment="CENTER" layoutX="525.0" layoutY="541.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#openFile" prefHeight="35.0" prefWidth="188.0" text="open assignment file" textAlignment="CENTER" />
-                  <Button fx:id="editBtn" alignment="CENTER" layoutX="589.0" layoutY="633.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openEditWindow" prefHeight="40.0" prefWidth="60.0" text="Edit" textAlignment="CENTER" textFill="#24107c" />
+                  <TextArea fx:id="instructionsField" editable="false" layoutX="350.0" layoutY="314.0" prefHeight="105.0" prefWidth="539.0" />
+                  <Hyperlink fx:id="fileLink" alignment="CENTER" layoutX="526.0" layoutY="470.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#openFile" prefHeight="35.0" prefWidth="188.0" text="open assignment file" textAlignment="CENTER" />
+                  <Button fx:id="editBtn" alignment="CENTER" layoutX="560.0" layoutY="542.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openEditWindow" prefHeight="40.0" prefWidth="120.0" text="Edit" textAlignment="CENTER" textFill="#24107c" />
                   <Separator layoutX="262.0" layoutY="42.0" orientation="VERTICAL" prefHeight="711.0" prefWidth="0.0" />
                   <Separator layoutX="976.0" layoutY="43.0" orientation="VERTICAL" prefHeight="711.0" prefWidth="0.0" />
                   <Separator layoutY="42.0" prefHeight="0.0" prefWidth="1270.0" />

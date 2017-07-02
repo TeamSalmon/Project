@@ -58,18 +58,18 @@
       </Label>
       <Separator layoutX="268.0" layoutY="42.0" orientation="VERTICAL" prefHeight="760.0" prefWidth="0.0" />
       <Separator layoutX="976.0" layoutY="42.0" orientation="VERTICAL" prefHeight="760.0" prefWidth="0.0" />
-      <Button id="test" fx:id="cancelBtn" layoutX="406.0" layoutY="706.0" mnemonicParsing="false" onAction="#cancel" prefWidth="152.0" text="Cancel" textFill="#942121">
+      <Button id="test" fx:id="cancelBtn" layoutX="405.0" layoutY="691.0" mnemonicParsing="false" onAction="#cancel" prefWidth="152.0" text="Cancel" textFill="#942121">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button id="test" fx:id="saveBtn" layoutX="711.0" layoutY="706.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="44.0" prefWidth="152.0" text="Save changes" textFill="#218629">
+      <Button id="test" fx:id="saveBtn" layoutX="712.0" layoutY="691.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="44.0" prefWidth="152.0" text="Save changes" textFill="#218629">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
       <Separator layoutY="42.0" prefHeight="2.0" prefWidth="1273.0" />
-      <Label id="test" fx:id="gradeError" layoutX="526.0" layoutY="234.0" text="must be an integer within the range 0-100" textFill="#da0606" visible="false" />
-      <Label fx:id="fileError" layoutX="564.0" layoutY="467.0" text="please enter a valid file path" textFill="#da0606" visible="false" />
+      <Label id="test" fx:id="gradeError" layoutX="527.0" layoutY="292.0" text="must be an integer within the range 0-100" textFill="#da0606" />
+      <Label fx:id="fileError" layoutX="565.0" layoutY="574.0" text="please enter a valid file path" textFill="#da0606" />
    </children>
 </AnchorPane>

@@ -25,26 +25,22 @@ import javafx.stage.WindowEvent;
 import projectsalmon.Assignment;
 import projectsalmon.Course;
 
+/**
+ * Controller of the window presenting a single course information, such as assignments defined in the specific course
+ */
 public class StudentSingleCourseTabController implements Initializable
 {
-	/**
-	 * Controller of the window presenting a single course information, such as assignments defined in the specific course
-	 */
 	Main myMain = Main.getInstance();
 	TabManager manager = TabManager.getInstance();
 	
     @FXML
     private ListView<Assignment> assignmentsList;
     @FXML
-    private Button closeBtn;
-    @FXML
-    private Button newAssignmentBtn;
-    @FXML
     private AnchorPane pane;
     private Tab current;
     private ArrayList<Assignment> assignments;
     private ObservableList<Assignment> data;
-	private static Tab singleAssignmentTab;
+	private Tab singleAssignmentTab;
 	private Course course;
 	
 
@@ -56,15 +52,6 @@ public class StudentSingleCourseTabController implements Initializable
 		current.setText(((Course)manager.getLatestSelection()).toString());
 		course = (Course)manager.getLatestSelection();
 		
-		if(!manager.getEditable())
-			newAssignmentBtn.setVisible(false);
-		else newAssignmentBtn.setVisible(true);
-		Main.getTheStage().setOnCloseRequest(new EventHandler<WindowEvent>()
-		{public void handle(WindowEvent we){System.out.println("Stage is closing");}});
-		
-		/**
-		 * Getting all assignments defined in the current course:
-		 */
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("getCourseAssignments");
 		arrsend.add(course.getCourseNumber());
@@ -78,7 +65,7 @@ public class StudentSingleCourseTabController implements Initializable
     		
     		try {
 				Main.con.wait();
-			} catch (InterruptedException e) {
+			} catch (InterruptedException e){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -105,19 +92,15 @@ public class StudentSingleCourseTabController implements Initializable
 		 * When clicking on an assignment, it's details are presented in a new tab.
 		 * In the new tab, the detail are only editable if the semester is the current one
 		 */
-		manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("SubmissionTab.fxml"));
-    	SubmissionController controller = new SubmissionController(assignmentsList.getSelectionModel().getSelectedItem(),this);
-    	loader.setController(controller);
-        singleAssignmentTab = new Tab("View assignment");
-        manager.getContainer().getTabs().add(singleAssignmentTab);
-        try {
-			singleAssignmentTab.setContent(loader.load());
-		} catch (IOException e){e.printStackTrace();}
+		if(assignmentsList.getSelectionModel().getSelectedItem()!=null)
+		{
+			manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentSubmissionTab.fxml"));
+	        singleAssignmentTab = new Tab("View assignment");
+	        manager.getContainer().getTabs().add(singleAssignmentTab);
+	        try {
+				singleAssignmentTab.setContent(loader.load());
+			} catch (IOException e){e.printStackTrace();}
+		}
 	}
-	@FXML
-    void closeTab(ActionEvent event)
-	{
-		manager.getContainer().getTabs().remove(current);
-    }
 }
