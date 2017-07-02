@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import ServerClient.ClientConsole;
+import controllers.reportController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ public  class Main extends Application {
 	private final static Main instance = new Main();
 	private static Stage theStage;
 	private guiMange Mange = new guiMange();;
+    public static reportController  repCon;
 
 	private User user = (User)(new Teacher(10,"315314369","Inbar" ,"Alfasi","12345"));
 

@@ -145,7 +145,13 @@ public class guiMange
 		return scene;
     }
 	
-	
+    /**
+	   * the method change the sence
+	   * @param Scene sceneUP.-the sence to show.
+	   * @return none.
+	   * @throws  IOException if  failed.
+	   * @author tamir. 
+	   */
     public void changeScene(Scene sceneUP) throws IOException
     {
     	
@@ -156,7 +162,22 @@ public class guiMange
         Main.getTheStage().show();
     	}
     	
+    /**
+	   * the method same as changeScene but dont push the corrent stage(for reports)
+	   * @param Scene sceneUP.-the sence to show.
+	   * @return none.
+	   * @throws  IOException if  failed.
+	   * @author tamir. 
+	   */
+  public void changeScenereport(Scene sceneUP) throws IOException
+  {
+  	
+  	
    
+      Main.getTheStage().setScene(sceneUP);
+      
+      Main.getTheStage().show();
+  	}
 
 
 	public static int getLastSence() { 

@@ -482,7 +482,7 @@ public abstract class SecretaryController {
 			  query_updateClassOfStudent.add(student.getId().toString());
 			  query_updateClassOfStudent.add(new_class.getClassId().toString());
 			  
-			  myMain.getConnection().getClient().handleMessageFromClientUI((Object)
+			  myMain.conhandleMessageFromClientUI((Object)
 			  query_updateClassOfStudent); received_object =
 			  myMain.getConnection().getMessage(); boolean answer2 =
 			  (boolean)received_object;
