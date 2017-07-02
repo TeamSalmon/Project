@@ -23,8 +23,6 @@ public class StudentPersonalFileController implements Initializable
     @FXML
     private ListView<StudentAssignment> assignmentsList;
     @FXML
-    private Button closeBtn;
-    @FXML
     private Label avgField;
     private TabManager manager;
     private Main myMain;
@@ -34,11 +32,6 @@ public class StudentPersonalFileController implements Initializable
     
     @FXML
     void StudentShowAssignment(MouseEvent event)
-    {
-    	
-    }
-    @FXML
-    void closeTab(ActionEvent event)
     {
     	
     }
@@ -54,9 +47,21 @@ public class StudentPersonalFileController implements Initializable
 		arrsend.add("getEvaluatedAssignments");
 		arrsend.add(student.getId());
 		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e){e.printStackTrace();}
-		studentAssignments = (ArrayList<StudentAssignment>)myMain.con.getMessage();
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		studentAssignments = (ArrayList<StudentAssignment>)Main.con.getMessage();
 		if(studentAssignments != null)
 		{
 		for(StudentAssignment st : studentAssignments)

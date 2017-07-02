@@ -8,28 +8,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane id="test" fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1270.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.StudentGuiController">
+<TabPane id="test" fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.StudentGuiController">
   <tabs>
     <Tab id="test" fx:id="mainTab" text="name">
       <content>
         <AnchorPane id="test" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="1039.0" prefWidth="1920.0">
                <children>
-                  <ListView fx:id="coursesList" fixedCellSize="50.0" layoutX="15.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#openSingleCourseTab" prefHeight="517.0" prefWidth="1238.0" stylesheets="@test.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="78.0" />
-                  <ComboBox fx:id="semesterChoice" layoutX="1086.0" layoutY="38.0" prefHeight="40.0" prefWidth="140.0" promptText="semester" />
-                  <Button id="test" fx:id="goBtn" layoutX="1226.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#changeSemesterOrChild" prefHeight="40.0" prefWidth="42.0" text="GO" textFill="#22078c">
+                  <ListView fx:id="coursesList" fixedCellSize="50.0" layoutX="15.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#openSingleCourseTab" prefHeight="556.0" prefWidth="1238.0" stylesheets="@test.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="39.0" />
+                  <ComboBox fx:id="semesterChoice" layoutX="1071.0" prefHeight="40.0" prefWidth="140.0" promptText="semester" />
+                  <Button id="test" fx:id="goBtn" layoutX="1211.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#changeSemesterOrChild" prefHeight="40.0" prefWidth="42.0" text="GO" textFill="#22078c">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Label layoutX="14.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="270.0" text="Courses in chosen semester">
+                  <Label layoutX="15.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="270.0" text="Courses in chosen semester">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <Separator layoutY="38.0" prefHeight="3.0" prefWidth="1282.0" />
-                  <Button id="test" fx:id="personalFileBtn" mnemonicParsing="false" onAction="#openPersonalFile" prefHeight="39.0" prefWidth="176.0" text="View personal file" textFill="#22078c" />
-                  <Separator layoutX="-1.0" layoutY="77.0" prefHeight="3.0" prefWidth="1270.0" />
-                  <ComboBox fx:id="childChoice" layoutX="946.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="140.0" promptText="Child" />
+                  <Button id="test" fx:id="personalFileBtn" layoutX="755.0" mnemonicParsing="false" onAction="#openPersonalFile" prefHeight="39.0" prefWidth="176.0" text="View personal file" textFill="#22078c" />
+                  <ComboBox fx:id="childChoice" layoutX="931.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="140.0" promptText="Child" />
                </children></AnchorPane>
       </content>
     </Tab>

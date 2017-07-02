@@ -75,8 +75,6 @@ public class ClientConsole extends ObservableClient
 
 
 
-
-
 public static TextField getLog() {
 	return log;
 }
@@ -85,6 +83,7 @@ public static TextField getLog() {
 public static void setLog(TextField log) {
 	ClientConsole.log = log;
 }
+
 
 
 
@@ -111,5 +110,5 @@ synchronized public void handleMessageFromServer(Object msg)
            this.setMessage(msg);
 	    	notify();
 	}   
-	 
+
 }

@@ -92,7 +92,9 @@ public class Controller {
             		((Node)event.getSource()).getScene().getWindow().hide();
 
 
-            		myMain.getMange().changeScene(myMain.getMange().initializationScreens(5));
+
+            		myMain.getMange().changeScene(myMain.getMange().initializationScreens(3));
+
 
             	}
             	
@@ -100,7 +102,6 @@ public class Controller {
             	{
             		logPT.setText ("cant load stage2");
             	}
-
             }
            
         }//end if

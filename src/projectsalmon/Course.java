@@ -8,7 +8,7 @@ public class Course
 	private String name;
 	private String description;
 	private float weeklyHours;
-	private TeachingUnit teachingUnit;
+	private String teachingUnitId;
 
 	// to return 
 	private String year;
@@ -18,22 +18,22 @@ public class Course
 	private ArrayList<Integer> grades;
 
 	
-	public Course(String courseNumber, String courseName,TeachingUnit teachingUnit, String description, float weeklyHours)
+	public Course(String courseNumber, String courseName,String description, float weeklyHours,String teachingUnit)
 {
 		this.courseNumber = courseNumber;
 		this.name = courseName;
 		this.description = description;
 		this.weeklyHours = weeklyHours;
-		this.teachingUnit = teachingUnit;
+		this.teachingUnitId = teachingUnit;
 	}
 
-	public Course(String courseNumber, TeachingUnit teachingUnit, float weeklyHours, String courseName)
+	public Course(String courseNumber, String teachingUnit, float weeklyHours, String courseName)
 	{
 		this.courseNumber = courseNumber;
 		this.name = courseName;
 		this.weeklyHours = weeklyHours;
 		this.description = "";
-		this.teachingUnit = teachingUnit;
+		this.teachingUnitId = teachingUnit;
 	}
 	
 	public Course(String courseNumber)
@@ -46,14 +46,14 @@ public class Course
 	public String getDescription(){return description;}
 	public float getWeeklyHours(){return weeklyHours;}
 	public ArrayList<Course> getPreCondition(){return preCondition;}
-	public TeachingUnit getTeachingUnit(){return teachingUnit;}
+	public String getTeachingUnit(){return teachingUnitId;}
 	
 	public void setCourseNumber(String number){this.courseNumber = number;}
 	public void setName(String name){this.name = name;}
 	public void setDescription(String description){this.description = description;}
 	public void setWeeklyHours(float hours){this.weeklyHours = hours;}
 	public void setPreCondition(ArrayList<Course> preCondition){this.preCondition = preCondition;}
-	public void setTeachingUnit(TeachingUnit teachingUnit){this.teachingUnit = teachingUnit;}
+	public void setTeachingUnit(String teachingUnit){this.teachingUnitId = teachingUnit;}
 
 	public ArrayList<Integer> getGrades() {
 		return grades;
@@ -77,5 +77,9 @@ public class Course
 
 	public void setYear(String year) {
 		this.year = year;
+	}
+	public String toString()
+	{
+		return name + " ," + courseNumber;
 	}
 }

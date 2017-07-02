@@ -35,15 +35,13 @@ public class TeacherSingleCourseTabController implements Initializable
     @FXML
     private ListView<Assignment> assignmentsList;
     @FXML
-    private Button closeBtn;
-    @FXML
     private Button newAssignmentBtn;
     @FXML
     private AnchorPane pane;
     private Tab current;
     private ArrayList<Assignment> assignments;
     private ObservableList<Assignment> data;
-	private static Tab singleAssignmentTab;
+	private Tab singleAssignmentTab;
 	private Course course;
 	
 
@@ -66,16 +64,35 @@ public class TeacherSingleCourseTabController implements Initializable
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("getCourseAssignments");
 		arrsend.add(course.getCourseNumber());
-		
 		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e){e.printStackTrace();}
-		assignments = (ArrayList<Assignment>)myMain.con.getMessage();
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    	ArrayList<ArrayList<String>> answer2 = new ArrayList<ArrayList<String>>();
+		answer2 = (ArrayList<ArrayList<String>>)Main.con.getMessage();
+		assignments = new ArrayList<Assignment>();
+		if(answer2!=null)
+			for(ArrayList<String> assignment : answer2)
+			{
+				assignments.add(new Assignment(assignment.get(0),assignment.get(1),assignment.get(2),assignment.get(3),assignment.get(5)));
+			}
 		
 		data = FXCollections.observableArrayList();
 		for(Assignment a : assignments)
 			data.add(a);
         assignmentsList.setItems(data);
+        manager.getContainer().getSelectionModel().select(current);
 	}
 	@FXML
 	void defineNewAssignment(ActionEvent event)
@@ -107,22 +124,19 @@ public class TeacherSingleCourseTabController implements Initializable
 		 * When clicking on an assignment, it's details are presented in a new tab.
 		 * In the new tab, the detail are only editable if the semester is the current one
 		 */
-		manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentTabs.fxml"));
-    	TeacherAssignmentController controller = new TeacherAssignmentController(assignmentsList.getSelectionModel().getSelectedItem(),this);
-    	loader.setController(controller);
-        singleAssignmentTab = new Tab("View assignment");
-        manager.getContainer().getTabs().add(singleAssignmentTab);
-        try {
-			singleAssignmentTab.setContent(loader.load());
-		} catch (IOException e){e.printStackTrace();}
+		if(assignmentsList.getSelectionModel().getSelectedItem()!=null)
+		{
+			manager.setLatestSelection(assignmentsList.getSelectionModel().getSelectedItem());
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentTabs.fxml"));
+	    	TeacherAssignmentController controller = new TeacherAssignmentController(assignmentsList.getSelectionModel().getSelectedItem(),this);
+	    	loader.setController(controller);
+	        singleAssignmentTab = new Tab("View assignment");
+	        manager.getContainer().getTabs().add(singleAssignmentTab);
+	        try {
+				singleAssignmentTab.setContent(loader.load());
+			} catch (IOException e){e.printStackTrace();}
+		}
 	}
-	@FXML
-    void closeTab(ActionEvent event)
-	{
-		manager.getContainer().getTabs().remove(current);
-    }
-
 	public void addAssignment(Assignment assignment)
 	{
 		/**
