@@ -5,13 +5,17 @@
 package ClientGui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import ServerClient.ClientConsole;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import projectsalmon.Course;
+import projectsalmon.TeachingUnit;
 
 public class Stage2Controller {
 	String teachId,unitUpdateval;
@@ -40,9 +44,58 @@ public class Stage2Controller {
     @FXML // fx:id="UpdateLog"
     private TextField UpdateLog; // Value injected by FXMLLoader
 
-    @FXML
-    void SearchTeacher(ActionEvent event) 
+    @SuppressWarnings("unchecked")
+	@FXML
+    void SearchTeacher(ActionEvent event) throws IOException, InterruptedException 
     {
+    	
+    	
+    	
+    	
+    	
+  		
+		ArrayList<TeachingUnit> arrget  =  new ArrayList<TeachingUnit>();
+		 ArrayList<String> arrsend  =  new ArrayList<String>();
+		 arrsend.add("coursesByID");
+		
+		
+		
+			Main.con.sendToServer(arrsend);
+	
+		
+	    	synchronized (Main.con) {
+	    		
+	    		Main.con.wait();
+			}
+	    	
+		//TeachingUnit bla=new TeachingUnit();
+		//bla=(TeachingUnit)Main.con.getMessage();
+		InfoLog.setText((String)Main.con.getMessage());
+	
+		//arrget=(ArrayList<TeachingUnit>) Main.con.getMessage();
+		
+		//InfoLog.setText(arrget.get(0).getName());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//InfoLog.setText(arrget.get(9).getName());
+		/*
     	teachId=InfoId.getText();
     	if(teachId.length()<1)
     	{
@@ -56,6 +109,7 @@ public class Stage2Controller {
     		myMain.getinfo(teachId);
     		
     	}
+    	*/
  	}
     
 
@@ -82,7 +136,7 @@ public class Stage2Controller {
     		 myMain.getConnection();
 			ClientConsole.setLog(UpdateLog);
     		
-    		myMain.UpdateTeacing(teachId, unitUpdateval);
+    		//myMain.UpdateTeacing(teachId, unitUpdateval);
     	}
     	
     }

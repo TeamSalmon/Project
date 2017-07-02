@@ -1,4 +1,3 @@
-
 package projectsalmon;
 
 public abstract class User {
@@ -11,9 +10,9 @@ public abstract class User {
 	private String email;
 	private String phone;
 	private String birthday;
-	private boolean lockedFlag;
+	private boolean lockedFlag;//Galit don't use
 	private Integer loginLockCounter;
-	
+//	lockedFlag = false;
 
 	public User(String id,String first, String last, String password,Integer loginLockCounter,Integer permission)
 	{/**
@@ -22,7 +21,6 @@ public abstract class User {
 		 * @param first
 		 * @param last
 		 * @param password
-		 * @param lockedFlag
 		 * @param loginLockCounter
 		 * Constructor for LoginUser
 		 */
@@ -30,14 +28,38 @@ public abstract class User {
 		this.first_name = first;
 		this.last_name = last;
 		this.password = password;
-//		this.lockedFlag = lockedFlag;
 		this.loginLockCounter = loginLockCounter;
 		this.permission=permission;
+	/*	this.setId(id);
+		this.setFirst_name(first);
+		this.setLast_name(last);
+		this.setPassword(password);
+		this.setloginLockCounter(Integer.getInteger(loginLockCounter));
+		this.setPrivilige(Integer.getInteger(permission));*/
 	}
 
-	
-	public User(String id,String first, String last, String password)
+/*	public User(String id,String first, String last, String password)
 	{
+		*
+		 * @author Galit
+		 * @param id
+		 * @param first
+		 * @param last
+		 * @param password
+		 * @param lockedFlag
+		 * @param loginLockCounter =0
+		 * Constructor for LoginUser
+		 *
+		this.setId(id);
+		this.setFirst_name(first);
+		this.setLast_name(last);
+		this.setPassword(password);
+		this.setloginLockCounter(0);
+	}
+*/	
+
+	public User(String id,String first, String last, String password)
+	{//Galit don't use
 		this.id = id;
 		this.first_name = first;
 		this.last_name = last;
@@ -107,10 +129,10 @@ public abstract class User {
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-	public boolean islockedFlag() {
+	public boolean islockedFlag() {//Galit don't use
 		return lockedFlag;
 	}
-	public void setlockedFlag(boolean lockedFlag) {
+	public void setlockedFlag(boolean lockedFlag) {//Galit don't use
 		this.lockedFlag = lockedFlag;
 	}
 	public Integer getloginLockCounter() {

@@ -63,7 +63,7 @@ public class RemovetTeacherFromCourseController implements Initializable {
 		String courseNum = courseNumberTB.getText();
 		String teacherID = teacherIDTB.getText();
 		if(teacherID.length()!= 0){
-		Teacher newTeacher = SecretaryController.searchTeacherID(teacherID);
+			ArrayList<String> newTeacher = SecretaryController.searchTeacherID(teacherID);
 		if (newTeacher != null)
 			teacherIDExists = true;}
 		else{
@@ -71,7 +71,7 @@ public class RemovetTeacherFromCourseController implements Initializable {
 			alert.showAndWait();
 		}
 		if(courseNum.length()!= 0){
-			ArrayList<StudentsClassInCourse> classCourseArr = SecretaryController.searchCourseNum(courseNum);
+			ArrayList<String> classCourseArr = SecretaryController.searchCourseNum(courseNum);
 			if (classCourseArr.size() != 0) {
 				courseNumExists = true;
 		}
@@ -82,9 +82,9 @@ public class RemovetTeacherFromCourseController implements Initializable {
 		
 			if ((courseNumExists) && (teacherIDExists)) {
 
-				for (StudentsClassInCourse classCourse : classCourseArr)
-					if (classCourse.getTeacher().getId() == teacherID) {
-						teacherClassCourseArr.add(classCourse.getTeacher().getId());
+			//	for (String classCourse : classCourseArr)
+			//		if (classCourse.getTeacher().getId() == teacherID) {
+			//			teacherClassCourseArr.add(classCourse.getTeacher().getId());
 					}
 
 				if (teacherClassCourseArr.size() != 0) {
@@ -105,7 +105,7 @@ public class RemovetTeacherFromCourseController implements Initializable {
 				alert.showAndWait();
 			}
 		}
-	}
+//	}
 
 	@FXML
 	void classList(ActionEvent event) {
@@ -116,10 +116,10 @@ public class RemovetTeacherFromCourseController implements Initializable {
 	void searchTeacherID(ActionEvent event) {
 		String id;
 		if ((id = teacherIDTB.getText()) != "") {
-			Teacher newTeacher = SecretaryController.searchTeacherID(id);
+			ArrayList<String> newTeacher = SecretaryController.searchTeacherID(id);
 			if (newTeacher != null) {
 				teacherIDExists = true;
-				teacherNameTB.setText(newTeacher.getFirst_name() + " " + newTeacher.getLast_name());
+			//	teacherNameTB.setText(newTeacher.getFirst_name() + " " + newTeacher.getLast_name());
 			} else {
 
 				teacherNameTB.setText("Invalid teacher ID");
@@ -146,65 +146,66 @@ public class RemovetTeacherFromCourseController implements Initializable {
 		ArrayList<String> teacherClassCourseArr = new ArrayList<String>();
 		String courseNum = courseNumberTB.getText();
 		String teacherID = teacherIDTB.getText();
-		Teacher newTeacher = SecretaryController.searchTeacherID(teacherID);
-		ArrayList<StudentsClassInCourse> classCourseArr = SecretaryController.searchCourseNum(courseNum);
+		ArrayList<String> newTeacher = SecretaryController.searchTeacherID(teacherID);
+		ArrayList<String> classCourseArr = SecretaryController.searchCourseNum(courseNum);
 
 		if (newTeacher != null)
 			teacherIDExists = true;
 		if (classCourseArr.size() != 0)
 			courseNumExists = true;
-
-		if ((courseNumExists) && (teacherIDExists)) {
-			for (StudentsClassInCourse classCourse : classCourseArr)
-				if (classCourse.getTeacher().getId() == teacherID) {
-					teacherClassCourseArr.add(classCourse.getTeacher().getId());
-				}
-			if (teacherClassCourseArr.size() != 0)
-				teacherClassCourse = true;
-			else {
-				Alert alert = new Alert(AlertType.WARNING,
-						"Teacher " + teacherNameTB.getText() + " is not participate in the course on current semester.",
-						ButtonType.OK);
-				alert.showAndWait();
-			}
-
-		} 
-		else if (!teacherIDExists){
-			Alert alert = new Alert(AlertType.WARNING, "Invalid teacher ID.", ButtonType.OK);
-			alert.showAndWait();
-			} 
-		else if (!courseNumExists) {
-			Alert alert = new Alert(AlertType.WARNING, "Invalid course number.", ButtonType.OK);
-			alert.showAndWait();
-		}
-		
-		
-		if(teacherClassCourse ){
-			if(classCMB.getValue()==null){
-				Alert alert = new Alert(AlertType.WARNING, "Please choose group of the course.", ButtonType.OK);
-				alert.showAndWait();
-			}
-		
-			else if(descriptionTB.getText().length()== 0){
-				Alert alert = new Alert(AlertType.WARNING, "Please fill description field.", ButtonType.OK);
-				alert.showAndWait();
-			}
-			else{
-				if(SecretaryController.removeTeacherfromCourseRequest(courseNumberTB.getText(),
-						teacherIDTB.getText(), descriptionTB.getText())){
-					Alert alert = new Alert(AlertType.NONE, "Your request has been sent successfully.", ButtonType.OK);
-					alert.showAndWait();
-				}
-				else{
-					Alert alert = new Alert(AlertType.WARNING, "Your request wasn't sent \n please try again.",
-							ButtonType.OK);
-					alert.showAndWait();
-				}
-				
-			}
-		}
-
-		
+//*******
+//		if ((courseNumExists) && (teacherIDExists)) {
+//			for (String classCourse : classCourseArr)
+////				if (classCourse.getTeacher().getId() == teacherID) {
+////					teacherClassCourseArr.add(classCourse.getTeacher().getId());
+//					
+//				}
+//			if (teacherClassCourseArr.size() != 0)
+//				teacherClassCourse = true;
+//			else {
+//				Alert alert = new Alert(AlertType.WARNING,
+//						"Teacher " + teacherNameTB.getText() + " is not participate in the course on current semester.",
+//						ButtonType.OK);
+//				alert.showAndWait();
+//			}
+//
+//		} 
+//		else if (!teacherIDExists){
+//			Alert alert = new Alert(AlertType.WARNING, "Invalid teacher ID.", ButtonType.OK);
+//			alert.showAndWait();
+//			} 
+//		else if (!courseNumExists) {
+//			Alert alert = new Alert(AlertType.WARNING, "Invalid course number.", ButtonType.OK);
+//			alert.showAndWait();
+//		}
+//		
+//		
+//		if(teacherClassCourse ){
+//			if(classCMB.getValue()==null){
+//				Alert alert = new Alert(AlertType.WARNING, "Please choose group of the course.", ButtonType.OK);
+//				alert.showAndWait();
+//			}
+//		
+//			else if(descriptionTB.getText().length()== 0){
+//				Alert alert = new Alert(AlertType.WARNING, "Please fill description field.", ButtonType.OK);
+//				alert.showAndWait();
+//			}
+//			else{
+//				if(SecretaryController.removeTeacherfromCourseRequest(courseNumberTB.getText(),
+//						teacherIDTB.getText(), descriptionTB.getText())){
+//					Alert alert = new Alert(AlertType.NONE, "Your request has been sent successfully.", ButtonType.OK);
+//					alert.showAndWait();
+//				}
+//				else{
+//					Alert alert = new Alert(AlertType.WARNING, "Your request wasn't sent \n please try again.",
+//							ButtonType.OK);
+//					alert.showAndWait();
+//				}
+//				
+//			}
+//		}
+//
+//		
 	}
 
 	@Override

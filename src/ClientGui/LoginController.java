@@ -28,7 +28,7 @@ import projectsalmon.User;
 
 public class LoginController implements Initializable {
 	Main myMain = Main.getInstance();
-	ArrayList<String>	forFunc=new ArrayList<String>();
+	ArrayList<String>	forFunc=new ArrayList<String>();;
 	@FXML // fx:id="PasswordTXT"
 	private PasswordField PasswordTXT; // Value injected by FXMLLoader
 
@@ -53,12 +53,26 @@ public class LoginController implements Initializable {
 	@FXML
 	void login(ActionEvent event) throws IOException {
 		String idSTR = idTXT.getText();
-		if (idSTR.length() == 9) {
+		/*
+		 * Checking
+		 * password---------------------------START-----------------------------
+		 * ----------
+		 */
+		if (PasswordTXT.getText().length() == 0) {
+			sendErrorMSG("Please enter your password");
+			PasswordTXT.setStyle("-fx-border-color: red");
+			PasswordTXT.setPromptText("Please enter your password");
+			/*
+			 * Checking
+			 * password---------------------------END---------------------------
+			 * ------------
+			 */
+		} else if (idSTR.length() == 9) {
 			if (!LoginUser.loginUser.getId().equals(idSTR)) {
 				Boolean f = searchUser(idSTR);
 
 				if (!f) {
-					sendErrorMSG(" User's ID does not exist, please try agine");
+					sendErrorMSG("User's ID does not exist, please try again");
 					return;
 				}
 			}
@@ -78,7 +92,23 @@ public class LoginController implements Initializable {
 					forFunc.add("updateUser");
 					forFunc.add(LoginUser.loginUser.getloginLockCounter().toString());
 					forFunc.add(LoginUser.Loged.toString());
-					myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
+					try {// ask for details from DB
+							// ************START************
+						Main.con.sendToServer(forFunc);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					synchronized (Main.con) {
+
+						try {
+							Main.con.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} // ************END************);
 					try {
 						myMain.getMange().changeScene(myMain.getMange().initializationScreens(-101));
 					} catch (IOException e) {
@@ -86,36 +116,87 @@ public class LoginController implements Initializable {
 						e.printStackTrace();
 					}
 					return;
-				} // end of if
+				} // end of if (LoginUser.loginUser.getPassword().equals(PasswordTXT.getText()))
 
 				else {
+					if ((LoginUser.loginUser.getPermission() & LoginUser.SystemAdminPER) != 0){
+						sendErrorMSG("Wrong password of system administrator, Please tru again");
+						return;
+					}
 					LoginUser.loginUser.setloginLockCounter(LoginUser.loginUser.getloginLockCounter() + 1);
 					// updateDB
 					switch (LoginUser.loginUser.getloginLockCounter()) {
 					case 1:
-						sendErrorMSG(" Wrong password, you have left more 2 tries");
+						sendErrorMSG("Wrong password, you have 2 more tries left");
 						forFunc.clear();
 						forFunc.add("updateUser");
 						forFunc.add(LoginUser.loginUser.getloginLockCounter().toString());
 						forFunc.add(LoginUser.logOut.toString());
-						myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
+						try {// ask for details from DB
+								// ************START************
+							Main.con.sendToServer(forFunc);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						synchronized (Main.con) {
+
+							try {
+								Main.con.wait();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} // ************END************
 						break;
 					case 2:
-						sendErrorMSG(" Wrong password, you have left 1 more try");
+						sendErrorMSG(" Wrong password, you have 1 more try left");
 						forFunc.clear();
 						forFunc.add("updateUser");
 						forFunc.add(LoginUser.loginUser.getloginLockCounter().toString());
 						forFunc.add(LoginUser.logOut.toString());
-						myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
+						try {// ask for details from DB
+								// ************START************
+							Main.con.sendToServer(forFunc);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						synchronized (Main.con) {
+
+							try {
+								Main.con.wait();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} // ************END************
 						break;
 					case 3:
-						sendErrorMSG(
-								" Wrong password 3 times, User is locked, please contact you'r administrator");
+						sendErrorMSG(" Wrong password 3 times. User is locked, please contact your system administrator");
 						forFunc.clear();
 						forFunc.add("updateUser");
 						forFunc.add(LoginUser.loginUser.getloginLockCounter().toString());
 						forFunc.add(LoginUser.Locked.toString());
-						myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
+						try {// ask for details from DB
+								// ************START************
+							Main.con.sendToServer(forFunc);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						synchronized (Main.con) {
+
+							try {
+								Main.con.wait();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} // ************END************
 						break;
 					default:
 						sendErrorMSG("Programming  user.getloginLockCounter() is NOT 1->3");
@@ -126,17 +207,18 @@ public class LoginController implements Initializable {
 
 			} // end of if (user != null)
 		} // end of if(idSTR.length()==9)
+
 		else
-			sendErrorMSG("The ID need to be 9 digits, please try agine");
+			sendErrorMSG("The ID must be 9 digits long, please try again");
 		return;
 	}// end of login method
 
 	public void sendErrorMSG(String msg){
-//		ActivityLogTXT.setText(msg);
 	
 		Alert alert = new Alert(AlertType.ERROR,msg, ButtonType.CANCEL);
 		alert.showAndWait();
 	}
+	@SuppressWarnings({"unchecked" })
 	public Boolean searchUser(String id) throws IOException {
 
 /*		ArrayList<LoginUser> dbARR = new ArrayList<LoginUser>();
@@ -152,11 +234,31 @@ public class LoginController implements Initializable {
 		forFunc.clear();
 		forFunc.add("searchUser");
 		forFunc.add(id);
-		myMain.getConnection().getClient().handleMessageFromClientUI(forFunc);
-		Object dbUserOBJ =  myMain.getConnection().getMessage();
-		LoginUser dbUser=(LoginUser)dbUserOBJ;
-		if (dbUser == null)
+		
+		try {//ask for details from DB ************START************ 
+			Main.con.sendToServer(forFunc);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+	   	synchronized (Main.con) {
+	   		
+	   		try {
+					Main.con.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}//************END************
+		ArrayList<String> dbUserOBJ = new ArrayList<String>();
+		dbUserOBJ = (ArrayList<String>) Main.con.getMessage();// get answer from
+																// DB
+		if (dbUserOBJ.get(0).length() == 0)
 			return false;
+
+		LoginUser dbUser = new LoginUser(dbUserOBJ);
+
 		if (dbUser.getId().equals(id))
 			LoginUser.loginUser.copy(dbUser);
 		return true;

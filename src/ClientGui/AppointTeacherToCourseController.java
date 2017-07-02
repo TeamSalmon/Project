@@ -82,7 +82,7 @@ public class AppointTeacherToCourseController implements Initializable {
 	void sendAppointTeacherRequest(ActionEvent event) {
 		
 		
-		Teacher newTeacher ;
+		ArrayList<String> newTeacher ;
 		
 		String description = descriptionTB.getText();
 		float newHours;
@@ -109,8 +109,8 @@ public class AppointTeacherToCourseController implements Initializable {
 					teacherIdTB.getText());
 			if (!(teacherInTheClassCourse)) {
 				newTeacher = SecretaryController.searchTeacherID(teacherIdTB.getText());
-				newHours = newTeacher.getWeekly_hours() + SecretaryController.getCourseWHours(courseNumberTB.getText());
-				if (newTeacher.getMax_maximal_weekly_hours() <= newHours) {
+//				newHours =  newTeacher.getWeekly_hours() + SecretaryController.getCourseWHours(courseNumberTB.getText());
+//				if (newTeacher.getMax_maximal_weekly_hours() <= newHours) {
 					requestSent = SecretaryController.sendAppointTeacherRequest(teacherIdTB.getText(),classCMB.getValue(), descriptionTB.getText());
 					if (requestSent) {
 						Alert alert = new Alert(AlertType.NONE, "Your request has been successfully sent.",
@@ -123,20 +123,20 @@ public class AppointTeacherToCourseController implements Initializable {
 					}
 				}
 				else {
-					Alert alert = new Alert(AlertType.WARNING, "The teacher can not to teach \nabove "+newTeacher.getMax_maximal_weekly_hours()+" hours per week.",ButtonType.OK);
+					Alert alert = new Alert(AlertType.WARNING, "The teacher can not to teach above hours per week.",ButtonType.OK);
 					alert.showAndWait();
 				}
 				
 				
 			}
-			else {
-				Alert alert = new Alert(AlertType.WARNING, "Teacher already assigned to the chosen class.",ButtonType.OK);
-				alert.showAndWait();
-			}
+//			else {
+//				Alert alert = new Alert(AlertType.WARNING, "Teacher already assigned to the chosen class.",ButtonType.OK);
+//				alert.showAndWait();
+//			}
 
 		}
 
-	}
+	
 
 	@FXML
 	void back(ActionEvent event) {
@@ -157,10 +157,10 @@ public class AppointTeacherToCourseController implements Initializable {
 	void searchTeacherID(ActionEvent event) {
 		String id;
 		if ((id = teacherIdTB.getText()) != "") {
-			Teacher newTeacher = SecretaryController.searchTeacherID(id);
+			ArrayList<String> newTeacher = SecretaryController.searchTeacherID(id);
 			if (newTeacher != null) {
 				teacherIDExists = true;
-				TeacherNameTB.setText(newTeacher.getFirst_name() + " " + newTeacher.getLast_name());
+				//TeacherNameTB.setText(newTeacher.getFirst_name() + " " + newTeacher.getLast_name());
 			} else {
 
 				TeacherNameTB.setText("Invalid teacher ID");
@@ -172,7 +172,7 @@ public class AppointTeacherToCourseController implements Initializable {
 	void searchCourse(ActionEvent event) throws IOException {
 
 		ArrayList<String> classCourseIDArr = new ArrayList<String>();
-		ArrayList<StudentsClassInCourse> StudentsClassInCourseArr= new ArrayList<StudentsClassInCourse>();
+		ArrayList<String> StudentsClassInCourseArr= new ArrayList<String>();
 		
 		
 		//ArrayList<String> classCourseArr;
@@ -181,8 +181,8 @@ public class AppointTeacherToCourseController implements Initializable {
 		if ((courseNum = courseNumberTB.getText()) != "") {
 			StudentsClassInCourseArr = SecretaryController.searchCourseNum(courseNum);
 		
-			for(StudentsClassInCourse classCourse:StudentsClassInCourseArr)	
-				classCourseIDArr.add(classCourse.getclassCourseID());
+			for(String classCourse:StudentsClassInCourseArr)	
+				classCourseIDArr.add(classCourse);
 
 			if (classCourseIDArr.size() != 0) {
 				courseNumExists = true;

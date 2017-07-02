@@ -47,7 +47,7 @@ public class removeStudentFromCourseController   implements Initializable{
     private TextField studentIDTB;
 
     @FXML
-    private TextArea studentNameTB;
+    private TextField studentNameTB;
 
     @FXML
     private Button sendRemoveStudentRequestBt;
@@ -55,7 +55,7 @@ public class removeStudentFromCourseController   implements Initializable{
     @FXML
     void sendRemoveStudentRequest(ActionEvent event) {
     	//check if the course is exists
-    	if(SecretaryController.searchCourseNum(courseNumberTB.getText()).size()!=0){
+    	if(SecretaryController.searchCourseNum(courseNumberTB.getText())!=null){
     	courseNumExists=true;
     	}
     	//check if student in the course group this semester
@@ -64,6 +64,7 @@ public class removeStudentFromCourseController   implements Initializable{
         		alert.showAndWait();
         	}
     		else{
+    			
     			studentDelitedCourse = SecretaryController.removeStudentfromCourseRequest(courseNumberTB.getText(),studentIDTB.getText(),descriptionTB.getText());
     			if(studentDelitedCourse){
     				Alert alert = new Alert(AlertType.NONE, "Your request has been sent successfully.", ButtonType.OK);
@@ -81,25 +82,23 @@ public class removeStudentFromCourseController   implements Initializable{
    	 myMain.getMange().changeScene((Scene) myMain.getMange().myStack.pop());
    }
 
-    @FXML
-    void searchStudentID(ActionEvent event) throws IOException
-    {
-    	String id;
-    	if ((id = studentIDTB.getText()) != "")
-    	{
-    		Student newStudent = SecretaryController.searchStudentID(id);
-    		if (newStudent != null){
-    			studentIDExists=true;
-    			studentNameTB.setText( newStudent.getFirst_name() +" "+ newStudent.getLast_name() );
-    		}
-    		else {
-    			
-    			studentNameTB.setText("Incorrect Student ID");
-    		}	
-    	}
-    }
 
-    
+
+	@FXML
+	void searchStudentID(ActionEvent event) throws IOException {
+
+		if (studentIDTB.getText().length() != 0) {
+			
+			ArrayList<String> newStudent = SecretaryController.searchStudentNameByID(studentIDTB.getText());
+			if (newStudent != null) {
+				studentIDExists = true;
+				studentNameTB.setText(newStudent.get(0) + " " + newStudent.get(1));
+			} else 
+				studentNameTB.setText("Invalid Student ID");
+		}
+		else 
+			studentNameTB.setText("Invalid Student ID");
+	}
 
 
 

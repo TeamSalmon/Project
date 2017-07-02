@@ -30,9 +30,9 @@ import projectsalmon.LoginUser;
 
 public class LoginPermissionController implements Initializable{
 	Main myMain = Main.getInstance();
-
-    private static final String FXCollection = null;
-
+	private static final String FXCollection = null;
+	ArrayList<String>	forFunc=new ArrayList<String>();
+	
 	@FXML // fx:id="permissionWND"
     private AnchorPane permissionWND; // Value injected by FXMLLoader
 
@@ -58,11 +58,80 @@ public class LoginPermissionController implements Initializable{
     }
 
     @FXML
-    void clickPerCBX(ActionEvent event) {
-    	String SelectedPermissionSTR=new String(perCBX.getValue());
-    	Alert alert = new Alert(AlertType.INFORMATION,"seccess->move to "+SelectedPermissionSTR+" screen", ButtonType.OK);
-		alert.showAndWait();
-    }
+	void clickPerCBX(ActionEvent event) {
+		String SelectedPermissionSTR = new String(perCBX.getValue());
+		/*
+		 * Alert alert = new Alert(AlertType.INFORMATION,"seccess->move to "
+		 * +SelectedPermissionSTR+" screen", ButtonType.OK);
+		 * alert.showAndWait();
+		 */
+		switch (SelectedPermissionSTR) {
+
+		case "Student":// Student
+				// ((Node)event.getSource()).getScene().getWindow().hide();
+			try {
+				myMain.getMange().changeScene(myMain.getMange().initializationScreens(12));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+
+		case "Parent":// Parent 
+			if (LoginUser.loginUser.getIsBlock() == 1) {
+				sendErrorMSG("Your permission as a parent is denied,\n"
+						+ " please contact school manager or select an other roule");
+				try {
+					myMain.getMange().changeScene(myMain.getMange().initializationScreens(-101));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			} // end of if (LoginUser.loginUser.getIsBlock() == 1)
+			try {
+				myMain.getMange().changeScene(myMain.getMange().initializationScreens(-104));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "Teacher":// Teacher
+			try {
+				myMain.getMange().changeScene(myMain.getMange().initializationScreens(3));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "School Manager":// School manager
+			try {
+				myMain.getMange().changeScene(myMain.getMange().initializationScreens(-102));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+
+		case "System Admin":// System administrator
+			/*
+			 * try { myMain.getMange().changeScene(myMain.getMange().
+			 * initializationScreens(other window)); } catch (IOException e) {
+			 * // TODO Auto-generated catch block e.printStackTrace(); }
+			 */
+
+			break;
+		case "Secretary":// Secretary
+			/*
+			 * try { myMain.getMange().changeScene(myMain.getMange().
+			 * initializationScreens(-103)); } catch (IOException e) { // TODO
+			 * Auto-generated catch block e.printStackTrace(); }
+			 */
+			sendErrorMSG("Only Secretary-->moving");
+			break;
+		}//end of switch
+    
+    }//end of "clickPerCBX" method
 
 	@FXML
 	void back(ActionEvent event) {
@@ -96,7 +165,7 @@ public class LoginPermissionController implements Initializable{
 
 		switch (LoginUser.loginUser.getPermission()) {
 
-		case 1:
+		case 1://Student only
 			// ((Node)event.getSource()).getScene().getWindow().hide();
 			try {
 				myMain.getMange().changeScene(myMain.getMange().initializationScreens(12));
@@ -106,16 +175,25 @@ public class LoginPermissionController implements Initializable{
 			}
 			break;
 
-		case 2:
-			/*
-			 * try { myMain.getMange().changeScene(myMain.getMange().
-			 * initializationScreens(-100)); } catch (IOException e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); }
-			 */
-
-			sendErrorMSG("Only parent-->moving");
+		case 2://Parent only
+			if (LoginUser.loginUser.getIsBlock() == 1) {
+				sendErrorMSG("Your permission as a parent is denied, please contact school manager");
+				try {
+					myMain.getMange().changeScene(myMain.getMange().initializationScreens(-101));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			}//end of if (LoginUser.loginUser.getIsBlock() == 1)
+			try {
+				myMain.getMange().changeScene(myMain.getMange().initializationScreens(-104));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
-		case 4:
+		case 4://Teacher only
 			try {
 				myMain.getMange().changeScene(myMain.getMange().initializationScreens(3));
 			} catch (IOException e) {
@@ -123,32 +201,31 @@ public class LoginPermissionController implements Initializable{
 				e.printStackTrace();
 			}
 			break;
-		case 8:
-			/*
-			 * try { myMain.getMange().changeScene(myMain.getMange().
-			 * initializationScreens(-100)); } catch (IOException e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); }
-			 */
-
-			sendErrorMSG("Only School Manager-->moving");
+		case 8://School manager only
+			try {
+				myMain.getMange().changeScene(myMain.getMange().initializationScreens(-102));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 
-		case 16:
-			/*
-			 * try { myMain.getMange().changeScene(myMain.getMange().
-			 * initializationScreens(-100)); } catch (IOException e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); }
-			 */
-
-			sendErrorMSG("Only System Admin-->moving");
+		case 16://System administrator only
+		/*	try {
+				myMain.getMange().changeScene(myMain.getMange().initializationScreens(other window));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			
 			break;
-		case 32:
-			/*
-			 * try { myMain.getMange().changeScene(myMain.getMange().
-			 * initializationScreens(-100)); } catch (IOException e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); }
-			 */
-
+		case 32://Secretary only
+			/*try {
+				myMain.getMange().changeScene(myMain.getMange().initializationScreens(-103));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 			sendErrorMSG("Only Secretary-->moving");
 			break;
 		default:
@@ -159,8 +236,7 @@ public class LoginPermissionController implements Initializable{
 			}
 				list = FXCollections.observableArrayList(perList);
 				perCBX.setItems(list);
-				break;
-			
+				break;			
 		}// end switch
 return;
 	}// end of method
