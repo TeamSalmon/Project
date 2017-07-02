@@ -16,6 +16,7 @@ public class Course
 
 	private ArrayList<Course> preCondition;
 	private ArrayList<Integer> grades;
+	private TeachingUnit teachingUnit;
 
 // TeachingUnit teachingUnit from constrcutor
 	public Course(String courseNumber, float weeklyHours, String courseName, String year, String semester, String teachingUnitId)

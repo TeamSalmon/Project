@@ -16,6 +16,6 @@
           <NumberAxis fx:id="yAxis" label="GPA" side="LEFT" />
         </yAxis>
       </BarChart>
-      <Button fx:id="backPT" layoutX="280.0" layoutY="434.0" mnemonicParsing="false" text="back" />
+      <Button fx:id="backPT" layoutX="280.0" layoutY="434.0" mnemonicParsing="false" onAction="#GoBack" text="back" />
    </children>
 </AnchorPane>
