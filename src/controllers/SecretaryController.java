@@ -1049,6 +1049,7 @@ public abstract class SecretaryController {
 						}
 				received_object = myMain.con.getMessage();
 				String answer2 = ((ArrayList<String>)received_object).get(0);
+
 			  
 			  if (answer2.equals("false"))
 			  {
