@@ -22,19 +22,18 @@ public  class Main extends Application {
 	private final static Main instance = new Main();
 	private static Stage theStage;
 	private guiMange Mange = new guiMange();;
-	private User user = (User)(new Teacher(10,"1235","Inbar" ,"Alfasi","12345"));
+	private User user = (User)(new Student("123567933","Inbar" ,"Alfasi","12345"));
 	private Report myreport = new Report();
 
 	public static Main getInstance() {
         return instance;
     }
 
-	public ClientConsole con;
+	public static ClientConsole con;
     public void setConnection(ClientConsole con)
     {
         this.con=con;
     }
-    
     public ClientConsole getConnection() {
         return con;
     }
@@ -100,42 +99,6 @@ public  class Main extends Application {
 
 	  }    
 
-//public void  getinfo(String id)//ask from server info about specific teacher
-//{
-//	
-//	 ArrayList<String> arrsend  =  new ArrayList<String>();
-//	 arrsend.add("getinfo");
-//	 arrsend.add(id);
-//	
-//	try
-//	{
-//		this.con.handleMessageFromClientUI(arrsend);
-//	}
-//	catch(IOException e)
-//	{
-//		ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-//	}
-////	ClientConsole.getLog().setText(con.getStringOut());
-//}
-
-
-//	public void UpdateTeacing(String id,String unit)//update teaching unit for specific teacher
-//	{	
-//		 ArrayList<String> arrsend  =  new ArrayList<String>();
-//		 arrsend.add("update");
-//		 arrsend.add(id);
-//		 arrsend.add(unit);
-//	
-//		 try
-//		 {
-//			 this.con.handleMessageFromClientUI(arrsend);
-//		 }
-//		 catch(IOException e)
-//		 {
-//			 ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-//		 }
-////		ClientConsole.getLog().setText(con.getStringOut());
-//	}
 
 	public static void main(String[] args) 
     {		

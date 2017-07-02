@@ -22,31 +22,23 @@ import javafx.event.ActionEvent;
 	 * @see SchoolManagerController
 	 * @author Elia
 	 */
-	public class BlockOrUnblockParentController {
+	public class BlockOrUnblockParentController
+	{
 
-		
-	Main myMain = Main.getInstance();
-		
-	
-	@FXML
-    private Button blockPT;
+		@FXML
+	    private Button blockPT;
+		@FXML
+		private Button unblockPT;
+	    @FXML
+	    private Pane paneFX;
+	    @FXML
+	    private Button exitPT;
+	    @FXML
+	    private TextField idFX;
+	    @FXML
+	    private Label requestFX;
+		Main myMain = Main.getInstance();
 
-	@FXML
-	private Button unblockPT;
-	
-    @FXML
-    private Pane paneFX;
-
-    @FXML
-    private Button exitPT;
-
-    @FXML
-    private TextField idFX;
-
-    @FXML
-    private Label requestFX;
-
-    
     
     /**
 	 * Deals with an attempt of the user to block a specified user

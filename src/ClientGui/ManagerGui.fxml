@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.ManagerGuiController">
+  <tabs>
+    <Tab fx:id="mainTab" text="Manager">
+      <content>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0">
+               <children>
+                  <Button fx:id="blockParentBtn" alignment="CENTER" layoutX="140.0" layoutY="61.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openBlockTab" prefHeight="60.0" prefWidth="1000.0" text="Block parent" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Button>
+                  <Separator layoutY="38.0" prefHeight="0.0" prefWidth="1280.0" />
+                  <Label layoutX="14.0" layoutY="14.0" text="View information">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="goBtn" layoutX="1238.0" mnemonicParsing="false" onAction="#changeSemester" prefHeight="38.0" prefWidth="42.0" text="GO">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <ComboBox fx:id="semesterChoice" layoutX="1098.0" prefHeight="39.0" prefWidth="140.0" promptText="Semester" />
+                  <Button fx:id="unblockParentBtn" layoutX="140.0" layoutY="143.0" mnemonicParsing="false" onAction="#openUnblockBtn" prefHeight="60.0" prefWidth="1000.0" text="Unblock parent" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="viewClassesBtn" layoutX="140.0" layoutY="489.0" mnemonicParsing="false" onAction="#openClassesTab" prefHeight="60.0" prefWidth="1000.0" text="View classes" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="viewTeachingUnitsBtn" layoutX="140.0" layoutY="400.0" mnemonicParsing="false" onAction="#openTeachingUnitsTabs" prefHeight="60.0" prefWidth="1000.0" text="View teaching units" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="viewTeachersBtn" layoutX="140.0" layoutY="313.0" mnemonicParsing="false" onAction="#openTeachersTab" prefHeight="60.0" prefWidth="1000.0" text="View teachers" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="viewReportsBtn" layoutX="140.0" layoutY="576.0" mnemonicParsing="false" onAction="#openReportTabs" prefHeight="60.0" prefWidth="1000.0" text="View reports" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="140.0" layoutY="230.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="1000.0" text="Respond to requests">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Button>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

@@ -47,4 +47,5 @@ public class StudentAssignment
 	public void setEvaluationForm(File evaluationForm){this.evaluationForm = evaluationForm;}
 	public String toString(){return studentId;}
 	public void setAssignment(Assignment assignment){this.assignment = assignment;}
+	public void setLateFlag(boolean flag){this.lateFlag = flag;}
 }

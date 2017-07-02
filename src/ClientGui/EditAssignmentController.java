@@ -1,8 +1,10 @@
 package ClientGui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -57,6 +59,17 @@ public class EditAssignmentController implements Initializable
     @FXML
     void deleteAssignment(ActionEvent event)
     {
+    	ArrayList<String> arrsend = new ArrayList<String>();
+    	arrsend.add("deleteAssignment");
+    	arrsend.add(assignment.getAssignmntId());
+    	try {
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con){try {Main.con.wait();} catch (InterruptedException e){e.printStackTrace();}
+		}
     	parentController.deleteAssignment(assignment);
     	Stage stage = (Stage)cancelBtn.getScene().getWindow();
    	    stage.close();
@@ -83,8 +96,31 @@ public class EditAssignmentController implements Initializable
     	assignment.setDeadline(cal);
     	assignment.setInstructions(instructionsField.getText());
     	assignment.setFile(uploadField.getText());
-    	//call controllers to make sure everything is ok
-    	//save the assignment in db
+    	
+    	ArrayList<String> arrsend = new ArrayList<String>();
+    	arrsend.add("editAssignment");
+    	arrsend.add(assignment.getAssignmntId());
+    	arrsend.add(assignment.getCourse());
+    	arrsend.add(assignment.getName());
+    	arrsend.add(assignment.getDeadlineAsString());
+    	arrsend.add(assignment.getInstructions());
+    	arrsend.add(assignment.getfile().getAbsolutePath());
+    	try {
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    	
     	parentController.updateAssignment(assignment);
     	Stage stage = (Stage)doneBtn.getScene().getWindow();
    	    stage.close();
@@ -103,7 +139,7 @@ public class EditAssignmentController implements Initializable
 		deadlineField.setValue(assignment.getDeadline().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 		instructionsField.setText(assignment.getInstructions());
 		deleteAssignmentBtn.setVisible(true);
-		uploadField.setText(assignment.getfile().getPath());
+		//uploadField.setText(assignment.getfile().getPath());
 	}
 	public boolean checkFields()
     {

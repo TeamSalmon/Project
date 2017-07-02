@@ -46,12 +46,12 @@ public class TeacherGuiController implements Initializable{
     @FXML
     private Button goBtn;
     private static Tab singleCourseTab;
-    private ObservableList<Course> data;
-    private ArrayList<Course> courses;
-    private ArrayList<Semester> semesters;
     private Semester currentSemester;
     private Semester presentedSemester;
 	private ObservableList<Semester> semesterList;
+	private ObservableList<Course> data;
+    private ArrayList<Course> courses;
+    private ArrayList<Semester> semesters;
 
     @SuppressWarnings("unchecked")
 	@FXML
@@ -63,24 +63,39 @@ public class TeacherGuiController implements Initializable{
     	 * According to the demand, a teacher is able to edit information of the current semester
     	 * Once a teacher goes on to a different semester than the current one, the information becomes uneditable 
     	 */
+    	if(semesterChoice.getSelectionModel().getSelectedItem()!=null)
+    	{
     	presentedSemester = semesterChoice.getSelectionModel().getSelectedItem();
     	
-    	/**
-    	 * Getting information according to the chosen semester from the DB:
-    	 */
     	ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("courseByTeacher");
 		arrsend.add(myMain.getUser().getId());
+		arrsend.add(presentedSemester.getYear());
 		arrsend.add(presentedSemester.getSemesterNumber());
-		
 		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 
-		catch (IOException e){e.printStackTrace();}
-		courses = (ArrayList<Course>)myMain.con.getMessage();
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    	ArrayList<ArrayList<String>> answer2 = new ArrayList<ArrayList<String>>();
+		answer2 = (ArrayList<ArrayList<String>>)Main.con.getMessage();
+		courses = new ArrayList<Course>();
+		if(answer2!=null)
+			for(ArrayList<String> course : answer2)
+			{
+				courses.add(new Course(course.get(0),course.get(1),course.get(2),Float.parseFloat(course.get(3)),course.get(4)));
+			}
 		
-		/**
-		 * Presenting the information:
-		 */
 		data = FXCollections.observableArrayList();
 		if(courses!=null)
 		{
@@ -89,13 +104,11 @@ public class TeacherGuiController implements Initializable{
 		
         coursesList.setItems(data);
 		}
-		/**
-		 * Making sure the information is only editable for the current semester:
-		 */
         if(presentedSemester == currentSemester)
         	manager.setEditable(true);
         else
         	manager.setEditable(false);
+    	}
     }
     @FXML
     void openSingleCourseTab(MouseEvent event)
@@ -122,51 +135,96 @@ public class TeacherGuiController implements Initializable{
 		manager.setEditable(true);
 		mainTab.setText(myMain.getUser().getFirst_name()+" " + myMain.getUser().getLast_name());
 		
-		/**
-		 * Since the default semester for presenting is the current one, we have to get it from the DB:
-		 */
+		// Since the default semester for presenting is the current one, we have to get it from the DB:
+		 
 		ArrayList<String> arrsend = new ArrayList<String>();
 		arrsend.add("CurrentSemester");
 		try {
-			myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
-		} catch (IOException e){e.printStackTrace();}
-		currentSemester = (Semester)myMain.con.getMessage();
-		
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con)
+    	{
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		ArrayList<String> answer = new ArrayList<String>();
+		answer = (ArrayList<String>)Main.con.getMessage();
+		currentSemester = new Semester(answer.get(0), answer.get(1));
 		presentedSemester = currentSemester;
+		manager.setCurrentSemester(currentSemester);
 		
-		/**
-		 * Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
-		 */
 		
-		/*arrsend = new ArrayList<String>();
+		//Getting from the DB all relevant semesters to the teacher (semesters in which he/she was active in the system):
+		
+		arrsend = new ArrayList<String>();
 		arrsend.add("getSemesters");
 		arrsend.add(myMain.getUser().getId());
 		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e){e.printStackTrace();}
-		semesters = (ArrayList<Semester>)myMain.con.getMessage();
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    	ArrayList<ArrayList<String>> answer2 = new ArrayList<ArrayList<String>>();
+		answer2 = (ArrayList<ArrayList<String>>)Main.con.getMessage();
+		semesters = new ArrayList<Semester>();
+		if(answer2!=null)
+			for(ArrayList<String> semester : answer2)
+			{
+				semesters.add(new Semester(semester.get(0),semester.get(1)));
+			}
 		
 		semesterList = FXCollections.observableArrayList();
-		if(semesters!=null)
-		{
 		for(Semester s : semesters)
 			semesterList.add(s);
 		semesterChoice.setItems(semesterList);
-		}
+
+		//Getting the information matching the semester:
 		
-		/**
-		 * Getting the information matching the semester:
-		 */
-		
-		/*arrsend = new ArrayList<String>();
+		arrsend = new ArrayList<String>();
 		arrsend.add("courseByTeacher");
 		arrsend.add(myMain.getUser().getId());
-		arrsend.add(currentSemester.getSemesterNumber());
-		
+		arrsend.add(presentedSemester.getYear());
+		arrsend.add(presentedSemester.getSemesterNumber());
 		try {
-			myMain.con.getClient().handleMessageFromClientUI(arrsend);} 
-		catch (IOException e){e.printStackTrace();}
-		courses = (ArrayList<Course>)myMain.con.getMessage();
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    	answer2 = new ArrayList<ArrayList<String>>();
+		answer2 = (ArrayList<ArrayList<String>>)Main.con.getMessage();
+		courses = new ArrayList<Course>();
+		if(answer2!=null)
+			for(ArrayList<String> course : answer2)
+			{
+				courses.add(new Course(course.get(0),course.get(1),course.get(2),Float.parseFloat(course.get(3)),course.get(4)));
+			}
 		
 		data = FXCollections.observableArrayList();
 		if(courses!=null)
@@ -175,6 +233,6 @@ public class TeacherGuiController implements Initializable{
 			data.add(c);
 		
         coursesList.setItems(data);
-		}*/
+		}
 	}
 }
