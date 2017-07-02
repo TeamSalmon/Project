@@ -22,8 +22,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import projectsalmon.Course;
-import projectsalmon.Student;
+
 import projectsalmon.StudentsClassInCourse;
 
 public class assignSingleStudentToCourseRequestController implements Initializable {
@@ -33,7 +32,7 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 	boolean courseNumExists = false;
 	boolean requestSent = false;
 
-	boolean studentInTheCourse = false;
+	
 	ObservableList<String> list;
 
 	@FXML
@@ -49,7 +48,7 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 	private TextField studentIDTB;
 
 	@FXML
-	private TextArea studentNameTB;
+	private TextField studentNameTB;
 
 	@FXML
 	private TextField courseNumberTB;
@@ -68,7 +67,8 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 
 	@FXML
 	void sendAssignStudentRequest(ActionEvent event) throws IOException {
-
+		boolean studentInTheCourse = false;
+		boolean haveNoPreconditions = false;
 		String description = descriptionTB.getText();
 		if (studentIDExists == false && courseNumExists == false) {
 			Alert alert = new Alert(AlertType.WARNING, "Please fill the form.", ButtonType.OK);
@@ -89,20 +89,34 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 
 		else {
 
-			// check prerequisites********************************************
-			// if ok continue
-			// else{
-			// Alert alert = new Alert(AlertType.WARNING, "Student
-			// "+studentNameTB.getText()+" don't have proper prerequisites",
-			// ButtonType.OK);
-
-			// alert.showAndWait();}
+			
+			//check if classcourse belong to current semester
+			boolean courseBelongToCurrSemester = SecretaryController.classCourseBelongToCurrSemester(classCMB.getValue());
+			if (!courseBelongToCurrSemester){
+				Alert alert = new Alert(AlertType.WARNING, "There are no such group of course current semester.",
+						ButtonType.OK);
+				alert.showAndWait();
+			}//********************8
+			else if((haveNoPreconditions=SecretaryController.haveNoPreconditions(studentIDTB.getText(),courseNumberTB.getText()))){
+				
+				 Alert alert = new Alert(AlertType.WARNING, "Student "+studentNameTB.getText()+" don't have proper prerequisites",
+				 ButtonType.OK);
+				 alert.showAndWait();
+			}
 			// check if student take this course in this semester
-			if (!(studentInTheCourse = SecretaryController
+			else if ((studentInTheCourse = SecretaryController
 					.searchStudentInCourseCurrentSemester(courseNumberTB.getText(), studentIDTB.getText()))) {
 
-				requestSent = SecretaryController.sendAssignStudentRequest(studentIDTB.getText(), classCMB.getValue(),
-						descriptionTB.getText());
+				Alert alert = new Alert(AlertType.WARNING, "Student already assigned to the chosen course.",
+						ButtonType.OK);
+				alert.showAndWait();
+				
+			}
+
+			else {
+
+				requestSent = SecretaryController.sendAssignRequest(studentIDTB.getText(), classCMB.getValue(),
+						descriptionTB.getText(), courseNumberTB.getText());
 				if (requestSent) {
 					Alert alert = new Alert(AlertType.NONE, "Your request has been successfully sent.", ButtonType.OK);
 					alert.showAndWait();
@@ -113,15 +127,14 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 				}
 			}
 
-			else {
-				Alert alert = new Alert(AlertType.WARNING, "Student already assigned to the chosen course.",
-						ButtonType.OK);
-				alert.showAndWait();
-			}
-
 		}
 
 	}
+
+//	private boolean haveNoPreconditions(String studentID, String courseNumber) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
 
 	@FXML
 	void back(ActionEvent event) throws IOException {
@@ -135,17 +148,18 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 
 	@FXML
 	void searchStudentID(ActionEvent event) throws IOException {
-		String id;
-		if ((id = studentIDTB.getText()) != "") {
-			Student newStudent = SecretaryController.searchStudentID(id);
-			if (newStudent != null) {
-				studentIDExists = true;
-				studentNameTB.setText(newStudent.getFirst_name() + " " + newStudent.getLast_name());
-			} else {
 
-				studentNameTB.setText("Incorrect Student ID");
-			}
+		if (studentIDTB.getText().length() != 0) {
+			
+			ArrayList<String> newStudent = SecretaryController.searchStudentNameByID(studentIDTB.getText());
+			if (newStudent.get(0) != null) {
+				studentIDExists = true;
+				studentNameTB.setText(newStudent.get(0) + " " + newStudent.get(1));
+			} else 
+				studentNameTB.setText("Invalid Student ID");
 		}
+		else 
+			studentNameTB.setText("Invalid Student ID");
 	}
 
 
@@ -153,18 +167,18 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 	void searchCourse(ActionEvent event) throws IOException {
 
 		ArrayList<String> classCourseIDArr = new ArrayList<String>();
-		ArrayList<StudentsClassInCourse> StudentsClassInCourseArr= new ArrayList<StudentsClassInCourse>();
+		ArrayList<String> StudentsClassInCourseArr= new ArrayList<String>();
 		
 		
 		//ArrayList<String> classCourseArr;
 		String courseNum;
 
-		if ((courseNum = courseNumberTB.getText()) != "") {
+		if ((courseNum = courseNumberTB.getText()).length() != 0) {
 			StudentsClassInCourseArr = SecretaryController.searchCourseNum(courseNum);
-		
-			for(StudentsClassInCourse classCourse:StudentsClassInCourseArr)	
-				classCourseIDArr.add(classCourse.getclassCourseID());
-
+		if(StudentsClassInCourseArr !=null){
+			for(String classCourse:StudentsClassInCourseArr)	
+				classCourseIDArr.add(classCourse);
+		}
 			if (classCourseIDArr.size() != 0) {
 				courseNumExists = true;
 
@@ -175,6 +189,10 @@ public class assignSingleStudentToCourseRequestController implements Initializab
 				Alert alert = new Alert(AlertType.WARNING, "Invalid course number.",ButtonType.OK);
 				alert.showAndWait();
 			}
+		}
+		else {
+			Alert alert = new Alert(AlertType.WARNING, "Invalid course number.",ButtonType.OK);
+			alert.showAndWait();
 		}
 	}
 

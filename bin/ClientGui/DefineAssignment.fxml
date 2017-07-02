@@ -15,7 +15,11 @@
          </font>
       </Label>
       <TextField fx:id="nameField" layoutX="119.0" layoutY="108.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="198.0" promptText="name the assignment" />
+<<<<<<< HEAD
       <Button fx:id="cancelBtn" layoutX="30.0" layoutY="499.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" textFill="#942121">
+=======
+      <Button id="test" fx:id="cancelBtn" layoutX="30.0" layoutY="499.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" textFill="#942121">
+>>>>>>> 0e9f7da8ad9d3987df090f44935c66ac6cb20318
          <font>
             <Font size="20.0" />
          </font></Button>

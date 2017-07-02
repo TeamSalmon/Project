@@ -19,6 +19,9 @@ import ServerClient.ClientConsole;
  * @see AssignClassToCourseController3 
  * @see DefineClass1Controller
  * @see DefineClass2Controller
+ * @see searchStudentInCourseCurrentSemester
+ * @see searchStudentNameByID
+ * @see sendAssignRequest
  * 
  */
 public abstract class SecretaryController {
@@ -1169,8 +1172,8 @@ public abstract class SecretaryController {
 
 	//	static String searchStudentID;
 	
-	public static boolean sendAppointTeacherRequest(String teacherID,String classCourse, String description) throws IOException{
-		boolean sentsucceaafully=false;
+
+	public static boolean sendAppointTeacherRequest(String teacherID,String classCourse, String description){
 		ArrayList<String> arrsend  =  new ArrayList<String>();
 				arrsend.clear();
 				 arrsend.add("sendAppointTeacherRequest");
@@ -1178,10 +1181,27 @@ public abstract class SecretaryController {
 				 arrsend.add(classCourse);
 				 arrsend.add(description);
 				 arrsend.add("2");
-				 myMain.getConnection().handleMessageFromClientUI((Object)arrsend);
-				 sentsucceaafully = (boolean)myMain.con.getMessage();
-			
-		return sentsucceaafully;
+
+
+					try {
+						Main.con.sendToServer(arrsend);
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+					}		
+				 synchronized (Main.con) {
+			    		
+			    		try {
+							Main.con.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				 ArrayList<String> ans = (ArrayList<String>)  myMain.con.getMessage();
+				 if(ans.get(0).equals("true"))
+					 return true;
+				 else return false;
 	}
 	
 	
@@ -1195,34 +1215,94 @@ public abstract class SecretaryController {
 		arrsend.add(description);
 		arrsend.add("3");
 
-		myMain.getConnection().handleMessageFromClientUI(arrsend);
 
-		sendRequestSucceded = (boolean) myMain.getConnection().getMessage();
-		return sendRequestSucceded;
+		try {
+			Main.con.sendToServer(arrsend);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}		
+	 synchronized (Main.con) {
+    		
+    		try {
+				Main.con.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	 ArrayList<String> ans = (ArrayList<String>)  myMain.con.getMessage();
+	 if(ans.get(0).equals("true"))
+		 return true;
+	 else return false;
 	}
 	
 			
 /**
- * 
+ * fill tuple in requests table
  * @param courseNumber
  * @param studentID
  * @param description
- * @return
+ * @return true of false
  */
-		public static boolean  removeStudentfromCourseRequest(String courseNumber, String studentID,String description) throws IOException{
-			boolean sendRequestSucceded=false;
-			 ArrayList<String> arrsend  =  new ArrayList<String>();
-			 arrsend.clear();
-			 arrsend.add("removeStudentfromCourseRequest");
-			 arrsend.add(studentID);
-			 arrsend.add(courseNumber);
-			 arrsend.add(description);
-			 arrsend.add("1");
-			 
-			 myMain.getConnection().handleMessageFromClientUI(arrsend);
 
-		sendRequestSucceded = (boolean) myMain.getConnection().getMessage();
-			return sendRequestSucceded;
+		public static boolean  removeStudentfromCourseRequest(String courseNumber, String userID,String description){
+			boolean sendRequestSucceded=false;
+			 String typeOfRequest = "1"; //assignStudent
+				String checkStatus = "0";
+				//get year and semester
+				 ArrayList<String> arrsend  =  new ArrayList<String>();
+				 arrsend.clear();
+				 arrsend.add("CurrentSemester");
+				 try {
+						Main.con.sendToServer(arrsend);
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+					}		
+				 synchronized (Main.con) {
+			    		
+			    		try {
+							Main.con.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				ArrayList<String> currSemester= (ArrayList<String>) myMain.con.getMessage();
+				//call to sendAssignRequest in server
+				 arrsend.clear();
+				 arrsend.add("sendRemoveRequest");
+				 arrsend.add(userID);
+				// arrsend.add(classCourse);
+				 arrsend.add(description);
+				 arrsend.add(checkStatus);
+				 arrsend.add(typeOfRequest);
+				 arrsend.add(courseNumber);
+				 arrsend.add(currSemester.get(0));
+				 arrsend.add(currSemester.get(1));
+				 try {
+						Main.con.sendToServer(arrsend);
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+					}		
+				 synchronized (Main.con) {
+			    		
+			    		try {
+							Main.con.wait();
+						} catch (InterruptedException e) {
+							ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
+							e.printStackTrace();
+						}
+					}
+			
+		ArrayList<String> ans = (ArrayList<String>)  myMain.getConnection().getMessage();
+			 if(ans.get(0).equals("true"))
+				 return true;
+			 else return false;
+			 
+
 		}
 		
 		public static float  getCourseWHours(String courseNum){
@@ -1230,8 +1310,24 @@ public abstract class SecretaryController {
 			 arrsend.clear();
 			 arrsend.add("getCourseWHours");
 			 arrsend.add(courseNum);
-			 myMain.getConnection().handleMessageFromClientUI((Object)arrsend);
-			 return 	 (float) myMain.getConnection().getMessage();
+
+			 try {
+					Main.con.sendToServer(arrsend);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+			    	synchronized (Main.con) {
+			    		
+			    		try {
+							Main.con.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} 		
+			  float wHours = (float)Main.con.getMessage();
+			 return wHours;
 		}
 		
 		
@@ -1240,155 +1336,208 @@ public abstract class SecretaryController {
 		 * @param TeacherID
 		 * @return object Teacher
 		 */
-		public static Teacher  searchTeacherID(String TeacherID){
+		public static ArrayList<String>  searchTeacherID(String TeacherID){
 			
 			 ArrayList<String> arrsend  =  new ArrayList<String>();
 			 arrsend.clear();
 			 arrsend.add("searchTeacherID");
 			 arrsend.add(TeacherID);
-		
-				myMain.getConnection().handleMessageFromClientUI((Object)arrsend);
-				Teacher newTeacher =  (Teacher) myMain.getConnection().getMessage();
-				
-			
-		//}
-		//----------
-		//	Student newStudent = new Student("123","Galit" ,"Alfarsi" ,"0000");
+
+			 try {
+					Main.con.sendToServer(arrsend);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+			    	synchronized (Main.con) {
+			    		
+			    		try {
+							Main.con.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+			    		
+			   ArrayList<String> newTeacher = (ArrayList<String>)Main.con.getMessage();
+
 			
 			if (newTeacher == null)
-				return (Teacher)null;
+				return (ArrayList<String>)null;
 			return newTeacher;
 		}
 
 		
-		
-		public static Student searchStudentID(String studentID) throws IOException{
-			
+
+/**
+ * This method send ID of student to server and gets his F_name and L_name if he is exists	
+ * @param studentID
+ * @return ArrayList with student name or null if the student isn't exists
+ * @author Mariya Portnoy
+ */
+		@SuppressWarnings("unchecked")
+		public static ArrayList<String> searchStudentNameByID(String studentID){	
 			 ArrayList<String> arrsend  =  new ArrayList<String>();
+			 ArrayList<String> newStudent = new ArrayList<String>();
 			 arrsend.clear();
-			 arrsend.add("searchStudentID");
-			 arrsend.add(studentID);
-		
-				myMain.getConnection().handleMessageFromClientUI((Object)arrsend);
-				Student newStudent =  (Student) myMain.getConnection().getMessage();
-				
-			
-		//}
-		//----------
-		//	Student newStudent = new Student("123","Galit" ,"Alfarsi" ,"0000");
-			
-			if (newStudent == null)
-				return (Student)null;
+
+			 arrsend.add("searchStudentNameByID");
+			 arrsend.add(studentID);		  
+			 try {
+				Main.con.sendToServer(arrsend);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		    	synchronized (Main.con) {
+		    		
+		    		try {
+						Main.con.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+		    	newStudent=	(ArrayList<String>)Main.con.getMessage();						
+			if (newStudent==null){
+				return (ArrayList<String>)null;
+			}
 			return newStudent;
 		}
 		
 
 
-	public static ArrayList<StudentsClassInCourse>  searchCourseNum(String courseNum){
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<String>  searchCourseNum(String courseNum){
 		
 	//	ArrayList<String> classCourseArr = new ArrayList<String>();
 
-		ArrayList<StudentsClassInCourse> StudentsClassInCourseArr= new ArrayList<StudentsClassInCourse>();
-//		 ArrayList<String> arrsend  =  new ArrayList<String>();
-//		arrsend.clear();
-//		 arrsend.add("searchCourseNum");
-//		 arrsend.add(CourseNum);
-//		try
-//		{
-//			this.con.getClient().handleMessageFromClientUI(arrsend);
-//		}
-//		catch(IOException e)
-//		{
-//			ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-//		}
-//		ClientConsole.getLog().setText(con.getStringOut());
-	//}
-
-		  Calendar startsAt = Calendar.getInstance();
-		  Calendar endsAt = Calendar.getInstance();
-		  startsAt.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
-		  startsAt.set(Calendar.HOUR, 10);
-		  startsAt.set(Calendar.MINUTE, 30);
-		  endsAt.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
-		  endsAt.set(Calendar.HOUR, 12);
-		  endsAt.set(Calendar.MINUTE, 30);
-		  Class newClass= new Class(startsAt,endsAt);
-		  ArrayList<Class> classschedule = new ArrayList<>();
-		  classschedule.add(newClass);
-		  TeachingUnit newTeachingUnit = new TeachingUnit("22","Math");
-		  Teacher newTeacher = new Teacher(20,"123456789","Elena", "Smith", "abcdefg");
+		ArrayList<String> StudentsClassInCourseArr= new ArrayList<String>();
+		 ArrayList<String> arrsend  =  new ArrayList<String>();
+		 arrsend.clear();
+		 arrsend.add("searchCourseNum");
+		 arrsend.add(courseNum);
+		 try {
+				Main.con.sendToServer(arrsend);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		 synchronized (Main.con) {
+	    		
+	    		try {
+					Main.con.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		 StudentsClassInCourseArr =  (ArrayList<String>) myMain.con.getMessage();
 		
-		  Course newCourse = new Course("123", "Algebra1",newTeachingUnit, "In course Algebra 1 you will learn how to calculate matrices", (float)3.0);
-		  
-		  StudentsClass newStudentsClass = new StudentsClass("2646452","10A", "10");
-		  
-		StudentsClassInCourse newClassCourse1 = new StudentsClassInCourse("1000001",newCourse,newStudentsClass,classschedule,newTeacher);
-		StudentsClassInCourse newClassCourse2 = new StudentsClassInCourse("1000002",newCourse,newStudentsClass,classschedule,newTeacher);
-		
-		StudentsClassInCourseArr.add(newClassCourse1);
-		StudentsClassInCourseArr.add(newClassCourse2);
-		
-			
-			
+		if (StudentsClassInCourseArr==null){
+			return (ArrayList<String>)null;
+		}
 			return StudentsClassInCourseArr;
 		}
 
 	/**
-	 * sendStudentRequest will save the report in DB
+	 * sendAssignRequest will save the report in DB
 	 * @param studentIDTB
 	 * @param classCourse
 	 * @param description
 	 * @return true if report data successfully saved in DB, else return false
 	 */
-		public static boolean sendAssignStudentRequest(String studentID, String classCourse, String description){
+		public static boolean sendAssignRequest(String userID,String classCourse,String description,String courseNum){	
+			String typeOfRequest = "0"; //assignStudent
+			String checkStatus = "0";
+			//get year and semester
+			 ArrayList<String> arrsend  =  new ArrayList<String>();
+			 arrsend.clear();
+			 arrsend.add("CurrentSemester");
+			 try {
+					Main.con.sendToServer(arrsend);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}		
+			 synchronized (Main.con) {
+		    		
+		    		try {
+						Main.con.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			ArrayList<String> currSemester= (ArrayList<String>) myMain.con.getMessage();
+			//call to sendAssignRequest in server
+			 arrsend.clear();
+			 arrsend.add("sendAssignRequest");
+			 arrsend.add(userID);
+			 arrsend.add(classCourse);
+			 arrsend.add(description);
+			 arrsend.add(checkStatus);
+			 arrsend.add(typeOfRequest);
+			 arrsend.add(courseNum);
+			 arrsend.add(currSemester.get(0));
+			 arrsend.add(currSemester.get(1));
+			 try {
+					Main.con.sendToServer(arrsend);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}		
+			 synchronized (Main.con) {
+		    		
+		    		try {
+						Main.con.wait();
+					} catch (InterruptedException e) {
+						ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
+						e.printStackTrace();
+					}
+				}
+			 ArrayList<String> ans = (ArrayList<String>)  myMain.con.getMessage();
+			 if(ans.get(0).equals("true"))
+				 return true;
+			 else return false;
 
-//			 ArrayList<String> arrsend  =  new ArrayList<String>();
-	//		arrsend.clear();
-//			 arrsend.add("sendStudentRequest");
-//			 arrsend.add(studentID);
-//			 arrsend.add(classCourse);
-//			 arrsend.add(description);
-//			 arrsend.add("0");
-//			try
-//			{
-//				this.con.getClient().handleMessageFromClientUI(arrsend);
-//			}
-//			catch(IOException e)
-//			{
-//				ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-//			}
-//			ClientConsole.getLog().setText(con.getStringOut());
-		
-		return true;
 		}
 		
+	/**
+	 * This method send to server course number and student ID and checks is the student participated the course in current semester	
+	 * @param courseNum
+	 * @param StudentID
+	 * @return true or false
+	 * @author Mariya Portnoy
+	 */
+	public static boolean searchStudentInCourseCurrentSemester(String courseNum, String StudentID) {
+		ArrayList<String> arrsend = new ArrayList<String>();
+		arrsend.clear();
+		arrsend.add("searchStudentInCourse");
+		arrsend.add(courseNum);
+		arrsend.add(StudentID);
 		
-	
-		
-		
-		public static boolean  searchStudentInCourseCurrentSemester(String courseNum,String StudentID){
+		 try {
+				Main.con.sendToServer(arrsend);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}		
+		 synchronized (Main.con) {
+	    		
+	    		try {
+					Main.con.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		 ArrayList<String> ans = (ArrayList<String>)  myMain.con.getMessage();
+		 if(ans.get(0).equals("true"))
+			 return true;
+		 else return false;
+	}
 
-			
-//			 ArrayList<String> arrsend  =  new ArrayList<String>();
-//			arrsend.clear();
-//			 arrsend.add("searchStudentInCourse");
-//			 arrsend.add(courseNum);
-//			 arrsend.add(StudentID);
-//			try
-//			{
-//				this.con.getClient().handleMessageFromClientUI(arrsend);
-//			}
-//			catch(IOException e)
-//			{
-//				ClientConsole.getLog().setText("Could not send message to server.  Terminating client.");
-//			}
-//			ClientConsole.getLog().setText(con.getStringOut());
-			
-		//	if (studentIncourse)
-			return true;
-		//	else return false;
-		}
-		
 		/**
 		 * function that asking from DB to check if the teacher already participates the course current semester
 		 * @param courseNum
@@ -1396,16 +1545,173 @@ public abstract class SecretaryController {
 		 * @return true if the teacher participates this course this semester, else will return false
 		 */
 		public static boolean searchTeacherInClassCourseCurrentSemester(String classCourseNum,String teacherID){
-			boolean teacherInTheClassCourse= false;
-//			 ArrayList<String> arrsend  =  new ArrayList<String>();
-//				arrsend.clear();
-//				 arrsend.add("searchTeacherInCourseCurrentSemester");
-//				 arrsend.add(classCourseNum);
-//				 arrsend.add(teacherID);
-			//this.con.getClient().handleMessageFromClientUI(arrsend);
-			//teacherInTheCourse = (boolean)myMain.con.getMessage();
+			ArrayList<String> teacherInTheClassCourse= new ArrayList<String>();
+			 ArrayList<String> arrsend  =  new ArrayList<String>();
+				arrsend.clear();
+				 arrsend.add("searchTeacherInCourseCurrentSemester");
+				 arrsend.add(classCourseNum);
+				 arrsend.add(teacherID);
+			try {
+				Main.con.sendToServer(arrsend);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}		
+		 synchronized (Main.con) {
+	    		
+	    		try {
+					Main.con.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		 ArrayList<ArrayList> teacherInTheCourse = (ArrayList<ArrayList>)myMain.con.getMessage();
 			
-			return teacherInTheClassCourse;
+		 if(teacherInTheCourse.get(0).equals("true"))
+			 return true;
+		 else return false;
 			
 		}
+
+		/**
+		 * check if group of course belongs to current semester
+		 * @param classCourseNum 
+		 * @return true if yes or false if not
+		 * @author Mariya Portnoy
+		 */
+		public static boolean classCourseBelongToCurrSemester(String classCourseNum){
+			//get year and semester
+			 ArrayList<String> arrsend  =  new ArrayList<String>();
+			 arrsend.clear();
+			 arrsend.add("CurrentSemester");
+			 try {
+					Main.con.sendToServer(arrsend);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}		
+			 synchronized (Main.con) {
+		    		
+		    		try {
+						Main.con.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			ArrayList<String> currSemester= (ArrayList<String>) myMain.con.getMessage();
+			 arrsend.clear();
+			 arrsend.add("classCourseBelongToSemester");
+			 arrsend.add(classCourseNum);
+			 arrsend.add(currSemester.get(0));
+			 arrsend.add(currSemester.get(1));
+			 try {
+					Main.con.sendToServer(arrsend);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}		
+			 synchronized (Main.con) {
+		    		
+		    		try {
+						Main.con.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			 
+		ArrayList<String> ans = (ArrayList<String>)  myMain.con.getMessage();
+			 if(ans.get(0).equals("true"))
+				 return true;
+			 else return false;
+ 
+		}
+		/**
+		 * check is specific student have no pre-courses of specific course
+		 * @param studentID
+		 * @param courseNumber
+		 * @return true if student don't have required pre-courses or false if he have
+		 * @author Mariya Portnoy
+		 */
+		@SuppressWarnings({ "static-access", "unchecked" })
+		public static boolean haveNoPreconditions(String studentID,String courseNumber){
+		
+			ArrayList<String> coursePreconditions = new ArrayList<String>();
+			ArrayList<String> arrsend = new ArrayList<String>();
+			arrsend.add("coursePrecondition");
+			arrsend.add(courseNumber);
+			try {
+				Main.con.sendToServer(arrsend);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}		
+		 synchronized (Main.con) {
+	    		
+	    		try {
+					Main.con.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		 coursePreconditions = (ArrayList<String>)myMain.con.getMessage();
+		//get year and semester
+		
+		 arrsend.clear();
+		 arrsend.add("CurrentSemester");
+		 try {
+				Main.con.sendToServer(arrsend);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}		
+		 synchronized (Main.con) {
+	    		
+	    		try {
+					Main.con.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		ArrayList<String> currSemester= (ArrayList<String>) myMain.con.getMessage();
+
+		 //get student old courses
+		 	arrsend.clear();
+		 	arrsend.add("getStudentPrevCourses");
+			arrsend.add(studentID);
+			arrsend.add(currSemester.get(0));
+			arrsend.add(currSemester.get(1));
+			try {
+				Main.con.sendToServer(arrsend);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}		
+		 synchronized (Main.con) {
+	    		
+	    		try {
+					Main.con.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		 ArrayList<ArrayList> studentOldCourses = (ArrayList<ArrayList>)myMain.con.getMessage();
+		 
+		int precoursesCounter = 0;
+
+		for (int i = 0; i < coursePreconditions.size(); i++) {
+			for (int j = 0; j < studentOldCourses.size(); j++)
+				if ((coursePreconditions.get(i)).equals((studentOldCourses.get(j))))
+					precoursesCounter++;
+		}
+		if(coursePreconditions.size()==precoursesCounter)
+			return false;
+		else
+			return true;
 	}
+}

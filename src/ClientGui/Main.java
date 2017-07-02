@@ -22,7 +22,9 @@ public  class Main extends Application {
 	private final static Main instance = new Main();
 	private static Stage theStage;
 	private guiMange Mange = new guiMange();;
-	private User user = (User)(new Student("123567933","Inbar" ,"Alfasi","12345"));
+
+	private User user = (User)(new Teacher(10,"315314369","Inbar" ,"Alfasi","12345"));
+
 	private Report myreport = new Report();
 
 	public static Main getInstance() {
@@ -98,6 +100,7 @@ public  class Main extends Application {
 		
 
 	  }    
+
 
 
 	public static void main(String[] args) 

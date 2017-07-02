@@ -14,10 +14,6 @@
          <font>
             <Font size="14.0" />
          </font></TextField>
-      <TextArea fx:id="studentNameTB" editable="false" layoutX="23.0" layoutY="83.0" prefHeight="30.0" prefWidth="350.0" promptText="Student Name">
-         <font>
-            <Font size="14.0" />
-         </font></TextArea>
       <Button fx:id="sendAssignStudentRequestBt" layoutX="345.0" layoutY="349.0" mnemonicParsing="false" onAction="#sendAssignStudentRequest" prefHeight="31.0" prefWidth="112.0" text="Send request">
          <font>
             <Font size="12.0" />
@@ -49,5 +45,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <TextField fx:id="studentNameTB" editable="false" layoutX="23.0" layoutY="89.0" prefHeight="31.0" prefWidth="354.0" promptText="Student Name" />
    </children>
 </AnchorPane>

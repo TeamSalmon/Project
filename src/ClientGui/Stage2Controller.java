@@ -136,7 +136,7 @@ public class Stage2Controller {
     		 myMain.getConnection();
 			ClientConsole.setLog(UpdateLog);
     		
-    		myMain.UpdateTeacing(teachId, unitUpdateval);
+    		//myMain.UpdateTeacing(teachId, unitUpdateval);
     	}
     	
     }

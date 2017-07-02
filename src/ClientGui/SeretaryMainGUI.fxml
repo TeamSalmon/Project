@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="cmbClass" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.SecretaryMainGuiController">
+   <children>
+      <Button fx:id="defineClassBT" layoutX="37.0" layoutY="54.0" mnemonicParsing="false" onAction="#defineClass" prefHeight="38.0" prefWidth="526.0" text="Define class">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="OpenNewSemesterBT" layoutX="37.0" layoutY="104.0" mnemonicParsing="false" onAction="#OpenNewSemester" prefHeight="38.0" prefWidth="526.0" text="Open new semester">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="assignStudentRequestBT" layoutX="37.0" layoutY="160.0" mnemonicParsing="false" onAction="#assignStudentRequest" prefHeight="38.0" prefWidth="526.0" text="Send assign student request">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="assignTeacherRequestBT" layoutX="37.0" layoutY="268.0" mnemonicParsing="false" onAction="#assignTeacherRequest" prefHeight="38.0" prefWidth="526.0" text="Send assign teacher request">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="unassignStudentRequestBT" layoutX="37.0" layoutY="214.0" mnemonicParsing="false" onAction="#unassignStudentRequest" prefHeight="38.0" prefWidth="526.0" text="Send unassign student request">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="unassignTeacherRequestBT" layoutX="37.0" layoutY="320.0" mnemonicParsing="false" onAction="#unassignTeacherRequest" prefHeight="38.0" prefWidth="526.0" text="Send unassign teacher request">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
