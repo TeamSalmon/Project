@@ -23,9 +23,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import projectsalmon.Course;
-import projectsalmon.FileEvent;
+//import projectsalmon.FileEvent;
 import projectsalmon.TeachingUnit;
-import projectsalmon.filesMange;
+//import projectsalmon.filesMange;
 
 public class Stage2Controller {
 	String teachId,unitUpdateval;
@@ -66,16 +66,16 @@ public class Stage2Controller {
     	 ObjectOutputStream outputStream = null;
     	 boolean isConnected = false;
     	 String sourceFilePath = "C:/temp/test.txt";
-    	 FileEvent fileEvent = null;
+    	// FileEvent fileEvent = null;
     	 String destinationPath = "C:/tmp/downloads/";
     	
     	
-		fileEvent = new FileEvent();
+		//fileEvent = new FileEvent();
 		String fileName = sourceFilePath.substring(sourceFilePath.lastIndexOf("/") + 1, sourceFilePath.length());
 		String path = sourceFilePath.substring(0, sourceFilePath.lastIndexOf("/") + 1);
-		fileEvent.setDestinationDirectory(destinationPath);
-		fileEvent.setFilename(fileName);
-		fileEvent.setSourceDirectory(sourceFilePath);
+	//	fileEvent.setDestinationDirectory(destinationPath);
+	//	fileEvent.setFilename(fileName);
+		//fileEvent.setSourceDirectory(sourceFilePath);
 		File file = new File(sourceFilePath);
 		System.out.println("enter func");
 		if (file.isFile()) {
@@ -88,19 +88,19 @@ public class Stage2Controller {
 		while (read < fileBytes.length && (numRead = diStream.read(fileBytes, read, fileBytes.length - read)) >= 0) {
 		read = read + numRead;
 		}
-		fileEvent.setFileSize(len);
-		fileEvent.setFileData(fileBytes);
-		fileEvent.setStatus("Success");
+		//fileEvent.setFileSize(len);
+	//	fileEvent.setFileData(fileBytes);
+	//	fileEvent.setStatus("Success");
 		} catch (Exception e) {
 		e.printStackTrace();
-		fileEvent.setStatus("Error");
+	//	fileEvent.setStatus("Error");
 		}
 		} else {
 		System.out.println("path specified is not pointing to a file");
-		fileEvent.setStatus("Error");
+	//	fileEvent.setStatus("Error");
 		}
 		//Now writing the FileEvent object to socket
-		Main.con.sendToServer(fileEvent.getFileData());
+		//Main.con.sendToServer(fileEvent.getFileData());
 		
 		System.out.println("Done...Going to exit");
 		
