@@ -14,14 +14,6 @@
             <Font size="14.0" />
          </font>
       </TextField>
-<<<<<<< HEAD
-      <TextArea fx:id="studentNameTB" editable="false" layoutX="23.0" layoutY="83.0" prefHeight="30.0" prefWidth="350.0" promptText="Student Name">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextArea>
-=======
->>>>>>> 0e9f7da8ad9d3987df090f44935c66ac6cb20318
       <Button fx:id="sendRemoveStudentRequestBt" layoutX="345.0" layoutY="349.0" mnemonicParsing="false" onAction="#sendRemoveStudentRequest" prefHeight="31.0" prefWidth="112.0" text="Send request">
          <font>
             <Font size="12.0" />
@@ -49,12 +41,9 @@
             <Font size="14.0" />
          </font>
       </Label>
-<<<<<<< HEAD
-=======
       <TextField fx:id="studentNameTB" editable="false" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="329.0" promptText="Student Name">
          <font>
             <Font size="14.0" />
          </font></TextField>
->>>>>>> 0e9f7da8ad9d3987df090f44935c66ac6cb20318
    </children>
 </AnchorPane>

@@ -6,18 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1270.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ClientGui.StudentPersonalFileController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.StudentPersonalFileController">
    <children>
-      <Separator layoutY="42.0" prefHeight="0.0" prefWidth="1270.0" />
-      <Label layoutX="14.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="270.0" text="Assignments in personal file">
+      <Separator layoutY="42.0" prefHeight="0.0" prefWidth="1280.0" />
+      <Label layoutX="14.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="270.0" text="Assignments in personal file">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <ListView fx:id="assignmentsList" fixedCellSize="50.0" layoutX="14.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#StudentShowAssignment" prefHeight="564.0" prefWidth="1241.0" stylesheets="@test.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="76.0" />
-      <Button id="test" fx:id="closeBtn" layoutX="1174.0" mnemonicParsing="false" onAction="#closeTab" prefHeight="42.0" prefWidth="96.0" text="close tab" textFill="#8d0909" />
-      <Label id="test" fx:id="avgField" layoutX="14.0" layoutY="14.0" text="Avg: ###" textFill="#281cb5">
+      <ListView fx:id="assignmentsList" fixedCellSize="50.0" layoutX="14.0" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#StudentShowAssignment" prefHeight="757.0" prefWidth="1251.0" stylesheets="@test.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="43.0" />
+      <Label id="test" fx:id="avgField" layoutX="1185.0" layoutY="16.0" text="Avg: ###" textFill="#281cb5">
          <font>
             <Font size="20.0" />
          </font>

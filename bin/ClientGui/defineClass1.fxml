@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<<<<<<< HEAD
 <?import javafx.scene.text.*?>
-=======
->>>>>>> 0e9f7da8ad9d3987df090f44935c66ac6cb20318
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -13,7 +10,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<<<<<<< HEAD
 <Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineClass1Controller">
    <children>
              <!--      <Button fx:id="continuePT" layoutX="365.0" layoutY="123.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" /> -->
@@ -43,13 +39,5 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-=======
-<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineClass1Controller">
-   <children>
-                  <Button fx:id="continuePT" layoutX="365.0" layoutY="123.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
-                  <TextField fx:id="gradeFX" layoutX="185.0" layoutY="123.0" promptText="Grade" />
-                  <Button fx:id="exitPT" layoutX="280.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-                  <Label fx:id="requestFX" layoutX="180.0" layoutY="61.0" text="Enter the new class's grade (in the range: 10-12)" />
->>>>>>> 0e9f7da8ad9d3987df090f44935c66ac6cb20318
 	</children>
 </Pane>
