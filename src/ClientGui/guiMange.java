@@ -30,6 +30,7 @@ public class guiMange
     public static final String Page15 = "defineCourse.fxml";
     public static final String Page16 = "blockOrUnblockUser.fxml";
     public static final String Page17 = "blockOrUnblockParent.fxml";
+    public static final String PageMinus108 = "systemAdminMenu.fxml";
 
 
     public static final String CSS = "test.css";
@@ -125,6 +126,10 @@ public class guiMange
         	
     	case -101:
         	xmlNum = PageMinus101;
+        	break;	
+        	
+    	case -108:
+        	xmlNum = PageMinus108;
         	break;	
         	
     	case 20:

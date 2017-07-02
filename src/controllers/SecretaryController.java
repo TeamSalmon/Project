@@ -20,7 +20,6 @@ import ServerClient.ClientConsole;
  * @see DefineClass1Controller
  * @see DefineClass2Controller
  * 
- * @author Mariya and Elia
  */
 public abstract class SecretaryController {
 
@@ -29,18 +28,19 @@ public abstract class SecretaryController {
 
 	private static Object received_object;
 	
-		
+	
 	
 	/* Assign Class to Course*/
 	
-	
-	private static ArrayList<Course> list_of_courses;
-	private static ArrayList<StudentsClass> list_of_classes;
-	private static ArrayList<Teacher> list_of_teachers;
-	private static ArrayList<Student> all_students_of_class;
-	private static ArrayList<Course> preconditions;
-	private static ArrayList<Course> student_former_courses;
-	private static ArrayList<Student> approved_students;
+	private static ArrayList<Object> list_of_objects;
+
+	private static ArrayList<Course> list_of_courses = new ArrayList<Course>();
+	private static ArrayList<StudentsClass> list_of_classes = new ArrayList<StudentsClass>();
+	private static ArrayList<Teacher> list_of_teachers = new ArrayList<Teacher>();
+	private static ArrayList<Student> all_students_of_class = new ArrayList<Student>();
+	private static ArrayList<String> preconditions = new ArrayList<String>();
+	private static ArrayList<String> student_former_courses = new ArrayList<String>();
+	private static ArrayList<Student> approved_students = new ArrayList<Student>();
 	
 	private static Course chosen_course;
 	private static StudentsClass chosen_class;
@@ -50,6 +50,8 @@ public abstract class SecretaryController {
 	
 	private static StudentsClassInCourse new_class_in_course;
 		
+	private static String courseClassID; 
+	
 	
 
 	/**
@@ -63,16 +65,76 @@ public abstract class SecretaryController {
 		// ask DB: Get list of all the courses in the DB (sorted by anything???)
 		// save it to 'list_of_courses'
 		
-		ArrayList<String> query_coursesByID = new ArrayList<String>();
-		query_coursesByID.add("coursesByID");
-		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_coursesByID);
-		received_object = myMain.getConnection().getMessage();
-		list_of_courses = (ArrayList<Course>)received_object;
+		ArrayList<String> query_getAllCourses = new ArrayList<String>();
+		query_getAllCourses.add("getAllCourses");
+	
+		try{
+			myMain.getConnection().sendToServer((Object)query_getAllCourses);
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+			synchronized(myMain.getConnection()){
+				try {
+					myMain.getConnection().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		received_object = myMain.con.getMessage();
+		list_of_objects = (ArrayList<Object>)received_object;
 		
-		/////////////////////////////////////////////////////////////////////////////////
-		//list_of_courses = new ArrayList<Course>();
-		//list_of_courses.add(new Course("999",new TeachingUnit("some","thing"), 2, "poetry"));
-		/////////////////////////////////////////////////////////////////////////////////
+		
+		// extract 'list_of_objects' into 'list_of_courses' 
+		
+		for(Object obj : list_of_objects)
+		{
+			String name = null;
+			String id=null;
+			float weekly_hours=0;
+			String year=null;
+			String semester=null;
+			int current_semester=0;
+		String teachingunitID = null;
+			
+			for(int i = 0 ; i < ((ArrayList<String>)obj).size() ; i++ )
+			{
+				switch (i)
+				{
+					case 0:
+						id = ((ArrayList<String>)obj).get(i);
+						break;
+					case 1:
+						weekly_hours = Float.valueOf(((ArrayList<String>)obj).get(i));
+						break;
+					case 2:
+						name = ((ArrayList<String>)obj).get(i);
+						break;
+					case 3:
+						year = ((ArrayList<String>)obj).get(i);
+						break;
+					case 4:
+						semester = ((ArrayList<String>)obj).get(i);
+						break;
+					case 5:
+						if(((ArrayList<String>)obj).get(i) == null)
+						{
+							current_semester = -1;
+							break;
+						}
+						current_semester = Integer.valueOf(((ArrayList<String>)obj).get(i));
+						break;
+					case 6:
+						teachingunitID = ((ArrayList<String>)obj).get(i);
+						break;
+				}
+			
+			}
+			Course onecourse = new Course(id, weekly_hours, name, year, semester,teachingunitID);
+			list_of_courses.add(onecourse);
+		}	
+		
 		return list_of_courses;
 	}
 	
@@ -89,15 +151,61 @@ public abstract class SecretaryController {
 	
 		ArrayList<String> query_studentClassesByID = new ArrayList<String>();
 		query_studentClassesByID.add("studentClassesByID");
-		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_studentClassesByID);
+		try{
+		myMain.getConnection().sendToServer((Object)query_studentClassesByID);
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		synchronized(myMain.getConnection()){
+			try {
+				myMain.getConnection().wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		received_object = myMain.getConnection().getMessage();
-		list_of_classes = (ArrayList<StudentsClass>)received_object;
+		list_of_objects = (ArrayList<Object>)received_object;
 
-		/////////////////////////////////////////////////////////////////////////////////
-		//list_of_classes = new ArrayList<StudentsClass>();
-		//list_of_classes.add(new StudentsClass("A1","A","5678"));
-		/////////////////////////////////////////////////////////////////////////////////
+		
+		// extract 'list_of_objects' into 'list_of_courses' 
+		
+		for(Object obj : list_of_objects)
+		{
+			int amount = 0;
+			String level=null;
+			String id = null;
+			String name=null;
+			
+			
+			for(int i = 0 ; i < ((ArrayList<String>)obj).size() ; i++ )
+			{
+				switch (i)
+				{
+					case 0:
+						amount = Integer.valueOf(((ArrayList<String>)obj).get(i));
+						break;
+					case 1:
+						level = ((ArrayList<String>)obj).get(i);
+						break;
+					case 2:
+						id = ((ArrayList<String>)obj).get(i);
+						break;
+					case 3:
+						name = ((ArrayList<String>)obj).get(i);
+						break;
+				}
+			
+			}
+
+			StudentsClass oneclass = new  StudentsClass(name, level, id, amount);
+			if(! oneclass.getClassId().equals("NULL"))
+				list_of_classes.add(oneclass);
+		}	
+		
 		return list_of_classes;
+
 	}
 	
 	
@@ -140,34 +248,89 @@ public abstract class SecretaryController {
 		
 		ArrayList<String> query_studentsOfClass = new ArrayList<String>();
 		query_studentsOfClass.add("studentsOfClass");
-		query_studentsOfClass.add(chosen_class.getClassId().toString());
-		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_studentsOfClass);
-		received_object = myMain.getConnection().getMessage();
-		all_students_of_class = (ArrayList<Student>)received_object;
+		query_studentsOfClass.add(chosen_class.getClassId());
 		
-		/////////////////////////////////////////////////////////////////////////////////////
-		//ArrayList<Student> all_students_of_class = new ArsrayList<Student>();
-		//all_students_of_class.add(new Student("001","Hayevgeni","gitin","124"));
-		/////////////////////////////////////////////////////////////////////////////////////
+		try{
+			myMain.getConnection().sendToServer((Object)query_studentsOfClass);
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+			synchronized(myMain.getConnection()){
+				try {
+					myMain.getConnection().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		
+			received_object = myMain.getConnection().getMessage();
+			list_of_objects = (ArrayList<Object>)received_object;
+
+			
+			// extract 'list_of_objects' into 'all_students_of_class' 
+			//	 * @return [0]=id,[1]=first_name,[2]=last_name,[3]=birthday.
+
+			for(Object obj : list_of_objects)
+			{
+				String id = null;
+				String first=null;
+				String last = null;
+				String bd=null;
+				
+				
+				for(int i = 0 ; i < ((ArrayList<String>)obj).size() ; i++ )
+				{
+					switch (i)
+					{
+						case 0:
+							id = ((ArrayList<String>)obj).get(i);
+							break;
+						case 1:
+							first = ((ArrayList<String>)obj).get(i);
+							break;
+						case 2:
+							last = ((ArrayList<String>)obj).get(i);
+							break;
+						case 3:
+							bd = ((ArrayList<String>)obj).get(i);
+							break;
+					}
+				
+				}
+
+				Student onestudent = new  Student(id, first, last, null);
+				all_students_of_class.add(onestudent);
+			}	
+					
 		
 		
 		// ask DB: Get list the courses that are the preconditions for the specified course
 		// preconditions = coursePreconditions(chosen_course);
 		
 		ArrayList<String> query_coursePreconditions = new ArrayList<String>();
-		query_coursePreconditions.add("coursePreconditions");
-		query_coursePreconditions.add(chosen_course.getCourseNumber().toString());
-		myMain.getConnection().getClient().handleMessageFromClientUI((Object) query_coursePreconditions);
-		received_object = myMain.getConnection().getMessage();
-		preconditions = (ArrayList<Course>)received_object;
+		query_coursePreconditions.add("coursePrecondition");
+		query_coursePreconditions.add(chosen_course.getCourseNumber());
 
+		try{
+			myMain.getConnection().sendToServer((Object)query_coursePreconditions);
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+			synchronized(myMain.getConnection()){
+				try {
+					myMain.getConnection().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		
-		/////////////////////////////////////////////////////////////////////////////////////
-		//ArrayList<Course> preconditions = new ArrayList<Course>(); 
-		//preconditions.add(new Course("111",new TeachingUnit("some","thing"), 2, "Robin 101"));
-		//preconditions.add(new Course("222",new TeachingUnit("some","thing"), 2, "guitar"));
-		/////////////////////////////////////////////////////////////////////////////////////
-
+		received_object = myMain.getConnection().getMessage();
+		preconditions = (ArrayList<String>)received_object;
+		 
 		
 		// List of 'Student's that lack the preconditions of the course
 		ArrayList<Student> misfit_students = new ArrayList<Student>();
@@ -192,23 +355,52 @@ public abstract class SecretaryController {
 			ArrayList<String> query_studentOldCourses = new ArrayList<String>();
 			query_studentOldCourses.add("studentOldCourses");
 			query_studentOldCourses.add(student.getId().toString());
-			myMain.getConnection().getClient().handleMessageFromClientUI((Object) query_studentOldCourses);
-			received_object = myMain.getConnection().getMessage();
-			student_former_courses = (ArrayList<Course>)received_object;
 			
-			/////////////////////////////////////////////////////////////////////////////////////
-			//ArrayList<Course> student_former_courses = new ArrayList<Course>();
-			//student_former_courses.add(new Course("111",new TeachingUnit("some","thing"), 2, "Robin 101"));
-			//student_former_courses.add(new Course("222",new TeachingUnit("some","thing"), 2, "guitar"));
-			/////////////////////////////////////////////////////////////////////////////////////
+			try{
+				myMain.getConnection().sendToServer((Object)query_studentOldCourses);
+				}
+				catch(IOException e){
+					e.printStackTrace();
+				}
+				synchronized(myMain.getConnection()){
+					try {
+						myMain.getConnection().wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				received_object = myMain.getConnection().getMessage();
+				list_of_objects = (ArrayList<Object>)received_object;
+				
+				for(Object obj : list_of_objects)
+				{
+					String id = null;
+					
+					
+					for(int j = 0 ; j < ((ArrayList<String>)obj).size() ; j++ )
+					{
+						switch (j)
+						{
+							case 0:
+								id =  ((ArrayList<String>)obj).get(j);
+								break;
+						}
+					
+					}
+
+					student_former_courses.add(id);
+				}
+				
+							
 			
-			
-			for (Course condition : preconditions)
+			for (String condition : preconditions)
 			{
 				if(i == 1)
-				for (Course course : student_former_courses)
+				for (String course : student_former_courses)
 				{	
-					if( condition.getCourseNumber() == course.getCourseNumber() )
+					if( condition.equals(course) )
 					{	
 						// count the precondition
 						exists++;
@@ -245,31 +437,85 @@ public abstract class SecretaryController {
 		ArrayList<String> query_optionalTeachersForCourse = new ArrayList<String>();
 		query_optionalTeachersForCourse.add("optionalTeachersForCourse");
 		query_optionalTeachersForCourse.add(chosen_course.getCourseNumber());
-		myMain.getConnection().getClient().handleMessageFromClientUI((Object) query_optionalTeachersForCourse);
-		received_object = myMain.getConnection().getMessage();
-		list_of_teachers = (ArrayList<Teacher>)received_object;
 		
+		try{
+			myMain.getConnection().sendToServer((Object)query_optionalTeachersForCourse);
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+			synchronized(myMain.getConnection()){
+				try {
+					myMain.getConnection().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			received_object = myMain.getConnection().getMessage();
+			list_of_objects = (ArrayList<Object>)received_object;
+
+			//	 * @return [0]=weeklyHours,[1]=id,[2]=first_name,[3]=last_name,[4]=Password.
+
+			// extract 'list_of_objects' into 'list_of_teachers' 
+			
+			for(Object obj : list_of_objects)
+			{
+				float maxweeklyhours = 0;
+				float weeklyhours = 0;
+				String id=null;
+				String first = null;
+				String last=null;
+				String pass = null;
+				
+				for(int i = 0 ; i < ((ArrayList<String>)obj).size() ; i++ )
+				{
+					switch (i)
+					{
+						case 0:
+							weeklyhours = Float.valueOf(((ArrayList<String>)obj).get(i));
+							break;
+						case 1:
+							id = ((ArrayList<String>)obj).get(i);
+							break;
+						case 2:
+							first = ((ArrayList<String>)obj).get(i);
+							break;
+						case 3:
+							last= ((ArrayList<String>)obj).get(i);
+							break;
+						case 4:
+							pass= ((ArrayList<String>)obj).get(i);
+							break;
+						case 5:
+							maxweeklyhours= Float.valueOf(((ArrayList<String>)obj).get(i));
+							break;
+					}
+				
+				}
+
+				Teacher oneteacher = new  Teacher(weeklyhours,id, first, last, pass);
+				oneteacher.setWeekly_hours(maxweeklyhours);
+				list_of_teachers.add(oneteacher);
+			}	
+		
+			
 		// Keep only the teachers that have enough free teaching hours
 		for (Teacher teacher : list_of_teachers)
     	{
 			if( teacher.getMax_maximal_weekly_hours() - teacher.getWeekly_hours() < chosen_course.getWeeklyHours())
 				list_of_teachers.remove(teacher);
     	}
-		
-		/////////////////////////////////////////////////////////////////////////////////////
-		//list_of_teachers = new ArrayList<Teacher>();
-		//list_of_teachers.add(new Teacher(30,"711", "Paskal", "Perez","111111"));
-		//list_of_teachers.add(new Teacher(34,"722", "Albert", "Gerbily","111111"));
-		/////////////////////////////////////////////////////////////////////////////////////
-
+	
 		return list_of_teachers;
 	}
 
 	/**
 	 * Updates the chosen teacher and assigns all the gathered data to the DB.
 	 * @param teacherName
+	 * @throws IOException 
 	 */
-	public static void updateChosenTeacher(String teacherName) {
+	public static String updateChosenTeacher(String teacherName) throws IOException {
 		
 		// find the selected teacher in the list
 		for (Teacher teacher : list_of_teachers)
@@ -284,7 +530,7 @@ public abstract class SecretaryController {
 		
 		// Add weekly hours of 'chosen_course' to 'chosen_teacher''s weekly hours
 		chosen_teacher.setWeekly_hours( chosen_teacher.getWeekly_hours() + chosen_course.getWeeklyHours());
-			
+		
 		ArrayList<Class> schedule = new ArrayList<Class>();
 		schedule.add(new Class());
 		
@@ -292,18 +538,216 @@ public abstract class SecretaryController {
 
 ////////////////////////////////////////////////////
 		// send 'new_class_in_course' to DB:
+		// public static ArrayList<String> CreateClassInCourse(String studentsClassID,String courseID,String teacherID,String studentsAmount,String ClassCourseID){
+		
+		ArrayList<String> query_CreateClassInCourse = new ArrayList<String>();
+		query_CreateClassInCourse.add("CreateClassInCourse");
+		query_CreateClassInCourse.add(chosen_class.getClassId());
+		query_CreateClassInCourse.add(chosen_course.getCourseNumber());
+		query_CreateClassInCourse.add(chosen_teacher.getId());
+		query_CreateClassInCourse.add(((Integer)approved_students.size()).toString());
+		
+		courseClassID = generateCourseClassId();
+		query_CreateClassInCourse.add(courseClassID);
+
+		try{
+			myMain.getConnection().sendToServer((Object)query_CreateClassInCourse);
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+			synchronized(myMain.getConnection()){
+				try {
+					myMain.getConnection().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			
+		received_object = myMain.getConnection().getMessage();
+		
+		String answer1 = ((ArrayList<String>) received_object).get(0);
+
+		if (answer1.equals("false")) {
+			System.out.println("Couldn't define new course (DB error");
+			return null;
+		}
 		
 		// update 'chosen_teacher' in DB
+			
+		ArrayList<String> query_updateTeacher = new ArrayList<String>();
+		query_updateTeacher.add("updateTeacher");
+		query_CreateClassInCourse.add(chosen_teacher.getId());
+		query_CreateClassInCourse.add(((Float)chosen_teacher.getWeekly_hours()).toString());
+
+		try{
+			myMain.getConnection().sendToServer((Object)query_CreateClassInCourse);
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+			synchronized(myMain.getConnection()){
+				try {
+					myMain.getConnection().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			received_object = myMain.getConnection().getMessage();
+			
+			String answer2 = ((ArrayList<String>) received_object).get(0);
+
+			if (answer2.equals("false")) {
+				System.out.println("Couldn't define new course (DB error");
+				return null;
+			}
+		
+		
+		for(Student student: approved_students)
+		{
+			 //add to new class in course
+			 //update 'student' in DB
+			ArrayList<String> query_updateStudentCourse = new ArrayList<String>();
+			query_updateStudentCourse.add("updateStudentCourse");
+			query_updateStudentCourse.add(chosen_course.getCourseNumber());
+			query_updateStudentCourse.add(chosen_teacher.getId());
+			query_updateStudentCourse.add(chosen_class.getClassId());
+			query_updateStudentCourse.add(courseClassID);
+			
+			//public static ArrayList<String> updateStudentCourse(String studentID,String CourseId,String teasherId,String StudentsClassID,String classCourseID){
+
+			try{
+				myMain.getConnection().sendToServer((Object)query_updateStudentCourse);
+				}
+				catch(IOException e){
+					e.printStackTrace();
+				}
+				synchronized(myMain.getConnection()){
+					try {
+						myMain.getConnection().wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				received_object = myMain.getConnection().getMessage();
 				
-		//for(Student student: approved_students)
-		//{
-			// add to new class in course
-			// update 'student' in DB
-		//}
+				answer2 = ((ArrayList<String>) received_object).get(0);
+
+				if (answer2.equals("false")) {
+					System.out.println("Couldn't define new course (DB error");
+					return null;
+				}
+		}
+		return answer2;
 		
 ////////////////////////////////////////////////////
 	}
 
+	
+	/**
+	 * Returns optional courses to assign classes to.
+	 * @return ArrayList<Course> list of optional courses.
+	 * @throws IOException
+	 */
+	public static String generateCourseClassId() throws IOException
+	{
+		ArrayList<String> list_of_ids=new ArrayList<String>(); 		
+		
+			ArrayList<String> query_groupsOfCourse = new ArrayList<String>();
+			query_groupsOfCourse.add("groupsOfCourse");
+			query_groupsOfCourse.add(chosen_course.getCourseNumber());
+			
+			try{
+				myMain.getConnection().sendToServer((Object)query_groupsOfCourse);
+				}
+				catch(IOException e){
+					e.printStackTrace();
+				}
+				synchronized(myMain.getConnection()){
+					try {
+						myMain.getConnection().wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				received_object = myMain.getConnection().getMessage();
+				list_of_objects = (ArrayList<Object>)received_object;
+
+				//	 * @return [0]=weeklyHours,[1]=id,[2]=first_name,[3]=last_name,[4]=Password.
+
+				// extract 'list_of_objects' into 'list_of_teachers' 
+				
+				for(Object obj : list_of_objects)
+				{
+					String ccID=null;
+				
+
+					for(int i = 0 ; i < ((ArrayList<String>)obj).size() ; i++ )
+					{
+						switch (i)
+						{
+							case 0:
+								ccID = ((ArrayList<String>)obj).get(i);
+								break;
+						}
+					
+					}
+
+					list_of_ids.add(ccID);
+				}	
+			
+			
+			
+			// List is empty, this s_class will be the first
+			if (list_of_ids.isEmpty() == true)
+				return "1";
+
+			String newid = "1";
+			int numerical_value;
+
+			// Scan the SORTED list of existing classes and return the
+			// smallest unused studentsClassId (starting at 1)
+			for (String sclass : list_of_ids) {
+				if (sclass.equals(newid)) {
+					// Increment 'newid'
+					numerical_value = Integer.valueOf(newid);
+					numerical_value++;
+					newid = String.valueOf(numerical_value);
+				}
+				if ( ! sclass.equals(newid)) {
+					break;
+				}
+
+			}
+			//set 'newid' to have a length of 3 digits
+			if (newid.length() < 2)
+				newid = "00000000" + newid; 
+			else if (newid.length() < 3)
+				newid = "0000000" + newid; 
+			else if (newid.length() < 4)
+				newid = "000000" + newid; 
+			else if (newid.length() < 5)
+				newid = "00000" + newid; 
+			else if (newid.length() < 6)
+				newid = "0000" + newid; 
+			else if (newid.length() < 7)
+				newid = "000" + newid; 
+			else if (newid.length() < 8)
+				newid = "00" + newid; 
+			else if (newid.length() < 9)
+				newid = "0" + newid; 
+			
+			return newid;
+		}
+		
+	
+	
+	
 	/**
 	 * (Getter)
 	 * @return Course chosen_course.
@@ -346,7 +790,7 @@ public abstract class SecretaryController {
 	 * @throws IOException
 	 */
 	public static void assignClassToCourseEXIT(int n) throws IOException {
-		for(int i = 0 ; i < n ; i++)
+		for(int i = 0 ; i < n-1 ; i++)
 		{
 			myMain.getMange().myStack.pop();
 		}
@@ -361,13 +805,18 @@ public abstract class SecretaryController {
 	/* Define Class*/
 	
 	
-	private static ArrayList<Student> OptionalStudents;
+	private static ArrayList<Student> OptionalStudents = new ArrayList<Student>();
 	//private static ArrayList<StudentsClass> list_of_classes; -> Using the 'list_of_classes'
 	// from the Assign Class to Course scope
 	
-	static StudentsClass new_class;
-	static String new_grade;
+	private static StudentsClass new_class;
+	private static String new_grade;
 
+	public static String getGrade()
+	{
+		return new_grade;
+	}
+	
 	
 	/**
 	 * (Setter)
@@ -381,33 +830,74 @@ public abstract class SecretaryController {
 	
 	/**
 	 * Gets a list of students with a specified level/grade without a class to be assigned to the new class
+	 * @param level 
 	 * @return ArrayList<Student>
 	 * @throws IOException
 	 */
-	public static ArrayList<Student> getOptionalStudents() throws IOException 
+	public static ArrayList<Student> getOptionalStudents(String level) throws IOException 
 	{
 		// ask DB: get a list of students in this grade that are not attached to
 		// 'studentsClass' instance already
 		// ArrayList<Student> OptionalStudents = DB.studnetsWithoutClass(grade);
-		/*
-		 * ArrayList<String> query_studentsWithoutClass = new
-		 * ArrayList<String>();
-		 * query_studentsWithoutClass.add("studentClassesByID");
-		 * myMain.getConnection().getClient().handleMessageFromClientUI((Object)
-		 * query_studentsWithoutClass); received_object =
-		 * myMain.getConnection().getMessage(); OptionalStudents =
-		 * (ArrayList<Student>)received_object;
-		 */
-		/////////////////////////////////////////////////////////////////////////////////////
-		ArrayList<Student> OptionalStudents = new ArrayList<Student>();
-		OptionalStudents.add(new Student("001", "yevgeni", "gitin", "124"));
-		OptionalStudents.add(new Student("002", "inbar", "elfasi", "124"));
-		OptionalStudents.add(new Student("003", "mariya", "portnoy", "124"));
-		OptionalStudents.add(new Student("004", "galit", "elfarsi", "124"));
-		OptionalStudents.add(new Student("005", "tamir", "zamoshzinsky", "124"));
-		OptionalStudents.add(new Student("006", "elia", "amar", "124"));
-		/////////////////////////////////////////////////////////////////////////////////////
+		
+		  ArrayList<String> query_studentsWithoutClass = new ArrayList<String>();
+		  query_studentsWithoutClass.add("studentsWithoutClass");
+		  query_studentsWithoutClass.add(level);
 
+		  try{
+				myMain.getConnection().sendToServer((Object)query_studentsWithoutClass);
+				}
+				catch(IOException e){
+					e.printStackTrace();
+				}
+				synchronized(myMain.getConnection()){
+					try {
+						myMain.getConnection().wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+		  
+		  
+		received_object = myMain.getConnection().getMessage(); 
+		list_of_objects = (ArrayList<Object>)received_object;
+  
+
+			// extract 'list_of_objects' into 'OptionalStudents' 
+			
+			for(Object obj : list_of_objects)
+			{
+				String id = null;
+				String first = null;
+				String last =null;
+				String pass = null;
+				
+				
+				for(int i = 0 ; i < ((ArrayList<String>)obj).size() ; i++ )
+				{
+					switch (i)
+					{
+						case 0:
+							id = ((ArrayList<String>)obj).get(i);
+							break;
+						case 1:
+							first = ((ArrayList<String>)obj).get(i);
+							break;
+						case 2:
+							last = ((ArrayList<String>)obj).get(i);
+							break;
+						case 3:
+							pass = ((ArrayList<String>)obj).get(i);
+							break;
+					}
+				
+				}
+
+				Student onestudent = new  Student(id,first,last,pass);
+					OptionalStudents.add(onestudent);
+			}	
+		 
 		return OptionalStudents;
 	}
 
@@ -425,19 +915,65 @@ public abstract class SecretaryController {
 		// 'studentsClassId'
 		// ArrayList<StudentsClass> list_of_classes = DB.classesByID();
 
-		/*
-		 * ArrayList<String> query_studentClassesByID = new ArrayList<String>();
-		 * query_studentClassesByID.add("studentClassesByID");
-		 * myMain.getConnection().getClient().handleMessageFromClientUI((Object)
-		 * query_studentClassesByID); received_object =
-		 * myMain.getConnection().getMessage(); list_of_classes =
-		 * (ArrayList<StudentsClass>)received_object;
-		 */
+		
+		  ArrayList<String> query_studentClassesByID = new ArrayList<String>();
+		  query_studentClassesByID.add("studentClassesByID");
+				  
+				  
+				  try{
+						myMain.getConnection().sendToServer((Object)query_studentClassesByID);
+						}
+						catch(IOException e){
+							e.printStackTrace();
+						}
+						synchronized(myMain.getConnection()){
+							try {
+								myMain.getConnection().wait();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						received_object = myMain.getConnection().getMessage();
+						list_of_objects = (ArrayList<Object>)received_object;
 
-		/////////////////////////////////////////////////////////////////////////////////////
-		ArrayList<StudentsClass> list_of_classes = new ArrayList<StudentsClass>();
-		/////////////////////////////////////////////////////////////////////////////////////
+						
+						// extract 'list_of_objects' into 'list_of_courses' 
+						
+						for(Object obj : list_of_objects)
+						{
+							int amount = 0;
+							String level=null;
+							String id = null;
+							String name=null;
+							
+							
+							for(int i = 0 ; i < ((ArrayList<String>)obj).size() ; i++ )
+							{
+								switch (i)
+								{
+									case 0:
+										amount = Integer.valueOf(((ArrayList<String>)obj).get(i));
+										break;
+									case 1:
+										level = ((ArrayList<String>)obj).get(i);
+										break;
+									case 2:
+										id = ((ArrayList<String>)obj).get(i);
+										break;
+									case 3:
+										name = ((ArrayList<String>)obj).get(i);
+										break;
+								}
+							
+							}
 
+							StudentsClass oneclass = new  StudentsClass(name, level, id, amount);
+							if(! oneclass.getClassId().equals("NULL"))
+								list_of_classes.add(oneclass);
+						}	
+				  
+				  
 		String className = generateClassName(list_of_classes, new_class);
 		String classID = generateClassID(list_of_classes);
 
@@ -449,18 +985,33 @@ public abstract class SecretaryController {
 
 		// Send to DB: the instance 'new_class' to add to DB
 		
-		  ArrayList<String> query_addNewClass = new ArrayList<String>();
-		  query_addNewClass.add("addNewClass"); query_addNewClass.add(classID);
-		  query_addNewClass.add(((Integer)
-		  new_class.getStudentsAmount()).toString());
-		  query_addNewClass.add(new_grade); query_addNewClass.add(className);
+		  ArrayList<String> query_createStudentsClass = new ArrayList<String>();
+		  query_createStudentsClass.add("createStudentsClass"); 
+		  query_createStudentsClass.add(classID);
+		  query_createStudentsClass.add(((Integer)new_class.getStudentsAmount()).toString());
+		  query_createStudentsClass.add(new_grade); 
+		  query_createStudentsClass.add(className);
+		 
+			try{
+				myMain.getConnection().sendToServer((Object)query_createStudentsClass);
+				}
+				catch(IOException e){
+					e.printStackTrace();
+				}
+				synchronized(myMain.getConnection()){
+					try {
+						myMain.getConnection().wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			received_object = myMain.con.getMessage();
 		  
-		  myMain.getConnection().getClient().handleMessageFromClientUI((Object)
-		  query_addNewClass); received_object =
-		  myMain.getConnection().getMessage(); boolean answer1 = (boolean)
-		  received_object;
 		  
-		  if (answer1 == false)
+		  String answer1 = ((ArrayList<String>)received_object).get(0);
+	  
+		  if (answer1.equals("false"))
 		  {
 			  System.out.println("Couldn't define new class (DB error");
 			  return null;
@@ -476,15 +1027,27 @@ public abstract class SecretaryController {
 			  ArrayList<String> query_updateClassOfStudent = new
 			  ArrayList<String>();
 			  query_updateClassOfStudent.add("updateClassOfStudent");
-			  query_updateClassOfStudent.add(student.getId().toString());
-			  query_updateClassOfStudent.add(new_class.getClassId().toString());
+			  query_updateClassOfStudent.add(student.getId());
+			  query_updateClassOfStudent.add(new_class.getClassId());
 			  
-			  myMain.getConnection().getClient().handleMessageFromClientUI((Object)
-			  query_updateClassOfStudent); received_object =
-			  myMain.getConnection().getMessage(); boolean answer2 =
-			  (boolean)received_object;
+					  try{
+						myMain.getConnection().sendToServer((Object)query_updateClassOfStudent);
+						}
+						catch(IOException e){
+							e.printStackTrace();
+						}
+						synchronized(myMain.getConnection()){
+							try {
+								myMain.getConnection().wait();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+				received_object = myMain.con.getMessage();
+				String answer2 = ((ArrayList<String>)received_object).get(0);
 			  
-			  if(answer2 == false)
+			  if (answer2.equals("false"))
 			  {
 				  System.out.println("Couldn't assign student to new class (DB error");
 				  return null;
@@ -606,7 +1169,7 @@ public abstract class SecretaryController {
 
 	//	static String searchStudentID;
 	
-	public static boolean sendAppointTeacherRequest(String teacherID,String classCourse, String description){
+	public static boolean sendAppointTeacherRequest(String teacherID,String classCourse, String description) throws IOException{
 		boolean sentsucceaafully=false;
 		ArrayList<String> arrsend  =  new ArrayList<String>();
 				arrsend.clear();
@@ -615,12 +1178,7 @@ public abstract class SecretaryController {
 				 arrsend.add(classCourse);
 				 arrsend.add(description);
 				 arrsend.add("2");
-				 try {
-					myMain.getConnection().getClient().handleMessageFromClientUI((Object)arrsend);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				 myMain.getConnection().handleMessageFromClientUI((Object)arrsend);
 				 sentsucceaafully = (boolean)myMain.con.getMessage();
 			
 		return sentsucceaafully;
@@ -637,12 +1195,7 @@ public abstract class SecretaryController {
 		arrsend.add(description);
 		arrsend.add("3");
 
-		try {
-			myMain.getConnection().getClient().handleMessageFromClientUI(arrsend);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		myMain.getConnection().handleMessageFromClientUI(arrsend);
 
 		sendRequestSucceded = (boolean) myMain.getConnection().getMessage();
 		return sendRequestSucceded;
@@ -656,7 +1209,7 @@ public abstract class SecretaryController {
  * @param description
  * @return
  */
-		public static boolean  removeStudentfromCourseRequest(String courseNumber, String studentID,String description){
+		public static boolean  removeStudentfromCourseRequest(String courseNumber, String studentID,String description) throws IOException{
 			boolean sendRequestSucceded=false;
 			 ArrayList<String> arrsend  =  new ArrayList<String>();
 			 arrsend.clear();
@@ -666,12 +1219,7 @@ public abstract class SecretaryController {
 			 arrsend.add(description);
 			 arrsend.add("1");
 			 
-			 try {
-				myMain.getConnection().getClient().handleMessageFromClientUI(arrsend);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			 myMain.getConnection().handleMessageFromClientUI(arrsend);
 
 		sendRequestSucceded = (boolean) myMain.getConnection().getMessage();
 			return sendRequestSucceded;
@@ -682,12 +1230,7 @@ public abstract class SecretaryController {
 			 arrsend.clear();
 			 arrsend.add("getCourseWHours");
 			 arrsend.add(courseNum);
-			 try {
-				myMain.getConnection().getClient().handleMessageFromClientUI((Object)arrsend);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			 myMain.getConnection().handleMessageFromClientUI((Object)arrsend);
 			 return 	 (float) myMain.getConnection().getMessage();
 		}
 		
@@ -704,21 +1247,7 @@ public abstract class SecretaryController {
 			 arrsend.add("searchTeacherID");
 			 arrsend.add(TeacherID);
 		
-				//myMain.con.getClient().handleMessageFromClientUI(arrsend);
-				//	currentSemester = (Semester)myMain.con.getmessage;
-//				try {
-//					myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				Student newStudent = (Student)myMain.con.getMessage();
-				try {
-					myMain.getConnection().getClient().handleMessageFromClientUI((Object)arrsend);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				myMain.getConnection().handleMessageFromClientUI((Object)arrsend);
 				Teacher newTeacher =  (Teacher) myMain.getConnection().getMessage();
 				
 			
@@ -733,28 +1262,14 @@ public abstract class SecretaryController {
 
 		
 		
-		public static Student searchStudentID(String studentID){
+		public static Student searchStudentID(String studentID) throws IOException{
 			
 			 ArrayList<String> arrsend  =  new ArrayList<String>();
 			 arrsend.clear();
 			 arrsend.add("searchStudentID");
 			 arrsend.add(studentID);
 		
-				//myMain.con.getClient().handleMessageFromClientUI(arrsend);
-				//	currentSemester = (Semester)myMain.con.getmessage;
-//				try {
-//					myMain.con.getClient().handleMessageFromClientUI((Object)arrsend);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				Student newStudent = (Student)myMain.con.getMessage();
-				try {
-					myMain.getConnection().getClient().handleMessageFromClientUI((Object)arrsend);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				myMain.getConnection().handleMessageFromClientUI((Object)arrsend);
 				Student newStudent =  (Student) myMain.getConnection().getMessage();
 				
 			

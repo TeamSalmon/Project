@@ -1,15 +1,6 @@
 
 package ClientGui;
 
-/**
- * This GUI controller is responsible for the second stage of
- * the the secretary's "Define Class" functionality.
- * In this screen the user selects the students that will be in the new class.
- *
- * @see SecretaryController
- * @see DefineClass1Controller
- * @author Elia
- */
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,10 +22,19 @@ import projectsalmon.StudentsClass;
 import javafx.fxml.Initializable;
 
 
+/**
+ * This GUI controller is responsible for the second stage of
+ * the the secretary's "Define Class" functionality.
+ * In this screen the user selects the students that will be in the new class.
+ *
+ * @see SecretaryController
+ * @see DefineClass1Controller
+ * @author Elia
+ */
 public class DefineClass2Controller implements Initializable{
 	
-	ArrayList<Student> students;
-	ArrayList<String> details;
+	ArrayList<Student> students = new ArrayList<Student>();
+	ArrayList<String> details = new ArrayList<String>();
 	ObservableList<String> leftstudents_names;
 
 	ArrayList<String> rightstudents_names = new ArrayList<String>();
@@ -84,7 +84,8 @@ public class DefineClass2Controller implements Initializable{
     {
 		try 
 		{
-			students = SecretaryController.getOptionalStudents();
+			students = SecretaryController.getOptionalStudents(SecretaryController.getGrade());
+		//try to insert 12
 		} 
 		catch (IOException e) 
 		{
@@ -92,17 +93,37 @@ public class DefineClass2Controller implements Initializable{
 			e.printStackTrace();
 		}
     	
-    	details = new ArrayList<String>();
-		
-    	for (Student student : students)
-    	{
-    		details.add( student.getFirst_name() + " " + student.getLast_name() + " " + student.getId() );
-    	}
-    	    	
-		leftstudents_names = FXCollections.observableArrayList(details); 
+		if(students.size() == 0)
+		{
+			leftLabelFX.setVisible(false);
+			rightLabelFX.setVisible(false);
+			leftListFX.setVisible(false);
+			rightListFX.setVisible(false);
+			requestFX2.setVisible(false);
+			moveFX.setVisible(false);
+			continuePT.setVisible(false);
+			exitPT.setVisible(false);
+			exitPT1.setVisible(true);
 
-    	leftListFX.setItems(leftstudents_names);
- 	}
+		
+				requestFX1.setText("Couldn't find free students at level " + SecretaryController.getGrade() +".");
+		
+				requestFX1.setTextFill(Color.RED);
+		}
+		else
+		{
+			details = new ArrayList<String>();
+		
+			for (Student student : students)
+			{
+				details.add( student.getFirst_name() + " " + student.getLast_name() + " " + student.getId() );
+			}
+    	    	
+			leftstudents_names = FXCollections.observableArrayList(details); 
+
+			leftListFX.setItems(leftstudents_names);
+		}
+	}
     
     
 	/**
@@ -147,8 +168,14 @@ public class DefineClass2Controller implements Initializable{
      */
      @FXML void nextFrame(ActionEvent event) throws IOException 
     {
-    	
-    	if (rightstudents_names.size() > 30)
+    	if (rightstudents_names.size() < 1)
+     	{
+     		rightLabelFX.setText("New class - Empty");
+     		rightLabelFX.setTextFill(Color.RED);
+     		full_alert = true;// not full, but canceling alert
+     	}
+    	 
+    	else if (rightstudents_names.size() > 30)
     	{
     		rightLabelFX.setText("New class - Over 30 students");
     		rightLabelFX.setTextFill(Color.RED);

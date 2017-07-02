@@ -86,14 +86,15 @@ public class AssignClassToCourseController2 implements Initializable {
 			leftListFX.setItems(FXCollections.observableArrayList(misfitNames)); 
 		}
 
-		if (misfitStudents.size() > 0) {
-			ArrayList<String> misfitNames = new ArrayList<String>();
-			for (Student student : misfitStudents) {
-				misfitNames.add(student.getFirst_name() + " " + student.getLast_name() + " " + student.getId());
-			}
-
-			leftListFX.setItems(FXCollections.observableArrayList(misfitNames));
-		} else {
+//		if (misfitStudents.size() > 0) {
+//			ArrayList<String> misfitNames = new ArrayList<String>();
+//			for (Student student : misfitStudents) {
+//				misfitNames.add(student.getFirst_name() + " " + student.getLast_name() + " " + student.getId());
+//			}
+//
+//			leftListFX.setItems(FXCollections.observableArrayList(misfitNames));
+//		} 
+		else {
 			leftListFX.setVisible(false);
 			leftLabelFX.setVisible(false);
 			requestFX1.setText("All the students in the class has the course's preconditions.");

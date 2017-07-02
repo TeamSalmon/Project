@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -9,11 +10,34 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineClass1Controller">
+<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.DefineClass1Controller">
    <children>
-                  <Button fx:id="continuePT" layoutX="365.0" layoutY="123.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" />
-                  <TextField fx:id="gradeFX" layoutX="180.0" layoutY="123.0" promptText="Grade" />
-                  <Button fx:id="exitPT" layoutX="280.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-                  <Label fx:id="requestFX" layoutX="180.0" layoutY="61.0" text="Enter the new class's grade (in the range: 10-12)" />
+             <!--      <Button fx:id="continuePT" layoutX="365.0" layoutY="123.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" /> -->
+              <Button id="test" fx:id="continuePT" layoutX="501.0" layoutY="499.0" mnemonicParsing="false" onAction="#nextFrame" text="Continue" textFill="#218629">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+         
+   
+                  <TextField fx:id="gradeFX" layoutX="61.0" layoutY="257.0" promptText="Grade">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+               <!--   <Button fx:id="exitPT" layoutX="280.0" layoutY="330.0" mnemonicParsing="false" onAction="#exit" text="Exit" /> -->
+               
+                <Button fx:id="exitPT" layoutX="30.0" layoutY="499.0" mnemonicParsing="false" onAction="#exit" text="Cancel" textFill="#942121">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+                  <Label fx:id="requestFX" layoutX="61.0" layoutY="187.0" text="Enter the new class's grade: (in the range: 10-12)">
+                   <font>
+           			 <Font name="System Bold" size="16.0" />
+       			  </font>
+                  </Label>
+      <Label fx:id="requestFX1" layoutX="234.0" layoutY="49.0" text="Define a New Class">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
 	</children>
 </Pane>

@@ -17,6 +17,17 @@ public class Course
 	private ArrayList<Course> preCondition;
 	private ArrayList<Integer> grades;
 
+// TeachingUnit teachingUnit from constrcutor
+	public Course(String courseNumber, float weeklyHours, String courseName, String year, String semester, String teachingUnitId)
+	{
+		this.year = year;
+		this.semester = semester;
+		this.courseNumber = courseNumber;
+		this.name = courseName;
+		this.weeklyHours = weeklyHours;
+		this.description = "";
+		this.teachingUnit = new TeachingUnit(teachingUnitId,"");
+	}
 	
 	public Course(String courseNumber, String courseName,TeachingUnit teachingUnit, String description, float weeklyHours)
 {

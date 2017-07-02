@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="paneFX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientGui.SystemAdminMenuController">
+   <children>
+                 <Button fx:id="blockPT" layoutX="236.0" layoutY="354.0" mnemonicParsing="false" onAction="#blocking" text="Block / Unblock User">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+                 
+			 
+			  <Label fx:id="requestFX3" layoutX="223.0" layoutY="46.0" lineSpacing="2.0" prefHeight="27.0" prefWidth="195.0" text="System Administrator">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+             
+ <Button fx:id="exitPT" layoutX="30.0" layoutY="499.0" mnemonicParsing="false" onAction="#exit" text="Cancel" textFill="#942121">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+       
+
+			 <!--   <Button fx:id="exitPT" layoutX="283.0" layoutY="331.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+                 --> 
+				 
+				 
+				 <Label fx:id="requestFX" layoutX="84.0" layoutY="155.0" text="Choose an option:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label> 
+                   
+				  
+				  
+      <Button fx:id="newcoursePT" layoutX="235.0" layoutY="250.0" mnemonicParsing="false" onAction="#newcourse" text="Define a New Course">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+	</children>
+</Pane>

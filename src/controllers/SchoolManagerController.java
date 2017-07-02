@@ -19,7 +19,7 @@ public class SchoolManagerController {
 
 	static Main myMain = Main.getInstance();
 	private static Object received_object;
-
+	static ArrayList<Object> list_of_objects = new ArrayList<Object>();
 	
 	/* Block or Unblock Parent */
 						
@@ -34,13 +34,33 @@ public class SchoolManagerController {
 		ArrayList<String> query_searchUser = new ArrayList<String>();
 		query_searchUser.add("searchUser");
 		query_searchUser.add(id);
-		
-		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_searchUser);
-		received_object = myMain.getConnection().getMessage();
-		LoginUser user = (LoginUser)received_object;
 			
-		return ((user.getPermission() & LoginUser.ParentPER)!=0);
-	
+		try {
+			myMain.getConnection().sendToServer((Object) query_searchUser);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		synchronized (myMain.getConnection()) {
+			try {
+				myMain.getConnection().wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+//		received_object = myMain.con.getMessage();
+//		list_of_objects = (ArrayList<Object>) received_object;
+
+		
+		received_object = myMain.getConnection().getMessage();
+		if (((ArrayList<String>)received_object).size() == 0)
+		{
+			return false;
+		}
+		
+		Integer permission = Integer.valueOf( (((ArrayList<String>)received_object).get(5)) );
+		return ((permission & LoginUser.ParentPER)!=0);
+		
 	}
 	
 	
@@ -56,11 +76,26 @@ public class SchoolManagerController {
 		query_block.add("block");
 		query_block.add(id);
 		
-		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_block);
-		received_object = myMain.getConnection().getMessage();
-		String answer = (String)received_object;
+		try{
+			myMain.getConnection().sendToServer((Object)query_block);
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+			synchronized(myMain.getConnection()){
+				try {
+					myMain.getConnection().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		received_object = myMain.con.getMessage();
+				
+		String answer = ((ArrayList<String>)received_object).get(0);
 			
 		return answer;
+		
 	}
 	
 	
@@ -76,9 +111,23 @@ public class SchoolManagerController {
 		query_unblock.add("unblock");
 		query_unblock.add(id);
 		
-		myMain.getConnection().getClient().handleMessageFromClientUI((Object)query_unblock);
-		received_object = myMain.getConnection().getMessage();
-		String answer = (String)received_object;
+		try{
+			myMain.getConnection().sendToServer((Object)query_unblock);
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+			synchronized(myMain.getConnection()){
+				try {
+					myMain.getConnection().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		received_object = myMain.con.getMessage();
+				
+		String answer = ((ArrayList<String>)received_object).get(0);
 			
 		return answer;
 	}

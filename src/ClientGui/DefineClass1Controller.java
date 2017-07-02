@@ -39,6 +39,9 @@ public class DefineClass1Controller {
     private Label requestFX; 
 	
 	@FXML 
+    private Label requestFX1;
+	
+	@FXML 
     private Button continuePT; 
 
     @FXML
@@ -56,9 +59,9 @@ public class DefineClass1Controller {
     @FXML void nextFrame (ActionEvent event) throws IOException 
     {
     	grade = gradeFX.getText();
-    	if(grade.length()<1 || ! grade.equals("10") || ! grade.equals("11") || ! grade.equals("12"))
+    	if(grade.length()<1 || !( grade.equals("10") ||  grade.equals("11") ||  grade.equals("12")))
     	{
-    		requestFX.setText("Pleasw enter a valid garde");
+    		requestFX.setText("Please enter a valid garde");
     	}
     	else
     	{

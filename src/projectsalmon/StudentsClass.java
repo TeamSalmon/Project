@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.ArrayList;
 
 /**
- * 
  * @author Elia
  */
 public class StudentsClass

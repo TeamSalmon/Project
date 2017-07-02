@@ -98,12 +98,8 @@ public class DefineCourseController {
 
 			else 
 			{
-				if (result == "preconditions")
-					requestFX1.setText("The chosen precondition courses don't exist.");
-
-				else 
+				if(result == null)
 				{
-					//continue regularly
 					nametxtFX.setVisible(false);
 					teachingtxtFX.setVisible(false);
 					teachingUnitFX.setVisible(false);
@@ -115,9 +111,32 @@ public class DefineCourseController {
 					continuePT.setVisible(false);
 					hourstxtFX.setVisible(false);
 					courseNameFX.setVisible(false);
-					
-					requestFX1.setText("Course was created successfully.");
+
+					requestFX1.setText("Couldn't define new course (DB error");
 					mainMenuFX.setVisible(true);
+				}
+				else{
+					if (result == "preconditions")
+
+						requestFX1.setText("The chosen precondition courses don't exist.");
+
+					else {
+						// continue regularly
+						nametxtFX.setVisible(false);
+						teachingtxtFX.setVisible(false);
+						teachingUnitFX.setVisible(false);
+						requestFX2.setVisible(false);
+						exitPT.setVisible(false);
+						preconditionsFX.setVisible(false);
+						weeklyHoursFX.setVisible(false);
+						preconditionstxtFX.setVisible(false);
+						continuePT.setVisible(false);
+						hourstxtFX.setVisible(false);
+						courseNameFX.setVisible(false);
+
+						requestFX1.setText("Course was created successfully.");
+						mainMenuFX.setVisible(true);
+					}
 				}
 			}
 		}

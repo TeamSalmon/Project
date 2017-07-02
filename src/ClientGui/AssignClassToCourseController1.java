@@ -36,8 +36,8 @@ import javafx.fxml.Initializable;
 
 public class AssignClassToCourseController1 implements Initializable{
 	
-	ArrayList<Course> courses;
-	ArrayList<StudentsClass> classes;
+	ArrayList<Course> courses = new ArrayList<Course>();
+	ArrayList<StudentsClass> classes = new ArrayList<StudentsClass>();
 	ArrayList<String> courses_names = new ArrayList<String>();
 	ArrayList<String> classes_names = new ArrayList<String>();
 	
